@@ -6,19 +6,16 @@ const pool = new Pool(poolJson[0]);
 const app = express();
 const http = require("http");
 const host = "192.168.11.67";
-const port = 80;
+const port = 3001;
 const { SHA256 } = require("crypto-js");
 app.use(function (req, res, next) {
   express.json();
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  ),
-    res.header(
       "Access-Control-Allow-Methods",
       "GET, POST, PUT, DELETE, OPTIONS"
-    );
+  );
   bodyparser.text();
   next();
 });
@@ -45,7 +42,7 @@ app.get("/", (req, res) => {
 
 app.get("/login", (req, res) => {
   let id = req.query.id;
-  pool.query(`SELECT * FROM users WHERE id=${id}`, (err, result) => {
+  pool.query(`SELECT * FROM users WHERE token=${id}`, (err, result) => {
     if (!err) {
       res.send(result.rows);
       res.status(200);
@@ -60,7 +57,7 @@ app.get("/login", (req, res) => {
 
 app.get("/users", (req, res, next) => {
   let id = req.query.id;
-  pool.query(`SELECT * FROM users WHERE id=${id}`, (err, result) => {
+  pool.query(`SELECT * FROM users`, (err, result) => {
     if (!err) {
       res.status(200).send(result.rows[0]);
     } else {

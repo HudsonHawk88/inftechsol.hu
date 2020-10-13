@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TabPane, TabContent, T } from "reactstrap";
+import { TabPane, TabContent } from "reactstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import "../../App.css";

@@ -1,5 +1,5 @@
 import { Microservices } from "./commons/MicroServices";
-const APIURL = "http://192.168.11.67:80";
+const APIURL = window.location.origin + "/api";
 
 export default class Services {
   // static listUsers = async () => {
@@ -8,9 +8,9 @@ export default class Services {
   //   result.push(await users.json());
   //   return result;
   // };
-  static listUsers = (id, fnDone) => {
-    Microservices.fetchApi(
-      APIURL + "/",
+  static listUsers = async () => {
+    let result = await Microservices.fetchApi(
+      APIURL + "/users",
       {
         method: "GET",
         mode: "cors",
@@ -18,10 +18,9 @@ export default class Services {
         headers: {
           "Content-Type": "application/json",
         },
-        qs: { id },
       },
-      fnDone
     );
+    return result
   };
   static getUser = async (id) => {
     let result = [];

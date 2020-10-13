@@ -1,7 +1,7 @@
 [{
-    "user": "karbantarto",
-    "host": "192.168.11.67",
-    "database": "users",
+    "user": "postgres",
+    "host": "localhost",
+    "database": "postgres",
     "password": "CoronamVitae88",
-    "port": 80
+    "port": 5432
 }]

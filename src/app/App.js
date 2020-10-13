@@ -93,6 +93,11 @@ class App extends Component {
     }
   };
 
+  getUsers = () => {
+    let data = Services.listUsers();
+    console.log(data)
+  }
+
   logOut = () => {
     this.setState({
       authenticated: false,
@@ -189,6 +194,7 @@ class App extends Component {
                 return (
                   <div>
                     <h1>Publikus oldal</h1>
+                    <button onClick={() => this.getUsers()}>Userek</button>
                   </div>
                 );
               }}

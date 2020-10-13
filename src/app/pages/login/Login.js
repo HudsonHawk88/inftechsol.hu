@@ -18,7 +18,7 @@ import {
   AvFeedback,
   AvGroup,
   AvField,
-} from "../../../node_modules/availity-reactstrap-validation";
+} from "availity-reactstrap-validation";
 import {
   NotificationContainer,
   NotificationManager,
@@ -60,7 +60,7 @@ class Login extends Component {
     Services.getUserData(token, (res, err) => {
       console.log(res[0]);
     });
-    let response = Services.getUserData(token).then((res) => {
+    let response = Services.getUserData('tg').then((res) => {
       let user = res[0];
       if (user) {
         if (user.username === username) {
