@@ -6,10 +6,6 @@ import {
   Button,
   CardHeader,
   CardFooter,
-  Form,
-  FormFeedback,
-  FormGroup,
-  Input,
   Label,
 } from "reactstrap";
 import {
@@ -17,84 +13,45 @@ import {
   AvInput,
   AvFeedback,
   AvGroup,
-  AvField,
 } from "availity-reactstrap-validation";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
 import Services from "./Services";
 import { SHA256 } from "crypto-js";
 import Dropzone from "react-dropzone";
-import "../../App.css";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      usersJson: [],
-      user: {},
-      modositObj: {},
-      // formType login/register
       formType: "login",
-      isModalOpen: false,
-      isDeleteModalOpen: false,
-      modalCim: "",
-      currentId: null,
-      userId: null,
-      authenticated: false,
-      buttonText: "Bejelentkezés",
-      currentUser: {},
+      buttonText: "Regisztráció",
       avatar: [],
     };
   }
 
-  // componentDidMount = () => {
-  //   this.getUsersData();
-  // };
-
   getUserData = (username, password) => {
-    let isPassWrong = false;
     let token = SHA256(username + password);
-
-    Services.getUserData(token, (res, err) => {
-      console.log(res[0]);
-    });
-    let response = Services.getUserData('tg').then((res) => {
+    Services.getUserData(token).then((res) => {
       let user = res[0];
+      console.log(user)
       if (user) {
         if (user.username === username) {
           if (user.password === password) {
-            return user;
+            document.cookie = `token=${token}`;
+            document.cookie = `auth=${true}`;
+            document.cookie = `isAdmin=${user.is_admin}`;
+            window.location.replace("/")
           } else {
-            isPassWrong = true;
-            return null;
+            this.props.notification("error", "A megadott jelszó hibás!");
           }
         } else {
           this.props.notification("error", "A megadott felhasználónév hibás!");
-          return null;
         }
       } else {
-        this.props.notification(
-          "error",
-          "A megadott felhasználónév vagy jelszó hibás!"
-        );
+        this.props.notification("error", "Nincs ilyen regisztrált felhasználó!");
         this.props.onChange(false, null);
         window.history.replaceState(null, null, window.location.pathname);
       }
     });
-    return response;
-  };
-
-  checkUser = (username, password) => {
-    let uname = username;
-    let pass = password;
-    let data = this.getUserData(uname, pass);
-    if (data) {
-      if (this.props.onChange) {
-        this.props.onChange(true, data);
-      }
-    }
   };
 
   renderLoginTitle = () => {
@@ -292,7 +249,7 @@ class Login extends Component {
   submitLoginForm = async () => {
     const { username, password, vezeteknev, keresztnev, avatar } = this.state;
     if (this.state.formType === "login") {
-      this.checkUser(username, password);
+      this.getUserData(username, password);
     }
     if (this.state.formType === "register") {
       let submitObj = {};

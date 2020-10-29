@@ -1,139 +1,143 @@
 const express = require("express");
+const app = express();
 const { Pool } = require("pg");
 const bodyparser = require("body-parser");
 const poolJson = require("./pool.json");
-const pool = new Pool(poolJson[0]);
-const app = express();
-const http = require("http");
-const host = "192.168.11.67";
-const port = 3001;
+const cors = require('cors');
+const users = new Pool(poolJson[0]);
+const views = new Pool(poolJson[1]);
+const fs = require("fs");
+const https = require("https");
+const host = process.env.HOST ? process.env.HOST : "92.118.27.50";
+const port = 8081;
+
 const { SHA256 } = require("crypto-js");
-app.use(function (req, res, next) {
-  express.json();
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  bodyparser.text();
-  next();
+const server = https.createServer({key: fs.readFileSync('/etc/letsencrypt/live/inftechsol.hu/privkey.pem'), cert: fs.readFileSync('/etc/letsencrypt/live/inftechsol.hu/cert.pem')}, app);
+  
+
+app.use(["/", "/user", "/users", "/login", "/header", "/blog"], (req, res, next) => {
+  bodyparser.json();
+  res.setHeader("Access-Control-Allow-Origin", "http://192.168.11.67:3000");
+  res.header('Access-Control-Allow-Methods', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  return next();
 });
-
-app.get("/", (req, res) => {
-  console.log(res);
-  res.send([{ username: "TG", nev: "Tóth Gergő" }]);
-
-  // req.body = [{ username: "TG", nev: "Tóth Gergő" }];
-  res.status(200);
-  res.end();
-  // pool.query("SELECT * FROM users", (err, result) => {
-  //   if (!err) {
-  //     res.send(result.rows);
-  //     res.status(200);
-  //     res.end();
-  //   } else {
-  //     res.send(err);
-  //     res.status(500);
-  //     res.end();
-  //   }
-  // });
-});
-
-app.get("/login", (req, res) => {
-  let id = req.query.id;
-  pool.query(`SELECT * FROM users WHERE token=${id}`, (err, result) => {
-    if (!err) {
-      res.send(result.rows);
-      res.status(200);
-      res.end();
-    } else {
-      res.send(err);
-      res.status(500);
-      res.end();
-    }
+app.options('*', cors());
+  
+  app.get("/login", (req, res) => {
+    let id = req.headers.token;
+      users.query(`SELECT * FROM users WHERE token='${id}'`, (err, result) => {
+        if (!err) {
+          res.status(200).send(result.rows);
+        } else {
+          res.status(500).send({err: err});
+        }
+      }); 
   });
-});
-
-app.get("/users", (req, res, next) => {
-  let id = req.query.id;
-  pool.query(`SELECT * FROM users`, (err, result) => {
-    if (!err) {
-      res.status(200).send(result.rows[0]);
+  
+  app.get("/users", (req, res, next) => {
+    let id = req.headers.token;
+    if (id) {
+      users.query(`SELECT * FROM users WHERE token='${id}'`, (err, result) => {
+        if (!err) {
+          res.status(200).send(result.rows);
+        } else {
+          res.status(500).send(err);
+        }
+      });
     } else {
-      next(err);
+      users.query("SELECT * FROM users", (err, result) => {
+        if (!err) {
+          res.status(200).send(result.rows);
+        } else {
+          res.status(500).send(err);
+        }
+      });
     }
+     
   });
-});
-
-app.post("/users", (req, res) => {
-  let body = [];
-  let felvitelObj = {};
-  req
-    .on("data", (chunk) => {
-      body.push(chunk);
-    })
-    .on("error", (res, err) => {
-      console.log(err, res);
+  
+  app.post("/users", (req, res) => {
+    let data = '';
+    req.on("data", (chunk) => {
+      data += chunk;
     })
     .on("end", () => {
-      let object;
-      body = Buffer.concat(body).toString();
-      object = JSON.parse(body);
-      felvitelObj = object[0];
-      let id = SHA256(felvitelObj.username + felvitelObj.password);
-      pool.query(
-        `INSERT INTO public.users(id, username, password, vezeteknev, keresztnev, avatar) VALUES ('${id}','${felvitelObj.username}','${felvitelObj.password}', '${felvitelObj.vezeteknev}', '${felvitelObj.keresztnev}', '${felvitelObj.avatar}');`,
+      const felvitelObj = JSON.parse(data);
+      const token = SHA256(felvitelObj.username + felvitelObj.password);
+      users.query(
+        `INSERT INTO public.users(token, username, password, vezeteknev, keresztnev, email, created_on, last_login, is_admin) VALUES ('${token}','${felvitelObj.username}','${felvitelObj.password}', '${felvitelObj.vezeteknev}', '${felvitelObj.keresztnev}', '${felvitelObj.email}', '${felvitelObj.created_on}', '${felvitelObj.last_login}', ${false});`,
         (err) => {
           if (!err) {
             res.status(200).send({ msg: "User sikeresen létrehozva!" });
           } else {
-            res.status(500).send({ msg: "User hozzáadása sikertelen!" });
+            res.status(500).send({ msg: "User hozzáadása sikertelen!", err: err });
           }
         }
       );
     });
-});
-
-app.put(`/users`, (req, res) => {
-  let body = [];
-  let modositoObj = {};
-  req
-    .on("data", (chunk) => {
-      body.push(chunk);
+  });
+  
+  app.put(`/users`, (req, res) => {
+    let data = '';
+    req.on("data", (chunk) => {
+      data += chunk;
     })
     .on("end", () => {
-      let object;
-      body = Buffer.concat(body).toString();
-      object = JSON.parse(body);
-      modositoObj = object;
-
-      pool.query(
-        `UPDATE public.users SET
-          username = '${modositoObj.username}'::text, password = '${modositoObj.password}'::text, vezeteknev = '${modositoObj.vezeteknev}'::text, keresztnev = '${modositoObj.keresztnev}'::text, avatar = '${modositoObj.avatar}'::bytea
-          WHERE id = '${modositoObj.id}';`,
-        (err) => {
-          if (!err) {
-            res.status(200).send({ msg: "User sikeresen módosítva!" });
-          } else {
-            res.status(500).send({ msg: "User módosítása sikertelen!" });
+        const modositoObj = JSON.parse(data);
+        const token = req.headers.token;
+        users.query(
+          `UPDATE public.users SET
+            username = '${modositoObj.username}'::text, password = '${modositoObj.password}'::text, vezeteknev = '${modositoObj.vezeteknev}'::text, keresztnev = '${modositoObj.keresztnev}'::text, email = '${modositoObj.email}'::text, is_admin = '${modositoObj.isAdmin ? modositoObj.isAdmin : false}'::boolean
+            WHERE id = '${token}';`,
+          (err) => {
+            if (!err) {
+              res.status(200).send({ msg: "User sikeresen módosítva!" });
+            } else {
+              res.status(500).send({ msg: "User módosítása sikertelen!", err: err });
+            }
           }
-        }
-      );
-    });
-});
-
-app.delete("/users", (req, res) => {
-  let id = req.query.id;
-  pool.query(`DELETE FROM public.users WHERE id='${id}'`, (err) => {
-    if (!err) {
-      res.status(200).send({ msg: "User sikeresen törölve!" });
-    } else {
-      res.status(500).send({ msg: "User törlése sikertelen!" });
-    }
+        );
+      });
   });
-});
+  
+  app.delete("/users", (req, res) => {
+    let id = req.headers.token;
+    users.query(`DELETE FROM public.users WHERE token='${id}'`, (err) => {
+      if (!err) {
+        res.status(200).send({ msg: "User sikeresen törölve!" });
+      } else {
+        res.status(403).send({ msg: "User törlése sikertelen!", err: err });
+      }
+    });
+  });
 
-app.listen(port, host, () =>
-  console.log(`Example app listening on ${host} port ${port}!`)
-);
+  // PUBLIC HEADER
+
+  app.get("/header", (req, res) => {
+    views.query(`SELECT * FROM header`, (err, result) => {
+      if (!err) {
+        res.status(200).send(result.rows);
+      } else {
+        res.status(500).send({ msg: "A header-ök lekérdezése sikertelen!", err: err });
+      }
+    });
+  })
+
+  // PUBLIC BLOG
+
+  app.get("/blog", (req, res) => {
+    views.query(`SELECT * FROM blog`, (err, result) => {
+      if (!err) {
+        res.status(200).send(result.rows);
+      } else {
+        res.status(500).send({ msg: "A header-ök lekérdezése sikertelen!", err: err });
+      }
+    });
+  })
+
+
+  server.listen(port, host);
+  console.log(`Server running at https://${host}:${port}/`);
+
+

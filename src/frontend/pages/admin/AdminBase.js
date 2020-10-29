@@ -100,7 +100,8 @@ class AdminBase extends Component {
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             <Admin
-              data={{ user: this.state.user !== {} && this.state.user }}
+              notification={this.props.notification}
+              data={{ user: this.props && this.props.data.user }}
               logOut={this.props.logOut && this.props.logOut}
             />
           </TabPane>

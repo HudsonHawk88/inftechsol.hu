@@ -1,11 +1,14 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: ["@babel/polyfill", "./src/app/index.js"],
+  entry: ["@babel/polyfill", "./src/frontend/index.js"],
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: path.join(__dirname, '/src/frontend/public'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   devServer: {
     inline: true,
@@ -13,10 +16,11 @@ module.exports = {
     host: '192.168.11.67',
     port: 3000,
     hot: true,
+    publicPath: '/',
     proxy: {
       '/api': {
-        target: 'http://192.168.11.67:3001',
-        pathRewrite: {'^/api' : ''}
+        target: 'https://inftechsol.hu',
+        secure: false
       }
     }
   },

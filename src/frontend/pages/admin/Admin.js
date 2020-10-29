@@ -13,14 +13,9 @@ import {
   AvFeedback,
   AvGroup,
 } from "availity-reactstrap-validation";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
-import Services from "./Services";
 import BootstrapTable from "react-bootstrap-table-next";
-import { LoadingPage } from "../../commons/Components";
-import Full from "../../components/Full/Full";
+import Services from "./Services";
+
 
 class Admin extends Component {
   constructor(props) {
@@ -39,52 +34,10 @@ class Admin extends Component {
     };
   }
 
-  setCookie = (name, value, daysToLive) => {
-    // Encode value in order to escape semicolons, commas, and whitespace
-    let cookie = name + "=" + decodeURIComponent(value);
-
-    if (typeof daysToLive === "number") {
-      /* Sets the max-age attribute so that the cookie expires
-        after the specified number of days */
-      cookie += "; max-age=" + daysToLive * 24 * 60 * 60;
-
-      document.cookie = cookie;
-    }
-  };
-
-  componentWillReceiveProps = (props) => {
-    console.log(props);
-    if (props !== {}) {
-      this.setState({ user: props.data.user, loading: false }, () => {
-        this.setCookie("auth", true, 1);
-        this.setCookie("userId", this.state.user.id, 1);
-      });
-    }
-  };
-
-  createNotification = (type, message) => {
-    switch (type) {
-      case "info":
-        NotificationManager.info(message, "");
-        break;
-      case "success":
-        NotificationManager.success(message, "");
-        break;
-      case "warning":
-        NotificationManager.warning(message, "");
-        break;
-      case "error":
-        NotificationManager.error(message, "");
-        break;
-      default: {
-        return;
-      }
-    }
-  };
-
   componentDidMount() {
     if (window.location.pathname === "/admin/users") {
       this.getUsersFromServer();
+      this.setState({ user: this.props && this.props.data.user })
     }
   }
 
@@ -133,30 +86,37 @@ class Admin extends Component {
     this.setState({ modositObj: newObj });
   };
 
+  onEmailChange = (e) => {
+    let value = e.target.value;
+    let newObj = this.state.modositObj;
+    newObj.email = value;
+    this.setState({ modositObj: newObj });
+  }
+
   onAvatarChange = (e) => {
     console.log(e.target.value);
   };
 
-  handleViewClick = async (id) => {
-    const response = await Services.getUser(id);
-    const data = await response;
-    this.setState({
-      modositObj: data,
-      formType: "VIEW",
-      modalCim: "Felhasználó megtekintése",
+  handleViewClick = (id) => {
+    Services.getUser(id).then((res) => {
+      this.setState({
+        modositObj: res[0],
+        formType: "VIEW",
+        modalCim: "Felhasználó megtekintése",
+      });
+      this.toggleModal();
     });
-    this.toggleModal();
   };
 
   handleEditClick = async (id) => {
-    const response = await Services.getUser(id);
-    const data = await response;
-    this.setState({
-      modositObj: data,
-      formType: "MOD",
-      modalCim: "Felhasználó módosítása",
-    });
-    this.toggleModal();
+    Services.getUser(id).then((res) => {
+      this.setState({
+        modositObj: res[0],
+        formType: "MOD",
+        modalCim: "Felhasználó módosítása",
+      });
+      this.toggleModal();
+    })
   };
 
   handleNewClick = () => {
@@ -168,50 +128,49 @@ class Admin extends Component {
     this.toggleModal();
   };
 
-  handleDeleteClick = async (id) => {
+  handleDeleteClick = (id) => {
     this.setState({ formType: "delete", currentId: id });
     this.toggleDeleteModal();
   };
 
-  deleteUser = async () => {
-    let response = await Services.deleteUser(this.state.currentId);
-    response.json().then((value) => {
-      if (response.status === 200) {
-        this.createNotification("success", value.msg);
+  deleteUser = () => {
+    Services.deleteUser(this.state.currentId).then((res) => {
+      if (!res.err) {
+        this.props.createNotification("success", res.msg);
       } else {
-        this.createNotification("error", value.msg);
+        this.props.createNotification("error", res.msg);
       }
     });
     this.getUsersFromServer();
     this.toggleDeleteModal();
   };
 
-  onSubmit = async () => {
-    const formType = this.state.formType;
+  onSubmit = () => {
+    const { formType } = this.state;
     if (formType === "FEL") {
-      let response = await Services.addUser(this.state.modositObj);
-
-      response.json().then((value) => {
-        if (response.status === 200) {
-          this.createNotification("success", value.msg);
+      let felvitelObj = {};
+      felvitelObj = JSON.parse(JSON.stringify(this.state.modositObj));
+      felvitelObj.created_on = 
+      Services.addUser(this.state.modositObj).then((res) => {
+        if (!res.err) {
+          this.getUsersFromServer();
+          this.toggleModal();
+          this.props.createNotification("success", res.msg);
         } else {
-          this.createNotification("error", value.msg);
+          this.props.createNotification("error", res.msg);
         }
       });
-      this.getUsersFromServer();
-      this.toggleModal();
     }
     if (formType === "MOD") {
-      let response = await Services.editUser(this.state.modositObj);
-      response.json().then((value) => {
-        if (response.status === 200) {
-          this.createNotification("success", value.msg);
+      Services.editUser(this.state.modositObj).then((res) => {
+        if (!res.err) {
+          this.getUsersFromServer();
+          this.toggleModal();
+          this.props.createNotification("success", res.msg);
         } else {
-          this.createNotification("error", value.msg);
+          this.props.createNotification("error", res.msg);
         }
       });
-      this.getUsersFromServer();
-      this.toggleModal();
     }
   };
 
@@ -243,6 +202,10 @@ class Admin extends Component {
     );
   }
 
+  nevFormatter = (value, cell) => {
+    return value + ' ' + cell.keresztnev;
+  }
+
   renderForm = () => {
     const { modositObj } = this.state;
     if (this.state.formType === "VIEW") {
@@ -256,9 +219,9 @@ class Admin extends Component {
           <br />
           <div>{modositObj.username}</div>
           <br />
-          <b>Jelszó:</b>
+          <b>Email:</b>
           <br />
-          <div>{modositObj.password}</div>
+          <div>{modositObj.email}</div>
           <br />
           {/* <b>Profilkép:</b>
           <br />
@@ -303,11 +266,22 @@ class Admin extends Component {
           <AvGroup>
             <Label>Jelszó: *</Label>
             <AvInput
-              type="text"
+              type="password"
               name="password"
               required
               onChange={(e) => this.onPasswordChange(e)}
               value={modositObj && modositObj.password}
+            />
+            <AvFeedback>Ez a mező kitöltése kötelező!</AvFeedback>
+          </AvGroup>
+          <AvGroup>
+            <Label>Email: *</Label>
+            <AvInput
+              type="email"
+              name="email"
+              required
+              onChange={(e) => this.onEmailChange(e)}
+              value={modositObj && modositObj.email}
             />
             <AvFeedback>Ez a mező kitöltése kötelező!</AvFeedback>
           </AvGroup>
@@ -328,11 +302,11 @@ class Admin extends Component {
   };
 
   renderUsersTable = () => {
-    let users = this.state.usersJson;
     const columns = [
       {
-        dataField: "teljesNev",
+        dataField: "vezeteknev",
         text: "Teljes név",
+        formatter: this.nevFormatter
       },
       {
         dataField: "username",
@@ -343,30 +317,28 @@ class Admin extends Component {
         text: "Jelszó",
       },
       {
-        dataField: "id",
+        dataField: "token",
         text: "Műveletek",
         formatter: (cell, row, rowIndex) =>
           this.tableIconFormatter(cell, row, rowIndex),
       },
     ];
 
-    return <BootstrapTable keyField="id" data={users} columns={columns} />;
+    return <BootstrapTable keyField="token" data={this.state.usersJson} columns={columns} />;
   };
 
   getUsersFromServer = () => {
-    Services.listUsers(12).then((result) => {
+    Services.listUsers().then((res) => {
+      console.log("UsersJson: ", res)
       this.setState({
-        teszt: result[0],
+        usersJson: res,
       });
     });
   };
 
   render() {
-    const { user } = this.state;
-    console.log(this.state.teszt);
     return (
       <div>
-        <NotificationContainer />
         <div>My App</div>
         <br />
         {/* <h1>{`Helló ${user.username}`}</h1> */}

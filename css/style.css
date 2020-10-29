@@ -1,0 +1,137 @@
+html, body {
+    width: 100%;
+    height: 100%;
+  }
+
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+
+  #app {
+    width: 100%;
+    height: 100%;
+  }
+
+  #main {
+    height: inherit;
+  }
+
+  #header-navbar .navbar-nav{
+    text-align: center;
+  }
+
+  #header-navbar .nav-link {
+    padding: 10px;
+    color: dodgerblue;
+  }
+
+  #header-navbar .nav-link:hover {
+   background-color: dodgerblue;
+   color: black;
+  }
+
+  #header-navbar .nav-link--active {
+    background-color: dodgerblue;
+    color: black;
+   }
+
+  #header-navbar a {
+    text-decoration: none;
+    list-style: none;
+  }
+
+  #sidebar-navbar {
+    height: 100%;
+  }
+
+  .navbar-toggler.sidebar {
+    display: inline-block !important;
+    margin-right: 5px;
+  }
+
+  /*
+  Sidebar wrapper styles
+  Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+  */
+  .bm-menu-wrap {
+    position: fixed;
+    height: 100%;
+  }
+   
+  /* General sidebar styles */
+  .bm-menu {
+    background:#343a40;
+    padding: 2.5em 1.5em 0;
+    font-size: 1.15em;
+  }
+   
+  /* Morph shape necessary with bubble or elastic */
+  .bm-morph-shape {
+    fill: #373a47;
+  }
+   
+  /* Wrapper for item list */
+  .bm-item-list {
+    color: #b8b7ad;
+    padding: 0.8em;
+  }
+   
+  /* Individual item */
+  .bm-item {
+    display: inline-block;
+  }
+   
+  /* Styling of overlay */
+  .bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  #content {
+    position: relative;
+    left: 10px;
+    top: 10px;
+  }
+
+
+
+  /* .header {
+    background-color: #282c34;
+    height: 60px;
+    display: block;
+    color: white;
+    width: 100%;
+    z-index: 1;
+  } */
+  
+  .user-action {
+    margin-left: auto;
+    margin-right: 0px;
+    display: block;
+    margin-top: -12px;
+  }
+  
+  .loginform.card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 60%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  
+  .dropzone {
+    text-align: center;
+    padding: 20px;
+    border: 3px dashed #413e3e;
+    background-color: #fafafa;
+    color: black;
+  }
+  
+  .spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
