@@ -6,9 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: ["@babel/polyfill", "./src/frontend/index.js"],
   output: {
-    path: path.join(__dirname, '/src/frontend/public'),
-    filename: 'bundle.js',
-    publicPath: '/',
+    path: path.resolve('./'),
+    filename: './public/bundle.js'
   },
   devServer: {
     inline: true,
@@ -16,7 +15,6 @@ module.exports = {
     host: '192.168.11.67',
     port: 3000,
     hot: true,
-    publicPath: '/',
     proxy: {
       '/api': {
         target: 'https://inftechsol.hu',
