@@ -24,7 +24,6 @@ function ReferenciakContent(props) {
   const [referenciakJson, setReferenciakJson] = useState(null);
 
   useEffect(() => {
-    console.log(window.location.pathname);
     if (window.location.pathname === "/admin/referenciak") {
       getReferenciak();
     }
@@ -33,7 +32,6 @@ function ReferenciakContent(props) {
   const getReferenciak = () => {
     Services.listReferenciak().then((res) => {
       if (!res.err) {
-        console.log(res);
         setReferenciakJson(res);
       }
     });

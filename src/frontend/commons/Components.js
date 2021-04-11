@@ -15,7 +15,6 @@ export const LoadingPage = () => {
 };
 
 export const ToggleSwitch = (props) => {
-  console.log(props);
   return (
     <div
       className={props.className}

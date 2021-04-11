@@ -70,7 +70,6 @@ function App() {
 
   const toggleTheme = () => {
     let body = document.body;
-    console.log(isLight);
     if (isLight === true) {
       body.classList.remove("theme-dark");
       body.classList.add("theme-light");
@@ -78,7 +77,6 @@ function App() {
       document.cookie = "light=true";
     }
     if (isLight === false) {
-      console.log("fsdfsd");
       body.classList.remove("theme-light")
       body.classList.add("theme-dark");
       setLight(false)
@@ -108,7 +106,7 @@ function App() {
     document.cookie = "auth=;";
     document.cookie = "token=;";
     document.cookie = "isAdmin=;";
-    // document.cookie = "light=";
+    document.cookie = "light=";
   };
 
   const logOut = () => {
@@ -122,7 +120,7 @@ function App() {
   const createNotification = (type, message) => {
     switch (type) {
       case "info":
-        NotificationManager.info("Info message");
+        NotificationManager.info(message, "");
         break;
       case "success":
         NotificationManager.success(message, "");
@@ -133,9 +131,7 @@ function App() {
       case "error":
         NotificationManager.error(message, "");
         break;
-      default: {
-        return;
-      }
+      default: break;
     }
   };
 
@@ -146,7 +142,7 @@ function App() {
         {window.location.pathname.includes("admin") ? (
           <Route
             path={"/admin"}
-            children={(props) => (
+            render={(props) => (
               datas.loading ? (
                 <LoadingPage />
               ) : (
@@ -164,7 +160,7 @@ function App() {
                     <AdminRoutes />
                   </Admin>
                 ) : (
-                  <Login notification={createNotification} />
+                  <Login {...props} notification={createNotification} />
                 )
             ))}
                 

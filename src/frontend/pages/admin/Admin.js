@@ -4,7 +4,6 @@ import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
 function Admin(props) {
-  console.log(props);
   const user = props.data && props.data.user && props.data.user;
   return (
     <React.Fragment>

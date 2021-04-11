@@ -3,8 +3,8 @@ const userUrl = window.location.origin + '/api/login';
 
 export default class Services {
 
-  static getUserData = async (email, password) => {
-    const result = await Microservices.fetchApi(userUrl, {
+  static getUserData = (email, password) => {
+    const result = Microservices.fetchApi(userUrl, {
       method: "GET",
       mode: "cors",
       cache: "no-cache",

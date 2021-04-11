@@ -30,15 +30,13 @@ function Login(props) {
 
   const getUserData = (email, password) => {
     Services.getUserData(email, password).then((res) => {
-      if (!res[0].error) {
+      if (!res.err) {
         document.cookie = `token=${res[0].token}`;
         document.cookie = `auth=${true}`;
         document.cookie = `isAdmin=${res[0].is_admin}`;
         window.location.replace("/admin");
       } else {
         props.notification("error", res.err);
-        props.onChange(false, null);
-        window.history.replaceState(null, null, window.location.pathname);
       }
     });
   };
@@ -69,19 +67,16 @@ function Login(props) {
   const handleInputFile = (e) => {
     const target = e.target;
     const value = target.value;
-    console.log(value);
   };
 
   const onDrop = (files) => {
-    files.map((file) => {
+    files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setAvatar(
           {
             avatar: [...avatar, { id: "01", src: e.target.result }],
-          },
-          () => console.log(avatar)
-        );
+          })
       };
       reader.readAsDataURL(file);
     });
@@ -190,7 +185,7 @@ function Login(props) {
                         return (
                           <Card key={item.id}>
                             <CardBody>
-                              <img src={item.src} style={previewStyle} />
+                              <img src={item.src} alt="profilkép" style={previewStyle} />
                             </CardBody>
                             <CardFooter>
                               <Button
@@ -230,7 +225,7 @@ function Login(props) {
     setButtonText(text);
   };
 
-  const submitLoginForm = async () => {
+  const submitLoginForm = () => {
     if (formType === "login") {
       getUserData(inputs.email, inputs.password);
     }
@@ -242,14 +237,12 @@ function Login(props) {
       submitObj.keresztnev = inputs.keresztnev;
       submitObj.vezeteknev = inputs.vezeteknev;
       submitObj.avatar = avatar;
-      let response = await Services.addUser(submitObj);
-      response.json().then((value) => {
-        if (this.props.notification) {
-          if (response.status === 200) {
-            this.props.notification("success", value.msg);
-          } else {
-            this.props.notification("error", value.msg);
-          }
+
+      Services.addUser(submitObj).then((res) => {
+        if(!res.err) {
+          props.notification("success", res.msg);
+        } else {
+          props.notification("error", res.msg);
         }
       });
     }

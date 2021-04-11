@@ -12,7 +12,6 @@ export const Sidebar = ({ width }) => {
       content.classList.add("sidebar-fixed");
     } else {
       setX(-width);
-      console.log(content);
       content.classList.remove("sidebar-fixed");
       content.classList.add("sidebar-hidden");
     }

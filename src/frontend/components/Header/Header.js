@@ -8,12 +8,7 @@ function Header(props) {
   const profileDrop = document.getElementById("profile-dropdown");
   
   const user = props.data && props.data.user && props.data.user;
-  // const user = {
-  //   vezeteknev: "Tóth",
-  //   keresztnev: "Gergő"
-  // }
 
-  console.log(props);
   useEffect(() => {
     if (profileDrop) {
       if (isDropped) {
@@ -23,8 +18,6 @@ function Header(props) {
       }
     }
   }, [isDropped]);
-
-  console.log("isLight: ", props.isLight);
 
   return (
     <div className="admin-navbar">
