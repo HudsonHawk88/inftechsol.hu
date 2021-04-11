@@ -1,0 +1,190 @@
+@use "./variables/colors";
+@use "./functions/var" as *;
+
+/* SIDEBAR */
+
+.sidebar {
+  height: calc(100vh - 80px) !important;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid;
+  border-radius: 0;
+  color:var(themes-dark-fontcolor);
+  background-color: var(themes-dark-bgcolor);
+  transition: 0.6s ease;
+  min-height: calc(100vh - 80px);
+
+  &__toggle-menu {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    outline: none;
+    z-index: 1;
+    background-color: transparent;
+    border: none;
+
+    .fa.fa-bars {
+      font-size: 2.5rem;
+      color:var(themes-dark-fontcolor);
+    }
+  }
+
+  &__nav-link {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    text-align: center;
+    color: var(themes-light-primary);
+
+    &:hover {
+      text-decoration: none;
+      background-color: var(themes-light-primary);
+      color: var(themes-light-fontcolor);
+    }
+  }
+
+  &__nav-link-active {
+    @extend .sidebar__nav-link;
+    text-decoration: none;
+    background-color: var(themes-light-primary);
+    color: var(themes-light-fontcolor);
+  }
+}
+
+
+// body.sidebar-hidden {
+//   .sidebar {
+//     height: 100%; /* 100% Full-height */
+//     width: 0; /* 0 width - change this with JavaScript */
+//     position: relative; /* Stay in place */
+//     z-index: 1; /* Stay on top */
+//     overflow-x: hidden; /* Disable horizontal scroll */
+//     padding: 0px; /* Place content 60px from the top */
+//     transition: 0.6s; 
+//     background-color: var(themes-dark-bgcolor);
+//     // background-color: #2067AC;
+//     color:var(themes-dark-fontcolor);
+
+//     @media screen and (max-width: 50rem) {
+//       width: 250px;
+//       padding: 10px; 
+//     }
+
+//     &__nav-link {
+//       display: block;
+//       padding: 10px;
+//       text-decoration: none;
+//       text-align: center;
+  
+//       &:hover {
+//         text-decoration: none;
+//       }
+//     }
+  
+//     &__nav-link-active {
+//       @extend .sidebar__nav-link;
+//     }
+//   }
+// }
+
+// body.sidebar-fixed {
+//   .sidebar {
+//     height: 100%; /* 100% Full-height */
+//     position: relative; /* Stay in place */
+//     z-index: 1; /* Stay on top */
+//     width: 0px;
+//     overflow-x: hidden; /* Disable horizontal scroll */
+//     padding: 0px; /* Place content 60px from the top */
+//     transition: 0.6s; 
+//     background-color: var(themes-dark-bgcolor);
+//     // background-color: #2067AC;
+//     color:var(themes-dark-fontcolor);
+  
+//     @media screen and (min-width: 50rem) {
+//       width: 250px;
+//       padding: 10px; 
+//     }
+  
+//     &__nav-link {
+//       display: block;
+//       padding: 10px;
+//       text-decoration: none;
+//       text-align: center;
+  
+//       &:hover {
+//         text-decoration: none;
+//       }
+//     }
+  
+//     &__nav-link-active {
+//       @extend .sidebar__nav-link;
+//     }
+//   }
+  
+//   .navbar-toggler.sidebar {
+//     display: inline-block !important;
+//     margin-right: 5px;
+//   }
+// }
+
+// /*
+//   Sidebar wrapper styles
+//   Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+//   */
+// .bm-menu-wrap {
+//   display: block;
+//   height: 100%;
+//   transform: translate3d(-100%, 0px, 0px);
+//   @media screen and (min-width: 50rem) {
+//     transform: none;
+//   }
+// }
+
+// /* General sidebar styles */
+// .bm-menu {
+//   background: #343a40;
+//   padding: 10px;
+//   font-size: 1.15em;
+// }
+
+// /* Morph shape necessary with bubble or elastic */
+// .bm-morph-shape {
+//   fill: #343a40;
+// }
+
+// /* Wrapper for item list */
+// .bm-item-list {
+//   color: #b8b7ad;
+//   padding: 5px;
+// }
+
+// /* Individual item */
+// .bm-item {
+//   display: inline-block;
+//   padding: 5px;
+//   color: #343a40;
+// }
+
+// .bm-item:hover {
+//   background: dodgerblue;
+// }
+
+// .bm-item a {
+//   text-decoration: none;
+//   list-style: none;
+// }
+
+// .bm-item:hover {
+//   color: #343a40;
+// }
+
+// .bm-item:hover a {
+//   text-decoration: none;
+//   list-style: none;
+//   color: #343a40;
+// }
+
+// /* Styling of overlay */
+// .bm-overlay {
+//   background: rgba(0, 0, 0, 0.3);
+// }

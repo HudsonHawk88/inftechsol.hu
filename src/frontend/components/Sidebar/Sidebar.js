@@ -1,64 +1,85 @@
-import React, { Component } from "react";
-import { push as Menu } from "react-burger-menu";
-import {
-  NavItem,
-} from "reactstrap";
-import {
-  NavLink,
-} from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
-class Sidebar extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isMenuOpen: true,
-    };
-  }
+export const Sidebar = ({ width }) => {
+  const [xPosition, setX] = React.useState(-width);
 
-  componentDidMount = () => {
+  const toggleMenu = () => {
+    let content = document.getElementById("content");
+    if (xPosition < 0) {
+      setX(0);
+      content.classList.remove("sidebar-hidden");
+      content.classList.add("sidebar-fixed");
+    } else {
+      setX(-width);
+      console.log(content);
+      content.classList.remove("sidebar-fixed");
+      content.classList.add("sidebar-hidden");
+    }
   };
 
-  render() {
-    return (
-      <Menu
-        pageWrapId={"content"}
-        outerContainerId={"main"}
-        customBurgerIcon={false}
-        customCrossIcon={false}
-        noOverlay width={ '250px' }
-        isOpen={this.props && this.props.isSidebarOpen}
+  useEffect(() => {
+    setX(0);
+  }, []);
+
+  return (
+    <React.Fragment>
+       <button
+          onClick={() => toggleMenu()}
+          className="sidebar__toggle-menu"
+          style={{
+            position: "absolute",
+            left: width + 10 + "px",
+            top: "15px"
+          }}
+        >
+          <i className="fa fa-bars" aria-hidden="true"></i>
+        </button>
+      <div
+        id="sidebar"
+        className="sidebar"
+        style={{
+          transform: `translatex(${xPosition}px)`,
+          width: width,
+        }}
       >
-        <NavItem>
-          <NavLink to="/admin/users">
-            <i className="fa fa-users" aria-hidden="true"></i>{" "}
-            &nbsp;Felhasználók
+        <div>
+          <NavLink
+            exact
+            className="sidebar__nav-link"
+            activeClassName="sidebar__nav-link-active"
+            to="/admin"
+          >
+            Kezdőlap
           </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/profil">
-            <i className="fa fa-user" aria-hidden="true"></i> Profil
+          <NavLink
+            exact
+            className="sidebar__nav-link"
+            activeClassName="sidebar__nav-link-active"
+            to="/admin/referenciak"
+          >
+            Referenciák
           </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/tartalom">
-            <i className="fa fa-list-alt" aria-hidden="true"></i> Tartalom
+          <NavLink
+            exact
+            className="sidebar__nav-link"
+            activeClassName="sidebar__nav-link-active"
+            to="/admin/users"
+          >
+            Felhasználók
           </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/ugyfelszolgalat">
-            <i className="fa fa-life-ring" aria-hidden="true"></i>{" "}
-            Ügyfélszolgálat
+          <NavLink
+            exact
+            className="sidebar__nav-link"
+            activeClassName="sidebar__nav-link-active"
+            to="/blog"
+          >
+            Blog
           </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/hirlevel">
-            <i className="fa fa-envelope-o" aria-hidden="true"></i>{" "}
-            Hírlevél
-          </NavLink>
-        </NavItem>
-      </Menu>
-    );
-  }
-}
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
 
 export default Sidebar;

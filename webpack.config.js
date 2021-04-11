@@ -1,60 +1,68 @@
 const dotenv = require("dotenv");
 dotenv.config();
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+console.log(process.env.PUBLIC_URL);
 module.exports = {
-  entry: ["@babel/polyfill", "./src/frontend/index.js"],
+  entry: "./src/frontend/index.js",
   output: {
-    path: path.resolve('./'),
-    filename: './public/bundle.js'
+    path: path.resolve(__dirname, "public"),
+    filename: "bundle.js",
+    publicPath: "/"
   },
   devServer: {
-    inline: true,
-    historyApiFallback: true,
-    host: '192.168.11.67',
+    contentBase: path.resolve(__dirname, "public"),
+    host: "192.168.11.64",
     port: 3000,
+    publicPath: "auto",
+    historyApiFallback: true,
     hot: true,
     proxy: {
-      '/api': {
-        target: 'https://inftechsol.hu',
-        secure: false
-      }
-    }
+      "/api": {
+        target: "https://inftechsol.hu",
+        secure: false,
+      },
+    },
   },
+
   resolve: {
     alias: {
-        "crypto": false
-    }
+      crypto: "false",
+    },
   },
   module: {
     rules: [
       {
-      test: /\.m?js$/,
-      exclude: /(node_modules|bower_components)/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-env', "@babel/preset-react"]
-        }
-      }
-    },
-    {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: [
+              "@babel/plugin-transform-arrow-functions",
+              "@babel/plugin-proposal-class-properties",
+            ],
+          },
+        },
+      },
+      {
         test: /\.css$/,
-        loader: 'css-loader'
-    },
-    {
+        loader: "css-loader",
+      },
+      {
         test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
-        loader: 'url-loader',
+        loader: "url-loader",
         options: {
-          limit: 10000
-        }
-    }
+          limit: 10000,
+        },
+      },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: path.resolve(__dirname, "src/frontend/public/index.html"),
+      filename: "index.html",
     }),
   ],
 };

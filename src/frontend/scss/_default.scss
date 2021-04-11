@@ -1,0 +1,170 @@
+@use "./variables/colors";
+@use "./functions/var" as *;
+
+html {
+  margin: 0;
+  font-size: 17px;
+}
+
+body.theme-light {
+  background-color: var(themes-light-bgcolor);
+  color: var(themes-light-fontcolor);
+
+  .sidebar {
+    background-color: var(themes-light-bgcolor);
+  }
+
+  .table {
+    background-color: var(themes-light-bgcolor);
+    color: var(themes-light-fontcolor);
+    border: 2px solid var(themes-light-fontcolor);
+
+    & th {
+      border: 2px solid var(themes-light-fontcolor);;
+    }
+
+    & td {
+      border: 2px solid var(themes-light-fontcolor);
+    }
+  }
+
+  .card:not(.loginform__card) {
+    overflow-y: auto;
+    height: calc(100vh - 120px);
+    background-color: var(themes-light-bgcolor);
+    color: var(themes-light-fontcolor);
+
+    .row {
+      margin: 0px
+    }
+  }
+  
+  #content.sidebar-fixed {
+    position: absolute;
+    left: 250px;
+    top: 80px;
+    width: calc(100% - 250px);
+    transition: 0.6s ease;
+    overflow: auto;
+
+    .card {
+      padding: 20px;
+      max-height: calc(100vh - 80px);
+      overflow: auto;
+      height: calc(100vh - 80px);
+      background-color: var(themes-light-bgcolor);
+      color: var(themes-light-fontcolor);
+    }
+
+  }
+
+  #content.sidebar-hidden {
+    position: absolute;
+    left: 0px;
+    top: 80px;
+    width: 100%;
+    transition: 0.6s ease;
+    overflow: auto;
+  
+    .card {
+      padding: 20px;
+      max-height: calc(100vh - 80px);
+      overflow: auto;
+      height: calc(100vh - 80px);
+      background-color: var(themes-light-bgcolor);
+      color: var(themes-light-fontcolor);
+    }
+  }
+  
+  
+}
+
+body.theme-dark {
+  background-color: var(themes-dark-bgcolor);
+  color:var(themes-dark-fontcolor);
+
+  .sidebar {
+    background-color: var(themes-dark-bgcolor);
+  }
+
+  .table {
+    background-color: var(themes-dark-bgcolor);
+    color:var(themes-dark-fontcolor);
+    border: 2px solid var(themes-dark-fontcolor);
+    & th {
+      border: 2px solid var(themes-dark-fontcolor);
+    }
+
+    & td {
+      border: 2px solid var(themes-dark-fontcolor);
+    }
+  }
+
+
+  .card:not(.loginform__card) {
+    overflow-y: auto;
+    height: calc(100vh - 120px);
+    background-color: var(themes-dark-bgcolor);
+    color:var(themes-dark-fontcolor);
+
+    .row {
+      margin: 0px
+    }
+  }
+
+  #content.sidebar-fixed {
+    position: absolute;
+    left: 250px;
+    top: 80px;
+    width: calc(100% - 250px);
+    transition: 0.6s ease;
+    overflow: auto;
+  
+    .card {
+      padding: 20px;
+      max-height: calc(100vh - 80px);
+      overflow: auto;
+      height: calc(100vh - 80px);
+      background-color: var(themes-dark-bgcolor);
+      color:var(themes-dark-fontcolor);
+    }
+  }
+
+  #content.sidebar-hidden {
+    position: absolute;
+    left: 0px;
+    top: 80px;
+    width: 100%;
+    transition: 0.6s ease;
+    overflow: auto;
+  
+    .card {
+      padding: 20px;
+      max-height: calc(100vh - 80px);
+      overflow: auto;
+      height: calc(100vh - 80px);
+      background-color: var(themes-dark-bgcolor);
+      color:var(themes-dark-fontcolor);
+    }
+  }
+  
+}
+
+#root {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  padding: 0px;
+}
+
+.container-fluid {
+  padding: 0px;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

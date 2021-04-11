@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardBody,
@@ -15,47 +15,35 @@ import {
   AvGroup,
 } from "availity-reactstrap-validation";
 import Services from "./Services";
-import { SHA256 } from "crypto-js";
 import Dropzone from "react-dropzone";
 
-class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      formType: "login",
-      buttonText: "Regisztráció",
-      avatar: [],
-    };
-  }
+function Login(props) {
+  const [formType, setFormType] = useState("login");
+  const [buttonText, setButtonText] = useState("Regisztráció");
+  const [avatar, setAvatar] = useState([]);
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+    vezeteknev: "",
+    keresztnev: "",
+  });
 
-  getUserData = (username, password) => {
-    let token = SHA256(username + password);
-    Services.getUserData(token).then((res) => {
-      let user = res[0];
-      console.log(user)
-      if (user) {
-        if (user.username === username) {
-          if (user.password === password) {
-            document.cookie = `token=${token}`;
-            document.cookie = `auth=${true}`;
-            document.cookie = `isAdmin=${user.is_admin}`;
-            window.location.replace("/")
-          } else {
-            this.props.notification("error", "A megadott jelszó hibás!");
-          }
-        } else {
-          this.props.notification("error", "A megadott felhasználónév hibás!");
-        }
+  const getUserData = (email, password) => {
+    Services.getUserData(email, password).then((res) => {
+      if (!res[0].error) {
+        document.cookie = `token=${res[0].token}`;
+        document.cookie = `auth=${true}`;
+        document.cookie = `isAdmin=${res[0].is_admin}`;
+        window.location.replace("/admin");
       } else {
-        this.props.notification("error", "Nincs ilyen regisztrált felhasználó!");
-        this.props.onChange(false, null);
+        props.notification("error", res.err);
+        props.onChange(false, null);
         window.history.replaceState(null, null, window.location.pathname);
       }
     });
   };
 
-  renderLoginTitle = () => {
-    const { formType } = this.state;
+  const renderLoginTitle = () => {
     switch (formType) {
       case "login": {
         return "Bejelentkezés";
@@ -69,42 +57,37 @@ class Login extends Component {
     }
   };
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value,
+  const handleInputChange = (e) => {
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setInputs({
+      ...inputs,
+      [e.target.name]: value,
     });
-  }
+  };
 
-  handleInputFile = (e) => {
+  const handleInputFile = (e) => {
     const target = e.target;
     const value = target.value;
     console.log(value);
   };
 
-  onDrop = (files) => {
-    console.log(files);
+  const onDrop = (files) => {
     files.map((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.setState(
-          (prevState) => ({
-            avatar: [...prevState.avatar, { id: "01", src: e.target.result }],
-          }),
-          () => {
-            console.log(this.state.avatar);
-          }
+        setAvatar(
+          {
+            avatar: [...avatar, { id: "01", src: e.target.result }],
+          },
+          () => console.log(avatar)
         );
       };
       reader.readAsDataURL(file);
     });
   };
 
-  renderLoginForm = () => {
-    const { username, password, vezeteknev, keresztnev, avatar } = this.state;
+  const renderLoginForm = () => {
     const previewStyle = {
       display: "inline",
       width: 300,
@@ -118,14 +101,14 @@ class Login extends Component {
               <div className="col-md-2" />
               <div className="col-md-8">
                 <AvGroup>
-                  <Label for="username">Felhasználónév:</Label>
+                  <Label for="email">Email:</Label>
                   <AvInput
-                    type="text"
-                    name="username"
-                    id="username"
-                    value={username}
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={inputs.email}
                     required
-                    onChange={(e) => this.handleInputChange(e)}
+                    onChange={(e) => handleInputChange(e)}
                   />
                   <AvFeedback>Mező kitöltése kötelező!</AvFeedback>
                 </AvGroup>
@@ -139,15 +122,15 @@ class Login extends Component {
                     type="password"
                     name="password"
                     id="password"
-                    value={password}
+                    value={inputs.password}
                     required
-                    onChange={(e) => this.handleInputChange(e)}
+                    onChange={(e) => handleInputChange(e)}
                   />
                   <AvFeedback>Mező kitöltése kötelező!</AvFeedback>
                 </AvGroup>
               </div>
               <div className="col-md-2" />
-              {this.state.formType === "register" && (
+              {formType === "register" && (
                 <React.Fragment>
                   <div className="col-md-2" />
                   <div className="col-md-8">
@@ -157,9 +140,9 @@ class Login extends Component {
                         type="vezeteknev"
                         name="vezeteknev"
                         id="vezeteknev"
-                        value={vezeteknev}
+                        value={inputs.vezeteknev}
                         required
-                        onChange={(e) => this.handleInputChange(e)}
+                        onChange={(e) => handleInputChange(e)}
                       />
                       <AvFeedback>Mező kitöltése kötelező!</AvFeedback>
                     </AvGroup>
@@ -173,9 +156,9 @@ class Login extends Component {
                         type="keresztnev"
                         name="keresztnev"
                         id="keresztnev"
-                        value={keresztnev}
+                        value={inputs.keresztnev}
                         required
-                        onChange={(e) => this.handleInputChange(e)}
+                        onChange={(e) => handleInputChange(e)}
                       />
                       <AvFeedback>Mező kitöltése kötelező!</AvFeedback>
                     </AvGroup>
@@ -184,14 +167,18 @@ class Login extends Component {
                   <div className="col-md-2" />
                   <div className="col-md-8">
                     <Label for="avatar">Avatár feltöltése:</Label>
-                    {this.state.avatar.length < 1 && (
+                    {avatar.length < 1 && (
                       <Dropzone
-                        className="dropzone"
+                        className="loginform__dropzone"
                         onDrop={this.onDrop}
                         accept="image/png"
                       >
                         {({ getRootProps, getInputProps }) => (
-                          <div {...getRootProps({ className: "dropzone" })}>
+                          <div
+                            {...getRootProps({
+                              className: "loginform__dropzone",
+                            })}
+                          >
                             <input {...getInputProps()} />
                             Kattintson ide a kép feltöltéséhez!
                           </div>
@@ -209,7 +196,7 @@ class Login extends Component {
                               <Button
                                 color="danger"
                                 style={{ width: "100%" }}
-                                onClick={() => this.setState({ avatar: [] })}
+                                onClick={() => setAvatar({ avatar: [] })}
                               >
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                 &nbsp; Törlés
@@ -229,8 +216,7 @@ class Login extends Component {
     );
   };
 
-  toggleButtonText = () => {
-    const { formType } = this.state;
+  const toggleButtonText = () => {
     let newType;
     let text;
     if (formType === "register") {
@@ -240,23 +226,21 @@ class Login extends Component {
       newType = "register";
       text = "Bejelentkezés";
     }
-    this.setState({
-      formType: newType,
-      buttonText: text,
-    });
+    setFormType(newType);
+    setButtonText(text);
   };
 
-  submitLoginForm = async () => {
-    const { username, password, vezeteknev, keresztnev, avatar } = this.state;
-    if (this.state.formType === "login") {
-      this.getUserData(username, password);
+  const submitLoginForm = async () => {
+    if (formType === "login") {
+      getUserData(inputs.email, inputs.password);
     }
-    if (this.state.formType === "register") {
+    if (formType === "register") {
       let submitObj = {};
-      submitObj.username = username;
-      submitObj.password = password;
-      submitObj.keresztnev = keresztnev;
-      submitObj.vezeteknev = vezeteknev;
+      submitObj.email = inputs.email;
+      submitObj.username = inputs.username;
+      submitObj.password = inputs.password;
+      submitObj.keresztnev = inputs.keresztnev;
+      submitObj.vezeteknev = inputs.vezeteknev;
       submitObj.avatar = avatar;
       let response = await Services.addUser(submitObj);
       response.json().then((value) => {
@@ -271,36 +255,33 @@ class Login extends Component {
     }
   };
 
-  render() {
-    const { formType, buttonText } = this.state;
-    return (
-      <div className="loginform">
-        <AvForm onValidSubmit={this.submitLoginForm}>
-          <Card>
-            <CardHeader>
-              <Button color="primary" onClick={this.toggleButtonText}>
-                {buttonText}
+  return (
+    <div className="loginform">
+      <AvForm onValidSubmit={() => submitLoginForm()}>
+        <Card className="loginform__card">
+          <CardHeader className="loginform__card-header">
+            <Button color="primary" onClick={() => toggleButtonText()}>
+              {buttonText}
+            </Button>
+          </CardHeader>
+          <CardBody className="loginform__card-body">
+            <CardTitle>{renderLoginTitle()}</CardTitle>
+            {renderLoginForm()}
+          </CardBody>
+          <CardFooter className="loginform__card-footer">
+            {formType === "register" ? (
+              <Button type="submit" color="info">
+                Regisztrálok
               </Button>
-            </CardHeader>
-            <CardBody>
-              <CardTitle>{this.renderLoginTitle()}</CardTitle>
-              {this.renderLoginForm()}
-            </CardBody>
-            <CardFooter>
-              {formType === "register" ? (
-                <Button type="submit" color="info">
-                  Regisztrálok
-                </Button>
-              ) : (
-                <Button type="submit" color="info">
-                  Bejelentkezés
-                </Button>
-              )}
-            </CardFooter>
-          </Card>
-        </AvForm>
-      </div>
-    );
-  }
+            ) : (
+              <Button type="submit" color="info">
+                Bejelentkezés
+              </Button>
+            )}
+          </CardFooter>
+        </Card>
+      </AvForm>
+    </div>
+  );
 }
 export default Login;

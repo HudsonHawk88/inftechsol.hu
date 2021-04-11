@@ -1,9 +1,9 @@
 import { Microservices } from "../../commons/MicroServices";
-const userUrl = window.location.origin + '/api/users';
+const userUrl = window.location.origin + '/api/login';
 
 export default class Services {
 
-  static getUserData = async (id) => {
+  static getUserData = async (email, password) => {
     const result = await Microservices.fetchApi(userUrl, {
       method: "GET",
       mode: "cors",
@@ -11,7 +11,8 @@ export default class Services {
       headers: {
         "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
         "Content-Type": "application/json",
-        "token": id
+        "email": email,
+        "password": password
       }
     });
     return result;

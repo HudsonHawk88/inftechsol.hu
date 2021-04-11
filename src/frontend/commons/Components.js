@@ -1,5 +1,4 @@
 import React from "react";
-import { Spinner } from "reactstrap";
 
 export const LoadingPage = () => {
   return (
@@ -11,6 +10,33 @@ export const LoadingPage = () => {
       >
         <span className="sr-only">Loading...</span>
       </div>
+    </div>
+  );
+};
+
+export const ToggleSwitch = (props) => {
+  console.log(props);
+  return (
+    <div
+      className={props.className}
+      onClick={() => props.onClick(!props.value)}
+    >
+      <input
+        type="checkbox"
+        className={`${props.className}-checkbox`}
+        name={props.name}
+        id={props.id}
+        onChange={props.onClick}
+        checked={props.value}
+      />
+      <label className={`${props.className}-label`} htmlFor={props.name}>
+        <span
+          className={`${props.className}-inner`}
+          data-on={props.on}
+          data-off={props.off}
+        />
+        <span className={`${props.className}-switch`} />
+      </label>
     </div>
   );
 };

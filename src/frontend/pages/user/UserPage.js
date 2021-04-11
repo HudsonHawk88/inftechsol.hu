@@ -33,19 +33,19 @@ class UserPage extends Component {
     }
   };
 
-  componentWillReceiveProps = (props) => {
-    if (props !== {}) {
-      this.setState({ user: props.data.user, loading: false }, () => {
-        this.setCookie("auth", true, 1);
-        this.setCookie("userId", this.state.user.id, 1);
-      });
-      if (this.state.user === {}) {
-        this.setState({ loading: true });
-      }
-    } else {
-      this.setState({ loading: true });
-    }
-  };
+  // componentWillReceiveProps = (props) => {
+  //   if (props !== {}) {
+  //     this.setState({ user: props.data.user, loading: false }, () => {
+  //       this.setCookie("auth", true, 1);
+  //       this.setCookie("userId", this.state.user.id, 1);
+  //     });
+  //     if (this.state.user === {}) {
+  //       this.setState({ loading: true });
+  //     }
+  //   } else {
+  //     this.setState({ loading: true });
+  //   }
+  // };
 
   setCookie = (name, value, daysToLive) => {
     // Encode value in order to escape semicolons, commas, and whitespace
