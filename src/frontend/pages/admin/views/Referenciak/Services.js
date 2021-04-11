@@ -28,4 +28,47 @@ export default class Services {
     });
     return result;
   };
+
+  static getReferencia = (id) => {
+    let result = Microservices.fetchApi(referenciakUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
+        "id": id
+      },
+    });
+    return result;
+  };
+
+  static editReferenciak = (data, id) => {
+    let result = Microservices.fetchApi(referenciakUrl, {
+      method: "PUT",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
+        "id": id
+      },
+      body: JSON.stringify(data),
+    });
+    return result;
+  };
+
+  static deleteReferencia = (id) => {
+    let result = Microservices.fetchApi(referenciakUrl, {
+      method: "DELETE",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
+        "id": id
+      },
+    });
+    return result;
+  };
 }

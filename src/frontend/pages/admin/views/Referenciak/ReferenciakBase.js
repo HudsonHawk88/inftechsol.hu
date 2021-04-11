@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReferenciakContent from "./ReferenciakContent";
 
-function ReferenciakBase() {
-  return <ReferenciakContent />;
+function ReferenciakBase(props) {
+  return <ReferenciakContent {...props} />;
 }
 
 export default ReferenciakBase;

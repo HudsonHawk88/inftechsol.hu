@@ -182,15 +182,24 @@ app.get("/blog", (req, res) => {
 // PUBLIC REFERENCIAK
 
 app.get("/referenciak", (req, res) => {
-  views.query(`SELECT * FROM referenciak`, (err, result) => {
-    if (!err) {
-      res.status(200).send(result.rows);
-    } else {
-      res
-        .status(500)
-        .send({ msg: "A referenciák lekérdezése sikertelen!", err: err });
-    }
-  });
+  let id = req.headers.id;
+  if (id) {
+    views.query(`SELECT * FROM referenciak WHERE id='${id}'`, (err, result) => {
+      if (!err) {
+        res.status(200).send(result.rows);
+      } else {
+        res.status(500).send(err);
+      }
+    });
+  } else {
+    views.query("SELECT * FROM referenciak", (err, result) => {
+      if (!err) {
+        res.status(200).send(result.rows);
+      } else {
+        res.status(500).send({ err: err });
+      }
+    });
+  }
 });
 
 app.post("/referenciak", (req, res) => {
@@ -203,7 +212,7 @@ app.post("/referenciak", (req, res) => {
       const felvitelObj = JSON.parse(data);
       const token = uuidv4();
       views.query(
-        `INSERT INTO public.referenciak(id, company_name, description) VALUES ('${token}'::text, '${felvitelObj.companyName}'::text, '${felvitelObj.description}'::text);`,
+        `INSERT INTO public.referenciak(id, company_name, description) VALUES ('${token}'::text, '${felvitelObj.company_name}'::text, '${felvitelObj.description}'::text);`,
         (err) => {
           if (!err) {
             res.status(200).send({ msg: "Referencia sikeresen létrehozva!" });
@@ -215,6 +224,41 @@ app.post("/referenciak", (req, res) => {
         }
       );
     });
+});
+
+app.put(`/referenciak`, (req, res) => {
+  let data = "";
+  req
+    .on("data", (chunk) => {
+      data += chunk;
+    })
+    .on("end", () => {
+      const modositoObj = JSON.parse(data);
+      const id = req.headers.id;
+      views.query(
+        `UPDATE public.referenciak
+        SET id='${id}', company_name='${modositoObj.company_name}', description='${modositoObj.description}'
+        WHERE id='${id}';`,
+        (err) => {
+          if (!err) {
+            res.status(200).send({ msg: "Referencia sikeresen módosítva!" });
+          } else {
+            res.status(500).send({ err: "Referencia módosítása sikertelen!" });
+          }
+        }
+      );
+    });
+});
+
+app.delete("/referenciak", (req, res) => {
+  let id = req.headers.id;
+  views.query(`DELETE FROM public.referenciak WHERE id='${id}'`, (err) => {
+    if (!err) {
+      res.status(200).send({ msg: "Referencia sikeresen törölve!" });
+    } else {
+      res.status(403).send({ err: "Referencia törlése sikertelen!" });
+    }
+  });
 });
 
 server.listen(port, host);

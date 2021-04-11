@@ -157,7 +157,7 @@ function App() {
                     toggleCheck={setLight}
                     toggleTheme={toggleTheme}
                   >
-                    <AdminRoutes />
+                    <AdminRoutes notification={createNotification} />
                   </Admin>
                 ) : (
                   <Login {...props} notification={createNotification} />

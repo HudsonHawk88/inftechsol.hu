@@ -533,6 +533,166 @@ body.theme-dark .loginform__dropzone {
   background-color: #f44336;
 }
 
+.button--bgcolor {
+  background-color: #f5f6f7;
+  border: 0;
+}
+
+.button--bgcolor:hover {
+  background-color: #f5f6f7;
+  border: 0;
+}
+
+.button--bgcolor:focus {
+  background-color: #f5f6f7;
+  border: 0;
+}
+
+.button--bgcolor:active {
+  background-color: #f5f6f7 !important;
+  border: 0;
+}
+
+.button--fontcolor {
+  background-color: #15172a;
+  border: 0;
+}
+
+.button--fontcolor:hover {
+  background-color: #15172a;
+  border: 0;
+}
+
+.button--fontcolor:focus {
+  background-color: #15172a;
+  border: 0;
+}
+
+.button--fontcolor:active {
+  background-color: #15172a !important;
+  border: 0;
+}
+
+.button--primary {
+  background-color: #2067AC;
+  border: 0;
+}
+
+.button--primary:hover {
+  background-color: #2067AC;
+  border: 0;
+}
+
+.button--primary:focus {
+  background-color: #2067AC;
+  border: 0;
+}
+
+.button--primary:active {
+  background-color: #2067AC !important;
+  border: 0;
+}
+
+.button--secondary {
+  background-color: #607d8b;
+  border: 0;
+}
+
+.button--secondary:hover {
+  background-color: #607d8b;
+  border: 0;
+}
+
+.button--secondary:focus {
+  background-color: #607d8b;
+  border: 0;
+}
+
+.button--secondary:active {
+  background-color: #607d8b !important;
+  border: 0;
+}
+
+.button--info {
+  background-color: #009688;
+  border: 0;
+}
+
+.button--info:hover {
+  background-color: #009688;
+  border: 0;
+}
+
+.button--info:focus {
+  background-color: #009688;
+  border: 0;
+}
+
+.button--info:active {
+  background-color: #009688 !important;
+  border: 0;
+}
+
+.button--success {
+  background-color: #4caf50;
+  border: 0;
+}
+
+.button--success:hover {
+  background-color: #4caf50;
+  border: 0;
+}
+
+.button--success:focus {
+  background-color: #4caf50;
+  border: 0;
+}
+
+.button--success:active {
+  background-color: #4caf50 !important;
+  border: 0;
+}
+
+.button--warning {
+  background-color: #ff9800;
+  border: 0;
+}
+
+.button--warning:hover {
+  background-color: #ff9800;
+  border: 0;
+}
+
+.button--warning:focus {
+  background-color: #ff9800;
+  border: 0;
+}
+
+.button--warning:active {
+  background-color: #ff9800 !important;
+  border: 0;
+}
+
+.button--danger {
+  background-color: #f44336;
+  border: 0;
+}
+
+.button--danger:hover {
+  background-color: #f44336;
+  border: 0;
+}
+
+.button--danger:focus {
+  background-color: #f44336;
+  border: 0;
+}
+
+.button--danger:active {
+  background-color: #f44336 !important;
+  border: 0;
+}
+
 .text {
   font: 1rem/1.5 Arial, Helvetica, sans-serif;
   padding: 1rem 0;

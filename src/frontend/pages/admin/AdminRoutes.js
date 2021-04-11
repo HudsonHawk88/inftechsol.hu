@@ -7,7 +7,7 @@ import Kezdolap from "./views/Kezdolap/Kezdolap";
 
 function AdminRoutes(props) {
     const user = props.data && props.data.user && props.data.user;
-
+    console.log(props);
     return (
         <React.Fragment>
             <Route
