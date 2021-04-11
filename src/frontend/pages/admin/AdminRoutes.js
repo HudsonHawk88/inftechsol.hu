@@ -13,12 +13,14 @@ function AdminRoutes(props) {
             <Route
                 path="/admin"
                 exact
-                render={() => {
+                render={(routes) => {
                     return (
                     <Kezdolap
+                        {...routes}
+                        {...props}
                         notification={props.notification}
                         data={{
-                        user: user,
+                            user: user,
                         }}
                     />
                     );
@@ -27,12 +29,14 @@ function AdminRoutes(props) {
             <Route
                 path="/admin/users"
                 exact
-                render={() => {
+                render={(routes) => {
                     return (
                     <FelhasznalokBase
+                        {...props}
+                        {...routes}
                         notification={props.notification}
                         data={{
-                        user: user,
+                            user: user,
                         }}
                     />
                     );
@@ -41,12 +45,14 @@ function AdminRoutes(props) {
             <Route
                 exact
                 path="/admin/referenciak"
-                render={() => {
+                render={(routes) => {
                     return (
                     <ReferenciakBase
+                        {...props}
+                        {...routes}
                         notification={props.notification}
                         data={{
-                        user: user,
+                            user: user,
                         }}
                     />
                     );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   TabContent,
   TabPane,
@@ -15,11 +15,11 @@ import {
 import classnames from "classnames";
 import FelhasznalokContent from "./FelhasznalokContent";
 
-function FelhasznalokBase() {
+function FelhasznalokBase(props) {
   const [activeTab, toggleTab] = useState("1");
 
   return (
-    <React.Fragment>
+    <div className="card">
       <Nav tabs>
         <NavItem>
           <NavLink
@@ -52,12 +52,13 @@ function FelhasznalokBase() {
           </NavLink>
         </NavItem>
       </Nav>
-      <TabContent activeTab={this.state.activeTab}>
+      <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
           <FelhasznalokContent
-            notification={this.props.notification}
-            data={{ user: this.props && this.props.data.user }}
-            logOut={this.props.logOut && this.props.logOut}
+            {...props}
+            notification={props.notification}
+            data={{ user: props && props.data.user }}
+            logOut={props.logOut && this.props.logOut}
           />
         </TabPane>
         <TabPane tabId="2">
@@ -109,7 +110,7 @@ function FelhasznalokBase() {
           </Row>
         </TabPane>
       </TabContent>
-    </React.Fragment>
+    </div>
   );
 }
 

@@ -2,7 +2,6 @@ const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const app = express();
 const { Pool } = require("pg");
-const bodyparser = require("body-parser");
 const poolJson = require("./pool.json");
 const cors = require("cors");
 const users = new Pool(poolJson[0]);
@@ -12,7 +11,6 @@ const https = require("https");
 const host = process.env.HOST ? process.env.HOST : "92.118.27.50";
 const port = 8081;
 
-const { SHA256 } = require("crypto-js");
 const server = https.createServer(
   {
     key: fs.readFileSync("/etc/letsencrypt/live/inftechsol.hu/privkey.pem"),
@@ -24,7 +22,7 @@ const server = https.createServer(
 app.use(
   ["/", "/user", "/users", "/login", "/header", "/blog", "/referenciak"],
   (req, res, next) => {
-    bodyparser.json();
+    express.json();
     res.setHeader("Access-Control-Allow-Origin", "http://192.168.11.67:3000");
     res.header("Access-Control-Allow-Methods", "*");
     res.header("Access-Control-Allow-Headers", "*");
@@ -84,7 +82,7 @@ app.post("/users", (req, res) => {
     })
     .on("end", () => {
       const felvitelObj = JSON.parse(data);
-      const token = SHA256(felvitelObj.username + felvitelObj.password);
+      const token = uuidv4();
       users.query(
         `INSERT INTO public.users(token, username, password, vezeteknev, keresztnev, email, created_on, last_login, is_admin) VALUES ('${token}','${
           felvitelObj.username
@@ -116,24 +114,14 @@ app.put(`/users`, (req, res) => {
       const modositoObj = JSON.parse(data);
       const token = req.headers.token;
       users.query(
-        `UPDATE public.users SET
-            username = '${modositoObj.username}'::text, password = '${
-          modositoObj.password
-        }'::text, vezeteknev = '${
-          modositoObj.vezeteknev
-        }'::text, keresztnev = '${modositoObj.keresztnev}'::text, email = '${
-          modositoObj.email
-        }'::text, is_admin = '${
-          modositoObj.isAdmin ? modositoObj.isAdmin : false
-        }'::boolean
-            WHERE id = '${token}';`,
+        `UPDATE public.users
+        SET token = '${token}', username = '${modositoObj.username}', password = '${modositoObj.password}', vezeteknev = '${modositoObj.vezeteknev}', keresztnev = '${modositoObj.keresztnev}', email = '${modositoObj.email}', is_admin = '${modositoObj.isAdmin ? modositoObj.isAdmin : false}'
+        WHERE token = '${token}';`,
         (err) => {
           if (!err) {
             res.status(200).send({ msg: "User sikeresen módosítva!" });
           } else {
-            res
-              .status(500)
-              .send({ msg: "User módosítása sikertelen!", err: err });
+            res.status(500).send({ err: "User módosítása sikertelen!" });
           }
         }
       );
@@ -141,8 +129,8 @@ app.put(`/users`, (req, res) => {
 });
 
 app.delete("/users", (req, res) => {
-  let id = req.headers.token;
-  users.query(`DELETE FROM public.users WHERE token='${id}'`, (err) => {
+  const token = req.headers.token;
+  users.query(`DELETE FROM public.users WHERE token='${token}'`, (err) => {
     if (!err) {
       res.status(200).send({ msg: "User sikeresen törölve!" });
     } else {
@@ -210,9 +198,9 @@ app.post("/referenciak", (req, res) => {
     })
     .on("end", () => {
       const felvitelObj = JSON.parse(data);
-      const token = uuidv4();
+      const id = uuidv4();
       views.query(
-        `INSERT INTO public.referenciak(id, company_name, description) VALUES ('${token}'::text, '${felvitelObj.company_name}'::text, '${felvitelObj.description}'::text);`,
+        `INSERT INTO public.referenciak(id, company_name, description) VALUES ('${id}'::text, '${felvitelObj.company_name}'::text, '${felvitelObj.description}'::text);`,
         (err) => {
           if (!err) {
             res.status(200).send({ msg: "Referencia sikeresen létrehozva!" });

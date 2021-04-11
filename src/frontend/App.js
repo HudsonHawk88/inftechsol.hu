@@ -73,14 +73,16 @@ function App() {
     if (isLight === true) {
       body.classList.remove("theme-dark");
       body.classList.add("theme-light");
-      setLight(true)
-      document.cookie = "light=true";
+      setLight(true);
+      document.cookie = "light=true;path=/;";
+      document.cookie = "light=true;path=/admin;";
     }
     if (isLight === false) {
       body.classList.remove("theme-light")
       body.classList.add("theme-dark");
-      setLight(false)
-      document.cookie = "light=false";
+      setLight(false);
+      document.cookie = "light=false;path=/;";
+      document.cookie = "light=false;path=/admin;";
     }
   };
 
@@ -103,10 +105,10 @@ function App() {
 
 
   const deleteCookie = () => {
-    document.cookie = "auth=;";
-    document.cookie = "token=;";
-    document.cookie = "isAdmin=;";
-    document.cookie = "light=";
+    document.cookie = "auth=;path=/;path=/admin;max-age: -1;";
+    document.cookie = "token=;path=/;path=/admin;max-age: -1;";
+    document.cookie = "isAdmin=;path=/;path=/admin;max-age: -1;";
+    document.cookie = "light=;path=/;path=/admin;max-age: -1;";
   };
 
   const logOut = () => {

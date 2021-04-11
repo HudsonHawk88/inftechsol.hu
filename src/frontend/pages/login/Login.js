@@ -31,9 +31,9 @@ function Login(props) {
   const getUserData = (email, password) => {
     Services.getUserData(email, password).then((res) => {
       if (!res.err) {
-        document.cookie = `token=${res[0].token}`;
-        document.cookie = `auth=${true}`;
-        document.cookie = `isAdmin=${res[0].is_admin}`;
+        document.cookie = `token=${res[0].token};path=/;path=/admin;`;
+        document.cookie = `auth=${true};path=/;path=/admin;`;
+        document.cookie = `isAdmin=${res[0].is_admin};path=/;path=/admin;`;
         window.location.replace("/admin");
       } else {
         props.notification("error", res.err);

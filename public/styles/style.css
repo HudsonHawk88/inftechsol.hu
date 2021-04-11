@@ -27,9 +27,6 @@ body.theme-light .card:not(.loginform__card) {
   background-color: #f5f6f7;
   color: #15172a;
 }
-body.theme-light .card:not(.loginform__card) .row {
-  margin: 0px;
-}
 body.theme-light #content.sidebar-fixed {
   position: absolute;
   left: 250px;
@@ -39,7 +36,7 @@ body.theme-light #content.sidebar-fixed {
   overflow: auto;
 }
 body.theme-light #content.sidebar-fixed .card {
-  padding: 20px;
+  padding: 10px;
   max-height: calc(100vh - 80px);
   overflow: auto;
   height: calc(100vh - 80px);
@@ -55,7 +52,7 @@ body.theme-light #content.sidebar-hidden {
   overflow: auto;
 }
 body.theme-light #content.sidebar-hidden .card {
-  padding: 20px;
+  padding: 10px;
   max-height: calc(100vh - 80px);
   overflow: auto;
   height: calc(100vh - 80px);
@@ -87,9 +84,6 @@ body.theme-dark .card:not(.loginform__card) {
   background-color: #15172a;
   color: #f5f6f7;
 }
-body.theme-dark .card:not(.loginform__card) .row {
-  margin: 0px;
-}
 body.theme-dark #content.sidebar-fixed {
   position: absolute;
   left: 250px;
@@ -99,7 +93,7 @@ body.theme-dark #content.sidebar-fixed {
   overflow: auto;
 }
 body.theme-dark #content.sidebar-fixed .card {
-  padding: 20px;
+  padding: 10px;
   max-height: calc(100vh - 80px);
   overflow: auto;
   height: calc(100vh - 80px);
@@ -115,7 +109,7 @@ body.theme-dark #content.sidebar-hidden {
   overflow: auto;
 }
 body.theme-dark #content.sidebar-hidden .card {
-  padding: 20px;
+  padding: 10px;
   max-height: calc(100vh - 80px);
   overflow: auto;
   height: calc(100vh - 80px);

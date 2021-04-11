@@ -34,9 +34,9 @@ body.theme-light {
     background-color: var(themes-light-bgcolor);
     color: var(themes-light-fontcolor);
 
-    .row {
-      margin: 0px
-    }
+    // .row {
+    //   margin: 0px
+    // }
   }
   
   #content.sidebar-fixed {
@@ -48,7 +48,7 @@ body.theme-light {
     overflow: auto;
 
     .card {
-      padding: 20px;
+      padding: 10px;
       max-height: calc(100vh - 80px);
       overflow: auto;
       height: calc(100vh - 80px);
@@ -67,7 +67,7 @@ body.theme-light {
     overflow: auto;
   
     .card {
-      padding: 20px;
+      padding: 10px;
       max-height: calc(100vh - 80px);
       overflow: auto;
       height: calc(100vh - 80px);
@@ -107,9 +107,9 @@ body.theme-dark {
     background-color: var(themes-dark-bgcolor);
     color:var(themes-dark-fontcolor);
 
-    .row {
-      margin: 0px
-    }
+    // .row {
+    //   margin: 0px
+    // }
   }
 
   #content.sidebar-fixed {
@@ -121,7 +121,7 @@ body.theme-dark {
     overflow: auto;
   
     .card {
-      padding: 20px;
+      padding: 10px;
       max-height: calc(100vh - 80px);
       overflow: auto;
       height: calc(100vh - 80px);
@@ -139,7 +139,7 @@ body.theme-dark {
     overflow: auto;
   
     .card {
-      padding: 20px;
+      padding: 10px;
       max-height: calc(100vh - 80px);
       overflow: auto;
       height: calc(100vh - 80px);

@@ -1,16 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import {
-  Form,
   Button,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  InputGroup,
   Label,
-  Input,
 } from "reactstrap";
+import { AvForm, AvGroup, AvInput, AvFeedback } from "availity-reactstrap-validation"
 import BootstrapTable from "react-bootstrap-table-next";
 import Services from "./Services";
 
@@ -170,24 +168,26 @@ function ReferenciakContent(props) {
   const renderModal = () => {
     return (
       <React.Fragment>
-        <InputGroup>
+        <AvGroup>
           <Label>Cégnév:</Label>
-          <Input
+          <AvInput
             name="company_name"
             type="text"
             onChange={(e) => handleInputChange(e)}
             value={referenciaObj.company_name}
           />
-        </InputGroup>
-        <InputGroup>
+          <AvFeedback>Ez a mező kitöltése kötelező!</AvFeedback>
+        </AvGroup>
+        <AvGroup>
           <Label>Leírás:</Label>
-          <Input
+          <AvInput
             name="description"
             type="text"
             onChange={(e) => handleInputChange(e)}
             value={referenciaObj.description}
           />
-        </InputGroup>
+          <AvFeedback>Ez a mező kitöltése kötelező!</AvFeedback>
+        </AvGroup>
       </React.Fragment>
     );
   };
@@ -275,17 +275,21 @@ function ReferenciakContent(props) {
   return (
     <div className="card">
       <div className="row">
-      <div className="col-md-3">
+      <div className="col-md-12" />
+      <br />
+      <div className="col-md-5">
         <Button className="button--primary" onClick={() => handleNewClick()}>
           + Referencia hozzáadása
         </Button>
       </div>
-      <div className="col-md-9" />
+      <div className="col-md-7" />
+      <div className="col-md-12" />
+      <br />
       <div className="col-md-12">{referenciakJson && renderTable()}</div>
       <Modal isOpen={isModalOpen} toggle={toggleModal}>
         <ModalHeader>{renderModalTitle()}</ModalHeader>
         <ModalBody>
-          <Form>{renderModal()}</Form>
+          <AvForm>{renderModal()}</AvForm>
         </ModalBody>
         <ModalFooter>
           <Button color="success" type="submit" onClick={() => onSubmit()}>
