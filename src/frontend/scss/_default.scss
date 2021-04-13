@@ -6,11 +6,27 @@ html {
   font-size: 17px;
 }
 
+.nav-tabs .nav-link {
+  cursor: pointer;
+}
+
 body.theme-light {
   background-color: var(themes-light-bgcolor);
   color: var(themes-light-fontcolor);
 
   .sidebar {
+    background-color: var(themes-light-bgcolor);
+  }
+
+  .jumbotron {
+    background-color: var(themes-light-primary);
+  }
+
+  .modal-content {
+    background-color: var(themes-light-bgcolor);
+  }
+
+  .admin-navbar__profile-list {
     background-color: var(themes-light-bgcolor);
   }
 
@@ -30,9 +46,11 @@ body.theme-light {
 
   .card:not(.loginform__card) {
     overflow-y: auto;
+    overflow-x: hidden;
     height: calc(100vh - 120px);
     background-color: var(themes-light-bgcolor);
     color: var(themes-light-fontcolor);
+    // padding: 10px;
 
     // .row {
     //   margin: 0px
@@ -87,6 +105,18 @@ body.theme-dark {
     background-color: var(themes-dark-bgcolor);
   }
 
+  .jumbotron {
+    background-color: var(themes-light-primary);
+  }
+
+  .modal-content {
+    background-color: var(themes-dark-bgcolor);
+  }
+
+  .admin-navbar__profile-list {
+    background-color: var(themes-dark-bgcolor);
+  }
+
   .table {
     background-color: var(themes-dark-bgcolor);
     color:var(themes-dark-fontcolor);
@@ -103,10 +133,15 @@ body.theme-dark {
 
   .card:not(.loginform__card) {
     overflow-y: auto;
+    overflow-x: hidden;
     height: calc(100vh - 120px);
     background-color: var(themes-dark-bgcolor);
     color:var(themes-dark-fontcolor);
 
+    @media screen and (min-width: 50rem){
+      justify-content: center;
+    }
+    // padding: 10px;
     // .row {
     //   margin: 0px
     // }

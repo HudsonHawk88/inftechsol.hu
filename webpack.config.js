@@ -12,6 +12,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, "public"),
+    watchContentBase: true,
     host: "192.168.11.64",
     port: 3000,
     publicPath: "auto",
@@ -24,7 +25,6 @@ module.exports = {
       },
     },
   },
-
   resolve: {
     alias: {
       crypto: "false",

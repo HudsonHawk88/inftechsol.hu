@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 
 import FelhasznalokBase from "./views/Felhasznalok/FelhasznalokBase";
 import ReferenciakBase from "./views/Referenciak/ReferenciakBase";
+import ElerhetosegekBase from './views/Elerhetosegek/ElerhetosegekBase';
 import Kezdolap from "./views/Kezdolap/Kezdolap";
 
 function AdminRoutes(props) {
@@ -48,6 +49,22 @@ function AdminRoutes(props) {
                 render={(routes) => {
                     return (
                     <ReferenciakBase
+                        {...props}
+                        {...routes}
+                        notification={props.notification}
+                        data={{
+                            user: user,
+                        }}
+                    />
+                    );
+                }}
+            />
+            <Route
+                exact
+                path="/admin/elerhetosegek"
+                render={(routes) => {
+                    return (
+                    <ElerhetosegekBase
                         {...props}
                         {...routes}
                         notification={props.notification}

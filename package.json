@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
+    "@webpack-cli/serve": "^1.3.1",
     "availity-reactstrap-validation": "^2.6.1",
     "bootstrap": "^4.4.1",
     "clean-webpack-plugin": "^3.0.0",
@@ -43,7 +44,7 @@
     "jest": "^23.6.0",
     "nodemon": "^1.18.4",
     "style-loader": "^0.23.1",
-    "webpack-cli": "^3.3.12",
+    "webpack-cli": "^4.3.0",
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
@@ -51,9 +52,9 @@
     "install-frontend": "cd src/frontend && npm i",
     "install-server": "cd src/server && npm i",
     "install-all": "npm run install-root && npm run install-frontend && npm run install-server",
-    "build": "webpack -p",
+    "build": "webpack build",
     "deploy": "npm run build && git commit -a -m deployment && git push heroku master",
-    "dev": "webpack-dev-server --open",
+    "dev": "webpack serve --watch-content-base",
     "server": "cross-env NODE_ENV=production babel-node src/server/index.js",
     "server-dev": "nodemon -r dotenv/config src/server/index.js",
     "start-dev": "concurrently \"npm run server-dev\" \"npm run dev\"",

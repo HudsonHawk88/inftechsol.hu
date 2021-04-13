@@ -71,9 +71,9 @@ export const Sidebar = ({ width }) => {
             exact
             className="sidebar__nav-link"
             activeClassName="sidebar__nav-link-active"
-            to="/blog"
+            to="/admin/elerhetosegek"
           >
-            Blog
+            Elérhetőségek
           </NavLink>
         </div>
       </div>

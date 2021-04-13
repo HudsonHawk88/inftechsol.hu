@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Services from "./Services";
 
@@ -13,10 +14,10 @@ function ReferenciakContent(props) {
   };
 
   useEffect(() => { 
-    if (props.location.pathname === "/referenciak") {
+    if (window.location.pathname === "/referenciak") {
       getReferenciak();
     } 
-  }, [props.location.pathname]);
+  }, [window.location.pathname]);
 
   const renderReferenciak = () => {
     if (referenciakJson && referenciakJson.length !== 0) {

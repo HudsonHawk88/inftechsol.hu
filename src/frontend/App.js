@@ -172,7 +172,7 @@ function App() {
             exact
             path="/"
             children={(props) => (
-              <Public {...props} isLight={isLight} toggleCheck={setLight} toggleTheme={toggleTheme}>
+              <Public {...props} notification={createNotification} isLight={isLight} toggleCheck={setLight} toggleTheme={toggleTheme}>
                 <PublicRoutes />
               </Public>
             )}

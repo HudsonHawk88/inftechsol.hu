@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 
 import Kezdolap from "./views/Kezdőlap/Kezdőlap";
 import ReferenciakBase from "./views/Referenciak/ReferenciakBase";
+import ElerhetosegekBase from './views/Elerhetosegek/ElerhetosegekBase';
 
 function PublicRoutes(props) {
   return (
@@ -10,11 +11,15 @@ function PublicRoutes(props) {
       <Route
         exact
         path="/"
-        render={(props) => <Kezdolap {...props}  />}
+        render={() => <Kezdolap {...props}  />}
       />
       <Route
         path="/referenciak"
-        render={(props) => <ReferenciakBase {...props} />}
+        render={() => <ReferenciakBase {...props} />}
+      />
+      <Route
+        path="/elerhetosegek"
+        render={() => <ElerhetosegekBase {...props} />}
       />
     </React.Fragment>
   );
