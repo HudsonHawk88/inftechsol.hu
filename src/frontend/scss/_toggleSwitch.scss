@@ -1,7 +1,7 @@
 .public-navbar {
   &__toggleTheme {
     position: absolute;
-    top: 11px;
+    top: 15px;
     right: 60px;
     width: 85px;
     display: inline-block;
@@ -106,7 +106,7 @@
     &-checkbox {
       display: none;
     }
-    
+
     &-label {
       display: block;
       overflow: hidden;

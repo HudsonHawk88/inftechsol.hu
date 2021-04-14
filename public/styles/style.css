@@ -1,10 +1,21 @@
 html {
   margin: 0;
   font-size: 17px;
+  overflow: hidden;
 }
 
 .nav-tabs .nav-link {
   cursor: pointer;
+}
+
+.google-map {
+  height: 300px;
+  padding: 10px 0px 10px 0px;
+}
+@media screen and (min-width: 48rem) {
+  .google-map {
+    height: 100%;
+  }
 }
 
 body.theme-light {
@@ -16,6 +27,24 @@ body.theme-light .sidebar {
 }
 body.theme-light .jumbotron {
   background-color: #2067AC;
+}
+body.theme-light .card.card-contact {
+  text-align: center;
+}
+body.theme-light .card.card-contact .col-md-6.contact-info {
+  align-self: center;
+  padding: 0 0 0 0;
+}
+@media screen and (min-width: 48rem) {
+  body.theme-light .card.card-contact .col-md-6.contact-info {
+    padding: 0 0 0 10px;
+  }
+}
+body.theme-light .card.card-contact .row {
+  margin: 0;
+}
+body.theme-light .card.card-contact .row.contact-row {
+  height: 100%;
 }
 body.theme-light .modal-content {
   background-color: #f5f6f7;
@@ -84,6 +113,24 @@ body.theme-dark .sidebar {
 body.theme-dark .jumbotron {
   background-color: #2067AC;
 }
+body.theme-dark .card.card-contact {
+  text-align: center;
+}
+body.theme-dark .card.card-contact .col-md-6.contact-info {
+  align-self: center;
+  padding: 0 0 0 0;
+}
+@media screen and (min-width: 48rem) {
+  body.theme-dark .card.card-contact .col-md-6.contact-info {
+    padding: 0 0 0 10px;
+  }
+}
+body.theme-dark .card.card-contact .row {
+  margin: 0;
+}
+body.theme-dark .card.card-contact .row.contact-row {
+  height: 100%;
+}
 body.theme-dark .modal-content {
   background-color: #15172a;
 }
@@ -107,11 +154,6 @@ body.theme-dark .card:not(.loginform__card) {
   height: calc(100vh - 120px);
   background-color: #15172a;
   color: #f5f6f7;
-}
-@media screen and (min-width: 50rem) {
-  body.theme-dark .card:not(.loginform__card) {
-    justify-content: center;
-  }
 }
 body.theme-dark #content.sidebar-fixed {
   position: absolute;
@@ -764,7 +806,7 @@ body.theme-dark .loginform__dropzone {
 
 .public-navbar__toggleTheme {
   position: absolute;
-  top: 11px;
+  top: 15px;
   right: 60px;
   width: 85px;
   display: inline-block;

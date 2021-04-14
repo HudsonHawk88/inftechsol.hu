@@ -2,13 +2,12 @@ const dotenv = require("dotenv");
 dotenv.config();
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-console.log(process.env.PUBLIC_URL);
 module.exports = {
   entry: "./src/frontend/index.js",
   output: {
     path: path.resolve(__dirname, "public"),
     filename: "bundle.js",
-    publicPath: "/"
+    publicPath: "/",
   },
   devServer: {
     contentBase: path.resolve(__dirname, "public"),

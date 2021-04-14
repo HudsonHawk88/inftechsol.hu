@@ -8,29 +8,35 @@ import {
   ModalFooter,
   Label,
 } from "reactstrap";
-import { AvForm, AvGroup, AvInput, AvField, AvFeedback } from "availity-reactstrap-validation"
+import {
+  AvForm,
+  AvGroup,
+  AvInput,
+  AvField,
+  AvFeedback,
+} from "availity-reactstrap-validation";
 import BootstrapTable from "react-bootstrap-table-next";
 import Services from "./Services";
 
 function ElerhetosegekContent(props) {
-  const [ isModalOpen, toggle ] = useState(false);
-  const [ isViewModalOpen, toggleViewModal ] = useState(false);
-  const [ modalType, toggleModalType ] = useState("FEL");
-  const [ currentId, setCurrentId ] = useState(null);
-  const [ deleteId, setDeleteId ] = useState(null);
-  const [ isDeleteModalOpen, toggleDeleteModal ] = useState(false);
+  const [isModalOpen, toggle] = useState(false);
+  const [isViewModalOpen, toggleViewModal] = useState(false);
+  const [modalType, toggleModalType] = useState("FEL");
+  const [currentId, setCurrentId] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
+  const [isDeleteModalOpen, toggleDeleteModal] = useState(false);
   const [elerhetosegObj, setElerhetosegObj] = useState({
     titulus: "",
     vezeteknev: "",
     keresztnev: "",
     orszag: {
       orszagnev: "",
-      orszagid: null
+      orszagid: null,
     },
     irszam: null,
     telepules: {
       id: "",
-      telepulesnev: ""
+      telepulesnev: "",
     },
     kozterulet: "",
     hazszam: "",
@@ -45,16 +51,16 @@ function ElerhetosegekContent(props) {
   const [elerhetosegekJson, setElerhetosegekJson] = useState([]);
   const [orszagokJson, setOrszagokJson] = useState([]);
   const [telepulesekJson, setTelepulesekJson] = useState([]);
-  const [ telepulesekOptions, setTelepulesekOptions ] = useState([])
+  const [telepulesekOptions, setTelepulesekOptions] = useState([]);
   const defaultOrszagKod = "hun";
 
   const isIrszamTyped = () => {
-    if (elerhetosegObj.irszam && elerhetosegObj.irszam.length === 4){
+    if (elerhetosegObj.irszam && elerhetosegObj.irszam.length === 4) {
       return true;
     } else {
       return false;
     }
-  }
+  };
 
   const setDefaultOrszag = () => {
     let orszagJson = elerhetosegObj.orszag;
@@ -62,91 +68,94 @@ function ElerhetosegekContent(props) {
       if (orszag.orszagkod === defaultOrszagKod) {
         orszagJson.orszagid = orszag.id;
         orszagJson.orszagnev = orszag.orszagnev;
-          setElerhetosegObj({
-            titulus: "",
-            vezeteknev: "",
-            keresztnev: "",
-            orszag: orszagJson,
-            irszam: null,
-            telepules: {
-              id: "",
-              telepulesnev: ""
-            },
-            kozterulet: "",
-            hazszam: "",
-            hrsz: "",
-            postafiok: "",
-            epulet: "",
-            emelet: "",
-            ajto: "",
-            telefon: "",
-            email: ""    
-          });
+        setElerhetosegObj({
+          titulus: "",
+          vezeteknev: "",
+          keresztnev: "",
+          orszag: orszagJson,
+          irszam: null,
+          telepules: {
+            id: "",
+            telepulesnev: "",
+          },
+          kozterulet: "",
+          hazszam: "",
+          hrsz: "",
+          postafiok: "",
+          epulet: "",
+          emelet: "",
+          ajto: "",
+          telefon: "",
+          email: "",
+        });
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     if (window.location.pathname === "/admin/elerhetosegek") {
-        getElerhetosegek();
-        getOrszagok();
-        getTelepulesek();
-    } 
+      getElerhetosegek();
+      getOrszagok();
+      getTelepulesek();
+    }
   }, [window.location.pathname]);
 
   useEffect(() => {
     if (isIrszamTyped()) {
-      const id = elerhetosegObj.irszam ;
+      const id = elerhetosegObj.irszam;
       getTelepulesek(id);
     }
   }, [isIrszamTyped()]);
 
-
   const getOrszagok = () => {
     Services.listOrszagok().then((res) => {
-      if(!res.err) {
+      if (!res.err) {
         setOrszagokJson(res);
       }
-    })
-  }
+    });
+  };
 
   const getTelepulesek = (id) => {
-    if (id) {    
+    if (id) {
       telepulesekJson.forEach((telepules) => {
-        if (telepules.irszam === id) { 
+        if (telepules.irszam === id) {
           let telepulesArray = [];
           telepulesArray.push(telepules);
           setTelepulesekOptions(telepulesArray);
         }
-      })
+      });
     } else {
       Services.listTelepulesek().then((res) => {
-        if(!res.err) {
+        if (!res.err) {
           setTelepulesekJson(res);
         }
       });
     }
-  }
+  };
 
   const renderOrszagokOptions = () => {
     if (orszagokJson.length !== 0) {
       return orszagokJson.map((orszag) => {
         return (
-          <option key={orszag.id} value={orszag.id} label={orszag.orszagnev}>{orszag.orszagnev}</option>
+          <option key={orszag.id} value={orszag.id} label={orszag.orszagnev}>
+            {orszag.orszagnev}
+          </option>
         );
-      })
+      });
     }
-  }
+  };
 
   const renderTelepulesekOptions = () => {
     if (telepulesekOptions.length !== 0) {
       return telepulesekOptions.map((telepules) => {
         return (
-          <option key={telepules.id} value={telepules.id}>{telepules.telepulesnev}</option>
+          <option key={telepules.id} value={telepules.id}>
+            {telepules.telepulesnev}
+          </option>
         );
-      })
+      });
     }
-  }
+  };
 
   const getElerhetosegek = (id) => {
     if (id) {
@@ -167,35 +176,35 @@ function ElerhetosegekContent(props) {
 
   const toggleView = () => {
     toggleViewModal(!isViewModalOpen);
-  }
+  };
 
   const handleNewClick = () => {
     setDefaultOrszag();
     toggleModalType("FEL");
     toggleModal();
-  }
+  };
 
   const handleViewClick = (cell) => {
     setCurrentId(cell);
     getElerhetosegek(cell);
     toggleView();
-  }
+  };
 
   const handleEditClick = (cell) => {
     toggleModalType("MOD");
     setCurrentId(cell);
     getElerhetosegek(cell);
     toggleModal();
-  }
+  };
 
   const toggleDelete = () => {
     toggleDeleteModal(!isDeleteModalOpen);
-  }
+  };
 
   const handleDeleteClick = (cell) => {
     setDeleteId(cell);
     toggleDelete();
-  }
+  };
 
   const addElerhetoseg = () => {
     Services.addElerhetoseg(elerhetosegObj).then((res) => {
@@ -223,17 +232,15 @@ function ElerhetosegekContent(props) {
 
   const deleteElerhetoseg = () => {
     Services.deleteElerhetoseg(deleteId).then((res) => {
-      if(!res.err) {
+      if (!res.err) {
         toggleDelete();
         props.notification("success", res.msg);
         getElerhetosegek();
       } else {
         props.notification("error", res.err);
       }
-    })
-  }
-
-
+    });
+  };
 
   const renderModalTitle = () => {
     switch (modalType) {
@@ -241,19 +248,24 @@ function ElerhetosegekContent(props) {
         return "Elérhetőség hozzáadása";
       case "MOD":
         return "Elérhetőség módosítása";
-      default: return "";
+      default:
+        return "";
     }
   };
 
   const renderViewModal = () => {
-    return(
+    return (
       <Modal isOpen={isViewModalOpen} toggle={toggleView}>
         <ModalHeader>Elérhetőség megtekintése</ModalHeader>
         <ModalBody>
-          <div>Név: {nevFormatter(elerhetosegObj)}</div><br />
-          <div>Cím: {cimFormatter(elerhetosegObj)}</div><br />
-          <div>Telefonszám: {elerhetosegObj.telefon}</div><br />
-          <div>Email: {elerhetosegObj.email}</div><br />
+          <div>Név: {nevFormatter(elerhetosegObj)}</div>
+          <br />
+          <div>Cím: {cimFormatter(elerhetosegObj)}</div>
+          <br />
+          <div>Telefonszám: {elerhetosegObj.telefon}</div>
+          <br />
+          <div>Email: {elerhetosegObj.email}</div>
+          <br />
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={() => toggleView()}>
@@ -262,15 +274,19 @@ function ElerhetosegekContent(props) {
         </ModalFooter>
       </Modal>
     );
-  }
+  };
 
   const renderDeleteModal = () => {
-    return(
+    return (
       <Modal isOpen={isDeleteModalOpen} toggle={toggleDelete}>
         <ModalHeader>Elérhetőség törlése</ModalHeader>
         <ModalBody>Valóban törölni kívánja a kiválasztott tételt?</ModalBody>
         <ModalFooter>
-          <Button className="button--danger" type="submit" onClick={() => deleteElerhetoseg()}>
+          <Button
+            className="button--danger"
+            type="submit"
+            onClick={() => deleteElerhetoseg()}
+          >
             Törlés
           </Button>
           <Button className="button--secondary" onClick={() => toggleDelete()}>
@@ -279,7 +295,7 @@ function ElerhetosegekContent(props) {
         </ModalFooter>
       </Modal>
     );
-  }
+  };
 
   const renderModal = () => {
     return (
@@ -330,7 +346,9 @@ function ElerhetosegekContent(props) {
               onChange={(e) => handleInputChange(e)}
               value={elerhetosegObj.orszag.orszagid}
             >
-              <option key="default" value="">{"Kérjük válasszon országot..."}</option>
+              <option key="default" value="">
+                {"Kérjük válasszon országot..."}
+              </option>
               {renderOrszagokOptions()}
             </AvField>
             <AvFeedback>Ez a mező kitöltése kötelező!</AvFeedback>
@@ -345,9 +363,20 @@ function ElerhetosegekContent(props) {
               onChange={(e) => handleInputChange(e)}
               value={elerhetosegObj.irszam}
               validate={{
-                required: {value: true, errorMessage: 'Ez a mező kitöltése kötelező!'},
-                minLength: {value: 4, errorMessage: 'Az irányítószámnak pontosan 4 számjegyűnek kell lennie!'},
-                maxLength: {value: 4, errorMessage: 'Az irányítószámnak pontosan 4 számjegyűnek kell lennie!'}
+                required: {
+                  value: true,
+                  errorMessage: "Ez a mező kitöltése kötelező!",
+                },
+                minLength: {
+                  value: 4,
+                  errorMessage:
+                    "Az irányítószámnak pontosan 4 számjegyűnek kell lennie!",
+                },
+                maxLength: {
+                  value: 4,
+                  errorMessage:
+                    "Az irányítószámnak pontosan 4 számjegyűnek kell lennie!",
+                },
               }}
             />
           </AvGroup>
@@ -358,11 +387,16 @@ function ElerhetosegekContent(props) {
             <AvField
               type="select"
               name="telepules"
-              disabled={!elerhetosegObj.irszam || (elerhetosegObj.irszam && elerhetosegObj.irszam.length !== 4)}
+              disabled={
+                !elerhetosegObj.irszam ||
+                (elerhetosegObj.irszam && elerhetosegObj.irszam.length !== 4)
+              }
               onChange={(e) => handleInputChange(e)}
               value={elerhetosegObj.telepules.id}
             >
-              <option key="default" value="">{"Kérjük válasszon települést..."}</option>
+              <option key="default" value="">
+                {"Kérjük válasszon települést..."}
+              </option>
               {renderTelepulesekOptions()}
             </AvField>
             <AvFeedback>Ez a mező kitöltése kötelező!</AvFeedback>
@@ -483,36 +517,36 @@ function ElerhetosegekContent(props) {
   const handleInputChange = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
-      if (e.target.name === "orszag") {
-        let orszagJson = elerhetosegObj.orszag;
-        orszagJson.orszagid = value;
-        orszagokJson.forEach((orszag) => {
-          if (value === orszag.id) {
-            orszagJson.orszagnev = orszag.orszagnev;
-          }
-        })
-        setElerhetosegObj({
-          ...elerhetosegObj,
-          [e.target.name]: orszagJson,
-        });
-      } else if (e.target.name === "telepules") {
-        let telepulesJson = elerhetosegObj.telepules;
-        telepulesJson.id = value;
-        telepulesekJson.forEach((telepules) => {
-          if (value === telepules.id) {
-            telepulesJson.telepulesnev = telepules.telepulesnev;
-          }
-        });
-        setElerhetosegObj({
-          ...elerhetosegObj,
-          [e.target.name]: telepulesJson,
-        });
-      } else {
-        setElerhetosegObj({
-          ...elerhetosegObj,
-          [e.target.name]: value,
-        });
-      }
+    if (e.target.name === "orszag") {
+      let orszagJson = elerhetosegObj.orszag;
+      orszagJson.orszagid = value;
+      orszagokJson.forEach((orszag) => {
+        if (value === orszag.id) {
+          orszagJson.orszagnev = orszag.orszagnev;
+        }
+      });
+      setElerhetosegObj({
+        ...elerhetosegObj,
+        [e.target.name]: orszagJson,
+      });
+    } else if (e.target.name === "telepules") {
+      let telepulesJson = elerhetosegObj.telepules;
+      telepulesJson.id = value;
+      telepulesekJson.forEach((telepules) => {
+        if (value === telepules.id) {
+          telepulesJson.telepulesnev = telepules.telepulesnev;
+        }
+      });
+      setElerhetosegObj({
+        ...elerhetosegObj,
+        [e.target.name]: telepulesJson,
+      });
+    } else {
+      setElerhetosegObj({
+        ...elerhetosegObj,
+        [e.target.name]: value,
+      });
+    }
   };
 
   const toggleModal = () => {
@@ -525,29 +559,29 @@ function ElerhetosegekContent(props) {
     } else {
       return value;
     }
-  }
+  };
 
   const cimFormatter = (row) => {
     if (undefinedToNull(row.hazszam)) {
       if (undefinedToNull(row.emelet)) {
         if (undefinedToNull(row.epulet)) {
-          return (`${row.irszam}, ${row.telepules.telepulesnev}, ${row.kozterulet} ${row.hazszam}. ${row.epulet} ép. ${row.emelet}/${row.ajto}.`);
+          return `${row.irszam}, ${row.telepules.telepulesnev}, ${row.kozterulet} ${row.hazszam}. ${row.epulet} ép. ${row.emelet}/${row.ajto}.`;
         } else {
-          return (`${row.irszam}, ${row.telepules.telepulesnev}, ${row.kozterulet} ${row.hazszam}. ${row.emelet}/${row.ajto}.`);
+          return `${row.irszam}, ${row.telepules.telepulesnev}, ${row.kozterulet} ${row.hazszam}. ${row.emelet}/${row.ajto}.`;
         }
       } else {
-        return (`${row.irszam}, ${row.telepules.telepulesnev}, ${row.kozterulet} ${row.hazszam}.`);
+        return `${row.irszam}, ${row.telepules.telepulesnev}, ${row.kozterulet} ${row.hazszam}.`;
       }
     } else if (undefinedToNull(row.postafiok)) {
-      return (`${row.irszam}, ${row.telepules.telepulesnev}, ${row.postafiok}.`);
+      return `${row.irszam}, ${row.telepules.telepulesnev}, ${row.postafiok}.`;
     } else {
-      return (`${row.irszam}, ${row.telepules.telepulesnev}, ${row.hrsz}.`);
+      return `${row.irszam}, ${row.telepules.telepulesnev}, ${row.hrsz}.`;
     }
-  }
+  };
 
   const nevFormatter = (row) => {
-    return (`${row.titulus} ${row.vezeteknev} ${row.keresztnev}`)
-  }
+    return `${row.titulus} ${row.vezeteknev} ${row.keresztnev}`;
+  };
 
   const tableIconFormatter = (cell, row, rowIndex) => {
     return (
@@ -578,7 +612,7 @@ function ElerhetosegekContent(props) {
   };
 
   const onSubmit = () => {
-    switch(modalType) {
+    switch (modalType) {
       case "FEL": {
         addElerhetoseg();
         break;
@@ -591,19 +625,19 @@ function ElerhetosegekContent(props) {
         break;
       }
     }
-  }
+  };
 
   const renderTable = () => {
     const columns = [
       {
         dataField: "nev",
         text: "Név",
-        formatter: (cell, row) => nevFormatter(row)
+        formatter: (cell, row) => nevFormatter(row),
       },
       {
         dataField: "irszam",
         text: "Cím",
-        formatter: (cell,row) => cimFormatter(row)
+        formatter: (cell, row) => cimFormatter(row),
       },
       {
         dataField: "telefon",
@@ -622,40 +656,49 @@ function ElerhetosegekContent(props) {
     ];
 
     return (
-      <BootstrapTable noDataIndication="Ez a tábla még üres..." bootstrap4 striped bordered wrapperClasses="table-responsive" keyField="id" data={elerhetosegekJson} columns={columns} />
+      <BootstrapTable
+        noDataIndication="Ez a tábla még üres..."
+        bootstrap4
+        striped
+        bordered
+        wrapperClasses="table-responsive"
+        keyField="id"
+        data={elerhetosegekJson}
+        columns={columns}
+      />
     );
   };
 
   return (
     <div className="card">
       <div className="row">
-      <div className="col-md-12" />
-      <br />
-      <div className="col-md-5">
-        <Button className="button--primary" onClick={() => handleNewClick()}>
-          + Elérhetőség hozzáadása
-        </Button>
-      </div>
-      <div className="col-md-7" />
-      <div className="col-md-12" />
-      <br />
-      <div className="col-md-12">{elerhetosegekJson && renderTable()}</div>
-      <Modal isOpen={isModalOpen} toggle={toggleModal} size="xl">
-        <ModalHeader>{renderModalTitle()}</ModalHeader>
-        <ModalBody>
-          <AvForm>{renderModal()}</AvForm>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="success" type="submit" onClick={() => onSubmit()}>
-            Mentés
+        <div className="col-md-12" />
+        <br />
+        <div className="col-md-5">
+          <Button className="button--primary" onClick={() => handleNewClick()}>
+            + Elérhetőség hozzáadása
           </Button>
-          <Button color="secondary" onClick={() => toggleModal()}>
-            Mégsem
-          </Button>
-        </ModalFooter>
-      </Modal>
-      {renderDeleteModal()}
-      {renderViewModal()}
+        </div>
+        <div className="col-md-7" />
+        <div className="col-md-12" />
+        <br />
+        <div className="col-md-12">{elerhetosegekJson && renderTable()}</div>
+        <Modal isOpen={isModalOpen} toggle={toggleModal} size="xl">
+          <ModalHeader>{renderModalTitle()}</ModalHeader>
+          <ModalBody>
+            <AvForm>{renderModal()}</AvForm>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="success" type="submit" onClick={() => onSubmit()}>
+              Mentés
+            </Button>
+            <Button color="secondary" onClick={() => toggleModal()}>
+              Mégsem
+            </Button>
+          </ModalFooter>
+        </Modal>
+        {renderDeleteModal()}
+        {renderViewModal()}
       </div>
     </div>
   );

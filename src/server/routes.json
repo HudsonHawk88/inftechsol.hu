@@ -1,0 +1,14 @@
+{
+  "routes": [
+    "/",
+    "/login",
+    "/users",
+    "/header",
+    "/blog",
+    "/referenciak",
+    "/elerhetosegek",
+    "/orszagok",
+    "/telepulesek",
+    "/contactmail"
+  ]
+}

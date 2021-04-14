@@ -9,20 +9,20 @@ export default class Services {
       cache: "no-cache",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
       },
     });
     return result;
   };
 
-  static addReferenciak = (data) => {
+  static addReferencia = (data) => {
     let result = Microservices.fetchApi(referenciakUrl, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
       },
       body: JSON.stringify(data),
     });
@@ -36,22 +36,22 @@ export default class Services {
       cache: "no-cache",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-        "id": id
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+        id: id,
       },
     });
     return result;
   };
 
-  static editReferenciak = (data, id) => {
+  static editReferencia = (data, id) => {
     let result = Microservices.fetchApi(referenciakUrl, {
       method: "PUT",
       mode: "cors",
       cache: "no-cache",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-        "id": id
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+        id: id,
       },
       body: JSON.stringify(data),
     });
@@ -65,8 +65,8 @@ export default class Services {
       cache: "no-cache",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-        "id": id
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+        id: id,
       },
     });
     return result;

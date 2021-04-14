@@ -4,10 +4,20 @@
 html {
   margin: 0;
   font-size: 17px;
+  overflow: hidden;
 }
 
 .nav-tabs .nav-link {
   cursor: pointer;
+}
+
+.google-map {
+  height: 300px;
+  padding: 10px 0px 10px 0px;
+
+  @media screen and (min-width: 48rem) {
+    height: 100%;
+  }
 }
 
 body.theme-light {
@@ -20,6 +30,27 @@ body.theme-light {
 
   .jumbotron {
     background-color: var(themes-light-primary);
+  }
+
+  .card.card-contact {
+    text-align: center;
+
+    .col-md-6.contact-info {
+      align-self: center;
+      padding: 0 0 0 0;
+
+      @media screen and (min-width: 48rem) {
+        padding: 0 0 0 10px;
+      }
+    }
+
+    .row {
+      margin: 0;
+    }
+
+    .row.contact-row {
+      height: 100%;
+    }
   }
 
   .modal-content {
@@ -36,7 +67,7 @@ body.theme-light {
     border: 2px solid var(themes-light-fontcolor);
 
     & th {
-      border: 2px solid var(themes-light-fontcolor);;
+      border: 2px solid var(themes-light-fontcolor);
     }
 
     & td {
@@ -51,12 +82,11 @@ body.theme-light {
     background-color: var(themes-light-bgcolor);
     color: var(themes-light-fontcolor);
     // padding: 10px;
-
     // .row {
-    //   margin: 0px
+    //   height: inherit;
     // }
   }
-  
+
   #content.sidebar-fixed {
     position: absolute;
     left: 250px;
@@ -73,7 +103,6 @@ body.theme-light {
       background-color: var(themes-light-bgcolor);
       color: var(themes-light-fontcolor);
     }
-
   }
 
   #content.sidebar-hidden {
@@ -83,7 +112,7 @@ body.theme-light {
     width: 100%;
     transition: 0.6s ease;
     overflow: auto;
-  
+
     .card {
       padding: 10px;
       max-height: calc(100vh - 80px);
@@ -93,13 +122,11 @@ body.theme-light {
       color: var(themes-light-fontcolor);
     }
   }
-  
-  
 }
 
 body.theme-dark {
   background-color: var(themes-dark-bgcolor);
-  color:var(themes-dark-fontcolor);
+  color: var(themes-dark-fontcolor);
 
   .sidebar {
     background-color: var(themes-dark-bgcolor);
@@ -107,6 +134,27 @@ body.theme-dark {
 
   .jumbotron {
     background-color: var(themes-light-primary);
+  }
+
+  .card.card-contact {
+    text-align: center;
+
+    .col-md-6.contact-info {
+      align-self: center;
+      padding: 0 0 0 0;
+
+      @media screen and (min-width: 48rem) {
+        padding: 0 0 0 10px;
+      }
+    }
+
+    .row {
+      margin: 0;
+    }
+
+    .row.contact-row {
+      height: 100%;
+    }
   }
 
   .modal-content {
@@ -119,7 +167,7 @@ body.theme-dark {
 
   .table {
     background-color: var(themes-dark-bgcolor);
-    color:var(themes-dark-fontcolor);
+    color: var(themes-dark-fontcolor);
     border: 2px solid var(themes-dark-fontcolor);
     & th {
       border: 2px solid var(themes-dark-fontcolor);
@@ -130,20 +178,15 @@ body.theme-dark {
     }
   }
 
-
   .card:not(.loginform__card) {
     overflow-y: auto;
     overflow-x: hidden;
     height: calc(100vh - 120px);
     background-color: var(themes-dark-bgcolor);
-    color:var(themes-dark-fontcolor);
-
-    @media screen and (min-width: 50rem){
-      justify-content: center;
-    }
+    color: var(themes-dark-fontcolor);
     // padding: 10px;
     // .row {
-    //   margin: 0px
+    //   height: inherit;
     // }
   }
 
@@ -154,14 +197,14 @@ body.theme-dark {
     width: calc(100% - 250px);
     transition: 0.6s ease;
     overflow: auto;
-  
+
     .card {
       padding: 10px;
       max-height: calc(100vh - 80px);
       overflow: auto;
       height: calc(100vh - 80px);
       background-color: var(themes-dark-bgcolor);
-      color:var(themes-dark-fontcolor);
+      color: var(themes-dark-fontcolor);
     }
   }
 
@@ -172,17 +215,16 @@ body.theme-dark {
     width: 100%;
     transition: 0.6s ease;
     overflow: auto;
-  
+
     .card {
       padding: 10px;
       max-height: calc(100vh - 80px);
       overflow: auto;
       height: calc(100vh - 80px);
       background-color: var(themes-dark-bgcolor);
-      color:var(themes-dark-fontcolor);
+      color: var(themes-dark-fontcolor);
     }
   }
-  
 }
 
 #root {

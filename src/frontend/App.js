@@ -44,11 +44,11 @@ function App() {
   const setDefaultTheme = () => {
     let light = getCookie("light");
     if (!light || light === "" || light === "true") {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
-  }
+  };
 
   const [isSidebarOpen, setSidebar] = useState(true);
   const [isLight, setLight] = useState(setDefaultTheme());
@@ -57,7 +57,7 @@ function App() {
     let auth = getCookie("auth");
     let token = getCookie("token");
     let isAdmin = getCookie("isAdmin");
-   
+
     if (token && token !== "" && auth && auth === "true" && isAdmin) {
       Services.getUser(token).then((res) => {
         setDatas({ user: res[0], authenticated: true, isAdmin: isAdmin });
@@ -65,7 +65,6 @@ function App() {
     } else {
       logOut(false, null);
     }
-   
   };
 
   const toggleTheme = () => {
@@ -78,7 +77,7 @@ function App() {
       document.cookie = "light=true;path=/admin;";
     }
     if (isLight === false) {
-      body.classList.remove("theme-light")
+      body.classList.remove("theme-light");
       body.classList.add("theme-dark");
       setLight(false);
       document.cookie = "light=false;path=/;";
@@ -88,7 +87,7 @@ function App() {
 
   // const toggleSidebar = () => {
   //   let body = document.body;
-  
+
   //   if(isSidebarOpen) {
   //     body.classList.remove("sidebar-hidden");
   //     body.classList.add("sidebar-fixed");
@@ -102,7 +101,6 @@ function App() {
     checkCookie();
     toggleTheme();
   }, [getCookie("token"), isLight]);
-
 
   const deleteCookie = () => {
     document.cookie = "auth=;path=/;path=/admin;max-age: -1;";
@@ -133,53 +131,65 @@ function App() {
       case "error":
         NotificationManager.error(message, "");
         break;
-      default: break;
+      default:
+        break;
     }
   };
 
   return (
-    <div>
+    <React.Fragment>
       <NotificationContainer />
-        <Router>
+      <Router>
         {window.location.pathname.includes("admin") ? (
           <Route
             path={"/admin"}
-            render={(props) => (
+            render={(props) =>
               datas.loading ? (
                 <LoadingPage />
+              ) : datas.authenticated ? (
+                <Admin
+                  {...props}
+                  isSidebarOpen={isSidebarOpen}
+                  toggleSidebar={setSidebar}
+                  logOut={logOut}
+                  notification={createNotification}
+                  data={{ user: datas.user }}
+                  isLight={isLight}
+                  toggleCheck={setLight}
+                  toggleTheme={toggleTheme}
+                >
+                  <AdminRoutes notification={createNotification} />
+                </Admin>
               ) : (
-                datas.authenticated ? (
-                  <Admin {...props}
-                    isSidebarOpen={isSidebarOpen}
-                    toggleSidebar={setSidebar}
-                    logOut={logOut}
-                    notification={createNotification}
-                    data={{ user: datas.user }}
-                    isLight={isLight}
-                    toggleCheck={setLight}
-                    toggleTheme={toggleTheme}
-                  >
-                    <AdminRoutes notification={createNotification} />
-                  </Admin>
-                ) : (
-                  <Login {...props} notification={createNotification} />
-                )
-            ))}
-                
+                <Login {...props} notification={createNotification} />
+              )
+            }
           />
         ) : (
           <Route
             exact
             path="/"
             children={(props) => (
-              <Public {...props} notification={createNotification} isLight={isLight} toggleCheck={setLight} toggleTheme={toggleTheme}>
-                <PublicRoutes />
+              <Public
+                {...props}
+                notification={createNotification}
+                isLight={isLight}
+                toggleCheck={setLight}
+                toggleTheme={toggleTheme}
+              >
+                <PublicRoutes
+                  {...props}
+                  notification={createNotification}
+                  isLight={isLight}
+                  toggleCheck={setLight}
+                  toggleTheme={toggleTheme}
+                />
               </Public>
             )}
           />
         )}
       </Router>
-    </div>
+    </React.Fragment>
   );
 }
 

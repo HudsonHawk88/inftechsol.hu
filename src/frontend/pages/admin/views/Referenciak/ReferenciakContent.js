@@ -8,17 +8,22 @@ import {
   ModalFooter,
   Label,
 } from "reactstrap";
-import { AvForm, AvGroup, AvInput, AvFeedback } from "availity-reactstrap-validation"
+import {
+  AvForm,
+  AvGroup,
+  AvInput,
+  AvFeedback,
+} from "availity-reactstrap-validation";
 import BootstrapTable from "react-bootstrap-table-next";
 import Services from "./Services";
 
 function ReferenciakContent(props) {
-  const [ isModalOpen, toggle ] = useState(false);
-  const [ isViewModalOpen, toggleViewModal ] = useState(false);
-  const [ modalType, toggleModalType ] = useState("FEL");
-  const [ currentId, setCurrentId ] = useState(null);
-  const [ deleteId, setDeleteId ] = useState(null);
-  const [ isDeleteModalOpen, toggleDeleteModal ] = useState(false);
+  const [isModalOpen, toggle] = useState(false);
+  const [isViewModalOpen, toggleViewModal] = useState(false);
+  const [modalType, toggleModalType] = useState("FEL");
+  const [currentId, setCurrentId] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
+  const [isDeleteModalOpen, toggleDeleteModal] = useState(false);
   const [referenciaObj, setReferenciaObj] = useState({
     company_name: "",
     description: "",
@@ -50,38 +55,38 @@ function ReferenciakContent(props) {
 
   const toggleView = () => {
     toggleViewModal(!isViewModalOpen);
-  }
+  };
 
   const handleNewClick = () => {
     setReferenciaObj({
       company_name: "",
-      description: ""
-    })
+      description: "",
+    });
     toggleModalType("FEL");
     toggleModal();
-  }
+  };
 
   const handleViewClick = (cell) => {
     setCurrentId(cell);
     getReferenciak(cell);
     toggleView();
-  }
+  };
 
   const handleEditClick = (cell) => {
     toggleModalType("MOD");
     setCurrentId(cell);
     getReferenciak(cell);
     toggleModal();
-  }
+  };
 
   const toggleDelete = () => {
     toggleDeleteModal(!isDeleteModalOpen);
-  }
+  };
 
   const handleDeleteClick = (cell) => {
     setDeleteId(cell);
     toggleDelete();
-  }
+  };
 
   const addReferencia = () => {
     Services.addReferenciak(referenciaObj).then((res) => {
@@ -109,17 +114,15 @@ function ReferenciakContent(props) {
 
   const deleteReferencia = () => {
     Services.deleteReferencia(deleteId).then((res) => {
-      if(!res.err) {
+      if (!res.err) {
         toggleDelete();
         props.notification("success", res.msg);
         getReferenciak();
       } else {
         props.notification("error", res.err);
       }
-    })
-  }
-
-
+    });
+  };
 
   const renderModalTitle = () => {
     switch (modalType) {
@@ -127,17 +130,20 @@ function ReferenciakContent(props) {
         return "Referencia hozzáadása";
       case "MOD":
         return "Referencia módosítása";
-      default: return "";
+      default:
+        return "";
     }
   };
 
   const renderViewModal = () => {
-    return(
+    return (
       <Modal isOpen={isViewModalOpen} toggle={toggleView}>
         <ModalHeader>Referencia megtekintése</ModalHeader>
         <ModalBody>
-          <div>Cégnév: {referenciaObj.company_name}</div><br />
-          <div>Leírás: {referenciaObj.description}</div><br />
+          <div>Cégnév: {referenciaObj.company_name}</div>
+          <br />
+          <div>Leírás: {referenciaObj.description}</div>
+          <br />
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={() => toggleView()}>
@@ -146,15 +152,19 @@ function ReferenciakContent(props) {
         </ModalFooter>
       </Modal>
     );
-  }
+  };
 
   const renderDeleteModal = () => {
-    return(
+    return (
       <Modal isOpen={isDeleteModalOpen} toggle={toggleDelete}>
         <ModalHeader>Referencia törlése</ModalHeader>
         <ModalBody>Valóban törölni kívánja a kiválasztott tételt?</ModalBody>
         <ModalFooter>
-          <Button className="button--danger" type="submit" onClick={() => deleteReferencia()}>
+          <Button
+            className="button--danger"
+            type="submit"
+            onClick={() => deleteReferencia()}
+          >
             Törlés
           </Button>
           <Button className="button--secondary" onClick={() => toggleDelete()}>
@@ -163,7 +173,7 @@ function ReferenciakContent(props) {
         </ModalFooter>
       </Modal>
     );
-  }
+  };
 
   const renderModal = () => {
     return (
@@ -234,7 +244,7 @@ function ReferenciakContent(props) {
   };
 
   const onSubmit = () => {
-    switch(modalType) {
+    switch (modalType) {
       case "FEL": {
         addReferencia();
         break;
@@ -247,7 +257,7 @@ function ReferenciakContent(props) {
         break;
       }
     }
-  }
+  };
 
   const renderTable = () => {
     const columns = [
@@ -268,40 +278,48 @@ function ReferenciakContent(props) {
     ];
 
     return (
-      <BootstrapTable bootstrap4 striped bordered wrapperClasses="table-responsive" keyField="id" data={referenciakJson} columns={columns} />
+      <BootstrapTable
+        bootstrap4
+        striped
+        bordered
+        wrapperClasses="table-responsive"
+        keyField="id"
+        data={referenciakJson}
+        columns={columns}
+      />
     );
   };
 
   return (
     <div className="card">
       <div className="row">
-      <div className="col-md-12" />
-      <br />
-      <div className="col-md-5">
-        <Button className="button--primary" onClick={() => handleNewClick()}>
-          + Referencia hozzáadása
-        </Button>
-      </div>
-      <div className="col-md-7" />
-      <div className="col-md-12" />
-      <br />
-      <div className="col-md-12">{referenciakJson && renderTable()}</div>
-      <Modal isOpen={isModalOpen} toggle={toggleModal}>
-        <ModalHeader>{renderModalTitle()}</ModalHeader>
-        <ModalBody>
-          <AvForm>{renderModal()}</AvForm>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="success" type="submit" onClick={() => onSubmit()}>
-            Mentés
+        <div className="col-md-12" />
+        <br />
+        <div className="col-md-5">
+          <Button className="button--primary" onClick={() => handleNewClick()}>
+            + Referencia hozzáadása
           </Button>
-          <Button color="secondary" onClick={() => toggleModal()}>
-            Mégsem
-          </Button>
-        </ModalFooter>
-      </Modal>
-      {renderDeleteModal()}
-      {renderViewModal()}
+        </div>
+        <div className="col-md-7" />
+        <div className="col-md-12" />
+        <br />
+        <div className="col-md-12">{referenciakJson && renderTable()}</div>
+        <Modal isOpen={isModalOpen} toggle={toggleModal}>
+          <ModalHeader>{renderModalTitle()}</ModalHeader>
+          <ModalBody>
+            <AvForm>{renderModal()}</AvForm>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="success" type="submit" onClick={() => onSubmit()}>
+              Mentés
+            </Button>
+            <Button color="secondary" onClick={() => toggleModal()}>
+              Mégsem
+            </Button>
+          </ModalFooter>
+        </Modal>
+        {renderDeleteModal()}
+        {renderViewModal()}
       </div>
     </div>
   );

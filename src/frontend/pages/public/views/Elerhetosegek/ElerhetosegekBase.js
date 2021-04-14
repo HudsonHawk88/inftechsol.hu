@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import ElerhetosegekContent from './ElerhetosegekContent';
+import ElerhetosegekContent from "./ElerhetosegekContent";
 
 function ElerhetosegekBase(props) {
-    return (
-        <ElerhetosegekContent {...props} />
-    );
+  return <ElerhetosegekContent {...props} />;
 }
 
 export default ElerhetosegekBase;

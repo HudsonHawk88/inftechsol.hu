@@ -1,0 +1,9 @@
+{
+  "telepulesek": {
+    "user": "postgres",
+    "host": "localhost",
+    "database": "orszagok",
+    "password": "CoronamVitae88",
+    "port": 5432
+  }
+}

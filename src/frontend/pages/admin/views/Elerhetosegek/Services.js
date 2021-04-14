@@ -1,164 +1,163 @@
 import { Microservices } from "../../../../commons/MicroServices";
-const userUrl = window.location.origin + '/api/elerhetosegek';
-const orszagokUrl = window.location.origin + '/api/orszagok';
-const telepulesekUrl = window.location.origin + '/api/telepulesek';
+const userUrl = window.location.origin + "/api/elerhetosegek";
+const orszagokUrl = window.location.origin + "/api/orszagok";
+const telepulesekUrl = window.location.origin + "/api/telepulesek";
 
 export default class Services {
-
   // ELERHETOSEGEK START
 
-    static listElerhetosegek = () => {
-        let result = Microservices.fetchApi(userUrl, {
-            method: "GET",
-            mode: "cors",
-            cache: "no-cache",
-            headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-            },
-        });
+  static listElerhetosegek = () => {
+    let result = Microservices.fetchApi(userUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+      },
+    });
 
-        return result;
-    };
+    return result;
+  };
 
-    static getElerhetoseg = (id) => {
-        let result = Microservices.fetchApi(userUrl, {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-            "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-            "Content-Type": "application/json",
-            "id": id
-        },
-        });
+  static getElerhetoseg = (id) => {
+    let result = Microservices.fetchApi(userUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+        "Content-Type": "application/json",
+        id: id,
+      },
+    });
 
-        return result;
-    };
+    return result;
+  };
 
-    static addElerhetoseg = (data) => {
-        let result = Microservices.fetchApi(userUrl, {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-          },
-          body: JSON.stringify(data),
-        });
-        return result;
-      };
-    
-      static editElerhetoseg = (data, id) => {
-        let result = Microservices.fetchApi(userUrl, {
-          method: "PUT",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-            "id": id
-          },
-          body: JSON.stringify(data),
-        });
-        return result;
-      };
-    
-      static deleteElerhetoseg = (id) => {
-        let result = Microservices.fetchApi(userUrl, {
-          method: "DELETE",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-            "id": id
-          },
-        });
-        return result;
-      };
+  static addElerhetoseg = (data) => {
+    let result = Microservices.fetchApi(userUrl, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+      },
+      body: JSON.stringify(data),
+    });
+    return result;
+  };
 
-    // ELÉRHETŐSÉGEK END
+  static editElerhetoseg = (data, id) => {
+    let result = Microservices.fetchApi(userUrl, {
+      method: "PUT",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+        id: id,
+      },
+      body: JSON.stringify(data),
+    });
+    return result;
+  };
 
-    // ORSZAGOK START
+  static deleteElerhetoseg = (id) => {
+    let result = Microservices.fetchApi(userUrl, {
+      method: "DELETE",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+        id: id,
+      },
+    });
+    return result;
+  };
 
-    static listOrszagok = () => {
-      let result = Microservices.fetchApi(orszagokUrl, {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-          },
-      });
+  // ELÉRHETŐSÉGEK END
 
-      return result;
-    };
+  // ORSZAGOK START
 
-    static listOrszagokLike = (like) => {
-      let result = Microservices.fetchApi(orszagokUrl, {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-          "like": like
-          },
-      });
+  static listOrszagok = () => {
+    let result = Microservices.fetchApi(orszagokUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+      },
+    });
 
-      return result;
-    };
+    return result;
+  };
 
-    // ORSZAGOK END
+  static listOrszagokLike = (like) => {
+    let result = Microservices.fetchApi(orszagokUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+        like: like,
+      },
+    });
 
-    // TELEPÜLÉSEK START
+    return result;
+  };
 
-    static listTelepulesek = () => {
-      let result = Microservices.fetchApi(telepulesekUrl, {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://192.168.11.67:3000"
-          },
-      });
+  // ORSZAGOK END
 
-      return result;
-    };
+  // TELEPÜLÉSEK START
 
-    static getTelepules = (id) => {
-      let result = Microservices.fetchApi(telepulesekUrl, {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-          "id": id
-          },
-      });
+  static listTelepulesek = () => {
+    let result = Microservices.fetchApi(telepulesekUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+      },
+    });
 
-      return result;
-    };
+    return result;
+  };
 
-    static listTelepulesekLike = (like) => {
-      let result = Microservices.fetchApi(telepulesekUrl, {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
-          "like": like
-          },
-      });
+  static getTelepules = (id) => {
+    let result = Microservices.fetchApi(telepulesekUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+        id: id,
+      },
+    });
 
-      return result;
-    };
+    return result;
+  };
 
-    // TELEPÜLÉSEK END
+  static listTelepulesekLike = (like) => {
+    let result = Microservices.fetchApi(telepulesekUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
+        like: like,
+      },
+    });
+
+    return result;
+  };
+
+  // TELEPÜLÉSEK END
 }

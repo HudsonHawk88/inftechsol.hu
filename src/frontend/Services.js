@@ -1,5 +1,5 @@
 import { Microservices } from "./commons/MicroServices";
-const userUrl = window.location.origin + '/api/users';
+const userUrl = window.location.origin + "/api/users";
 
 export default class Services {
   static getUser = async (id) => {
@@ -8,9 +8,9 @@ export default class Services {
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Access-Control-Allow-Origin": "http://192.168.11.67:3000",
+        "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
         "Content-Type": "application/json",
-        "token": id
+        token: id,
       },
     });
     return result;
