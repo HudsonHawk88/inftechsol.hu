@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { CrumbRoute } from "../../commons/Components";
 
 import FelhasznalokBase from "./views/Felhasznalok/FelhasznalokBase";
 import ReferenciakBase from "./views/Referenciak/ReferenciakBase";
@@ -7,71 +7,32 @@ import ElerhetosegekBase from "./views/Elerhetosegek/ElerhetosegekBase";
 import Kezdolap from "./views/Kezdolap/Kezdolap";
 
 function AdminRoutes(props) {
-  const user = props.data && props.data.user && props.data.user;
   return (
     <React.Fragment>
-      <Route
+      <CrumbRoute
+        title="Főoldal"
         path="/admin"
-        exact
-        render={(routes) => {
-          return (
-            <Kezdolap
-              {...routes}
-              {...props}
-              notification={props.notification}
-              data={{
-                user: user,
-              }}
-            />
-          );
-        }}
+        render={() => props.match.isExact && <Kezdolap {...props} />}
       />
-      <Route
+      <CrumbRoute
+        title="Felhasználók"
         path="/admin/users"
-        exact
-        render={(routes) => {
-          return (
-            <FelhasznalokBase
-              {...props}
-              {...routes}
-              notification={props.notification}
-              data={{
-                user: user,
-              }}
-            />
-          );
+        render={() => {
+          return <FelhasznalokBase {...props} />;
         }}
       />
-      <Route
-        exact
+      <CrumbRoute
+        title="Referenciák"
         path="/admin/referenciak"
-        render={(routes) => {
-          return (
-            <ReferenciakBase
-              {...props}
-              {...routes}
-              notification={props.notification}
-              data={{
-                user: user,
-              }}
-            />
-          );
+        render={() => {
+          return <ReferenciakBase {...props} />;
         }}
       />
-      <Route
-        exact
+      <CrumbRoute
+        title="Elérhetőségek"
         path="/admin/elerhetosegek"
-        render={(routes) => {
-          return (
-            <ElerhetosegekBase
-              {...props}
-              {...routes}
-              notification={props.notification}
-              data={{
-                user: user,
-              }}
-            />
-          );
+        render={() => {
+          return <ElerhetosegekBase {...props} />;
         }}
       />
     </React.Fragment>

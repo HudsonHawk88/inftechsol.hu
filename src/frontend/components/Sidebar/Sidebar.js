@@ -1,81 +1,101 @@
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-export const Sidebar = ({ width }) => {
-  const [xPosition, setX] = React.useState(-width);
+import { useWindowSize } from "../../commons/Components";
 
-  const toggleMenu = () => {
-    let content = document.getElementById("content");
-    if (xPosition < 0) {
-      setX(0);
-      content.classList.remove("sidebar-hidden");
-      content.classList.add("sidebar-fixed");
+export const Sidebar = () => {
+  const width = useWindowSize().width;
+
+  const collapseSidebar = () => {
+    if (width < 992) {
+      document.body.classList.remove("sidebar-fixed");
+      document.body.classList.add("sidebar-hidden");
     } else {
-      setX(-width);
-      content.classList.remove("sidebar-fixed");
-      content.classList.add("sidebar-hidden");
+      document.body.classList.remove("sidebar-hidden");
+      document.body.classList.add("sidebar-fixed");
+    }
+  };
+
+  const toggleSidebar = () => {
+    if (document.body.classList.contains("sidebar-fixed")) {
+      document.body.classList.remove("sidebar-fixed");
+      document.body.classList.add("sidebar-hidden");
+    } else {
+      document.body.classList.remove("sidebar-hidden");
+      document.body.classList.add("sidebar-fixed");
     }
   };
 
   useEffect(() => {
-    setX(0);
-  }, []);
+    collapseSidebar();
+  }, [width]);
 
   return (
     <React.Fragment>
-       <button
-          onClick={() => toggleMenu()}
-          className="sidebar__toggle-menu"
-          style={{
-            position: "absolute",
-            left: width + 10 + "px",
-            top: "15px"
-          }}
-        >
+      <div id="sidebar" className="sidebar">
+        <ul className="sidebar__navbar-nav">
+          <li className="sidebar__navitem">
+            <NavLink
+              exact
+              className="sidebar__nav-link"
+              activeClassName="sidebar__nav-link-active"
+              to="/admin"
+            >
+              {" "}
+              <span className="sidebar__icon">
+                <i className="fa fa-home" aria-hidden="true"></i>
+              </span>
+              <span className="sidebar__title">Kezdőlap</span>
+            </NavLink>
+          </li>
+          <li className="sidebar__navitem">
+            <NavLink
+              exact
+              className="sidebar__nav-link"
+              activeClassName="sidebar__nav-link-active"
+              to="/admin/referenciak"
+            >
+              {" "}
+              <span className="sidebar__icon">
+                <i className="fa fa-external-link" aria-hidden="true"></i>
+              </span>
+              <span className="sidebar__title">Referenciák</span>
+            </NavLink>
+          </li>
+          <li className="sidebar__navitem">
+            <NavLink
+              exact
+              className="sidebar__nav-link"
+              activeClassName="sidebar__nav-link-active"
+              to="/admin/users"
+            >
+              {" "}
+              <span className="sidebar__icon">
+                <i className="fa fa-users" aria-hidden="true"></i>
+              </span>
+              <span className="sidebar__title">Felhasználók</span>
+            </NavLink>
+          </li>
+          <li className="sidebar__navitem">
+            <NavLink
+              exact
+              className="sidebar__nav-link"
+              activeClassName="sidebar__nav-link-active"
+              to="/admin/elerhetosegek"
+            >
+              {" "}
+              <span className="sidebar__icon">
+                <i className="fa fa-phone" aria-hidden="true"></i>
+              </span>
+              <span className="sidebar__title">Elérhetőségek</span>
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+      <div onClick={() => toggleSidebar()} className="sidebar__toggler">
+        <span className="navbar-toggler-icon">
           <i className="fa fa-bars" aria-hidden="true"></i>
-        </button>
-      <div
-        id="sidebar"
-        className="sidebar"
-        style={{
-          transform: `translatex(${xPosition}px)`,
-          width: width,
-        }}
-      >
-        <div>
-          <NavLink
-            exact
-            className="sidebar__nav-link"
-            activeClassName="sidebar__nav-link-active"
-            to="/admin"
-          >
-            Kezdőlap
-          </NavLink>
-          <NavLink
-            exact
-            className="sidebar__nav-link"
-            activeClassName="sidebar__nav-link-active"
-            to="/admin/referenciak"
-          >
-            Referenciák
-          </NavLink>
-          <NavLink
-            exact
-            className="sidebar__nav-link"
-            activeClassName="sidebar__nav-link-active"
-            to="/admin/users"
-          >
-            Felhasználók
-          </NavLink>
-          <NavLink
-            exact
-            className="sidebar__nav-link"
-            activeClassName="sidebar__nav-link-active"
-            to="/admin/elerhetosegek"
-          >
-            Elérhetőségek
-          </NavLink>
-        </div>
+        </span>
       </div>
     </React.Fragment>
   );

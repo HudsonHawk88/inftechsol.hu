@@ -4,42 +4,36 @@
 /* SIDEBAR */
 
 .sidebar {
-  height: calc(100vh - 80px) !important;
+  width: 250px;
+  padding: 0px;
+  position: absolute;
+  top: 80px;
+  left: 0px;
+  height: calc(100vh - 80px);
+  justify-content: center;
   display: flex;
-  flex-direction: column;
-  border-right: 1px solid;
-  border-radius: 0;
-  color:var(themes-dark-fontcolor);
-  background-color: var(themes-dark-bgcolor);
-  transition: 0.6s ease;
-  min-height: calc(100vh - 80px);
 
-  &__toggle-menu {
-    height: 50px;
-    width: 50px;
-    position: absolute;
-    outline: none;
-    z-index: 1;
-    background-color: transparent;
-    border: none;
+  &__navbar-nav {
+    flex-direction: column;
+    padding: 0px;
+    width: 100%;
+  }
 
-    .fa.fa-bars {
-      font-size: 2.5rem;
-      color:var(themes-dark-fontcolor);
-    }
+  &__navitem {
+    position: relative;
+    width: 100%;
+    list-style: none;
+    justify-content: center;
   }
 
   &__nav-link {
-    display: block;
-    padding: 10px;
+    display: flex;
     text-decoration: none;
     text-align: center;
-    color: var(themes-light-primary);
 
     &:hover {
       text-decoration: none;
       background-color: var(themes-light-primary);
-      color: var(themes-light-fontcolor);
     }
   }
 
@@ -47,144 +41,45 @@
     @extend .sidebar__nav-link;
     text-decoration: none;
     background-color: var(themes-light-primary);
-    color: var(themes-light-fontcolor);
+  }
+
+  &__icon {
+    position: relative;
+    display: block;
+    min-width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+
+    .fa {
+      font-size: 24px;
+    }
+  }
+
+  &__title {
+    position: relative;
+    display: block;
+    min-width: 60px;
+    padding: 0 10px;
+    height: 60px;
+    line-height: 60px;
+    text-align: start;
+    white-space: nowrap;
   }
 }
 
+.sidebar__toggler {
+  display: block;
+  color: white;
+  font-size: 24px;
+  position: absolute;
+  top: 22px;
+  left: 170px;
+  height: 60px;
+  width: 60px;
+  cursor: pointer;
 
-// body.sidebar-hidden {
-//   .sidebar {
-//     height: 100%; /* 100% Full-height */
-//     width: 0; /* 0 width - change this with JavaScript */
-//     position: relative; /* Stay in place */
-//     z-index: 1; /* Stay on top */
-//     overflow-x: hidden; /* Disable horizontal scroll */
-//     padding: 0px; /* Place content 60px from the top */
-//     transition: 0.6s; 
-//     background-color: var(themes-dark-bgcolor);
-//     // background-color: #2067AC;
-//     color:var(themes-dark-fontcolor);
-
-//     @media screen and (max-width: 50rem) {
-//       width: 250px;
-//       padding: 10px; 
-//     }
-
-//     &__nav-link {
-//       display: block;
-//       padding: 10px;
-//       text-decoration: none;
-//       text-align: center;
-  
-//       &:hover {
-//         text-decoration: none;
-//       }
-//     }
-  
-//     &__nav-link-active {
-//       @extend .sidebar__nav-link;
-//     }
-//   }
-// }
-
-// body.sidebar-fixed {
-//   .sidebar {
-//     height: 100%; /* 100% Full-height */
-//     position: relative; /* Stay in place */
-//     z-index: 1; /* Stay on top */
-//     width: 0px;
-//     overflow-x: hidden; /* Disable horizontal scroll */
-//     padding: 0px; /* Place content 60px from the top */
-//     transition: 0.6s; 
-//     background-color: var(themes-dark-bgcolor);
-//     // background-color: #2067AC;
-//     color:var(themes-dark-fontcolor);
-  
-//     @media screen and (min-width: 50rem) {
-//       width: 250px;
-//       padding: 10px; 
-//     }
-  
-//     &__nav-link {
-//       display: block;
-//       padding: 10px;
-//       text-decoration: none;
-//       text-align: center;
-  
-//       &:hover {
-//         text-decoration: none;
-//       }
-//     }
-  
-//     &__nav-link-active {
-//       @extend .sidebar__nav-link;
-//     }
-//   }
-  
-//   .navbar-toggler.sidebar {
-//     display: inline-block !important;
-//     margin-right: 5px;
-//   }
-// }
-
-// /*
-//   Sidebar wrapper styles
-//   Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
-//   */
-// .bm-menu-wrap {
-//   display: block;
-//   height: 100%;
-//   transform: translate3d(-100%, 0px, 0px);
-//   @media screen and (min-width: 50rem) {
-//     transform: none;
-//   }
-// }
-
-// /* General sidebar styles */
-// .bm-menu {
-//   background: #343a40;
-//   padding: 10px;
-//   font-size: 1.15em;
-// }
-
-// /* Morph shape necessary with bubble or elastic */
-// .bm-morph-shape {
-//   fill: #343a40;
-// }
-
-// /* Wrapper for item list */
-// .bm-item-list {
-//   color: #b8b7ad;
-//   padding: 5px;
-// }
-
-// /* Individual item */
-// .bm-item {
-//   display: inline-block;
-//   padding: 5px;
-//   color: #343a40;
-// }
-
-// .bm-item:hover {
-//   background: dodgerblue;
-// }
-
-// .bm-item a {
-//   text-decoration: none;
-//   list-style: none;
-// }
-
-// .bm-item:hover {
-//   color: #343a40;
-// }
-
-// .bm-item:hover a {
-//   text-decoration: none;
-//   list-style: none;
-//   color: #343a40;
-// }
-
-// /* Styling of overlay */
-// .bm-overlay {
-//   background: rgba(0, 0, 0, 0.3);
-// }
+  @media screen and (min-width: 62rem) {
+    left: 270px;
+  }
+}

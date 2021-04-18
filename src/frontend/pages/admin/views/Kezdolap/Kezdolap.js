@@ -1,11 +1,15 @@
 import React from "react";
 
 function Kezdolap(props) {
-  const user = props.data && props.data.user && props.data.user;
+  const user = props && props.user;
 
   return (
     <div className="card">
-      <div>Üdvözlöm {user && user.vezeteknev + " " + user.keresztnev}</div>
+      <div className="row">
+        <div className="col-md-12">
+          <div>Üdvözlöm {user && user.vezeteknev + " " + user.keresztnev}</div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -73,10 +73,9 @@ function Login(props) {
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setAvatar(
-          {
-            avatar: [...avatar, { id: "01", src: e.target.result }],
-          })
+        setAvatar({
+          avatar: [...avatar, { id: "01", src: e.target.result }],
+        });
       };
       reader.readAsDataURL(file);
     });
@@ -185,7 +184,11 @@ function Login(props) {
                         return (
                           <Card key={item.id}>
                             <CardBody>
-                              <img src={item.src} alt="profilkép" style={previewStyle} />
+                              <img
+                                src={item.src}
+                                alt="profilkép"
+                                style={previewStyle}
+                              />
                             </CardBody>
                             <CardFooter>
                               <Button
@@ -239,7 +242,7 @@ function Login(props) {
       submitObj.avatar = avatar;
 
       Services.addUser(submitObj).then((res) => {
-        if(!res.err) {
+        if (!res.err) {
           props.notification("success", res.msg);
         } else {
           props.notification("error", res.msg);

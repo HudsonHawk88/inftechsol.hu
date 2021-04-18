@@ -1,14 +1,78 @@
 @use "./variables/colors";
 @use "./functions/var" as *;
 
-html {
-  margin: 0;
+body {
+  min-height: 100vh;
+  max-height: 100vh;
   font-size: 17px;
   overflow: hidden;
 }
 
+body.sidebar-fixed {
+  .admin-app {
+    display: grid;
+    grid-template: 80px auto / 250px auto;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    display: flex;
+  }
+
+  .content {
+    left: 250px;
+    width: calc(100% - 250px);
+  }
+}
+
+body.sidebar-hidden {
+  .admin-app {
+    display: grid;
+    grid-template: 80px auto / auto;
+    min-height: 100vh;
+  }
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    left: 0px;
+    width: 100%;
+  }
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.admin-app {
+  display: grid;
+  grid-template: 80px auto / max-content auto;
+  min-height: 100vh;
+}
+
+.public-app {
+  display: grid;
+  grid-template-rows: minmax(60px, auto) auto 60px;
+  min-height: 100vh;
+  overflow: hidden;
+  position: static;
+}
+
 .nav-tabs .nav-link {
   cursor: pointer;
+}
+
+.row {
+  margin: 0;
+  border: none;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .google-map {
@@ -20,44 +84,70 @@ html {
   }
 }
 
+.card.card-contact {
+  text-align: center;
+  height: 100%;
+
+  .col-md-6.contact-info {
+    align-self: center;
+    padding: 0 0 0 0;
+  }
+
+  .row.contact-row {
+    height: 100%;
+  }
+}
+
+.table {
+  td {
+    padding: 0.3rem;
+    width: min-content;
+    text-align: center;
+  }
+}
+
+.content {
+  position: absolute;
+  top: 80px;
+}
+
 body.theme-light {
   background-color: var(themes-light-bgcolor);
   color: var(themes-light-fontcolor);
 
-  .sidebar {
+  .breadcrumbs {
     background-color: var(themes-light-bgcolor);
+
+    &__crumb {
+      color: var(themes-light-fontcolor);
+    }
   }
 
-  .jumbotron {
-    background-color: var(themes-light-primary);
+  .admin-navbar__logo {
+    border: 1px solid var(themes-light-fontcolor);
   }
 
-  .card.card-contact {
-    text-align: center;
+  .admin-navbar__navitem a {
+    color: var(themes-light-fontcolor);
 
-    .col-md-6.contact-info {
-      align-self: center;
-      padding: 0 0 0 0;
-
-      @media screen and (min-width: 48rem) {
-        padding: 0 0 0 10px;
-      }
+    &:hover {
+      color: var(themes-light-warning);
     }
+  }
 
-    .row {
-      margin: 0;
-    }
+  .sidebar__nav-link-active {
+    border-left: 10px solid var(themes-dark-bgcolor);
+  }
 
-    .row.contact-row {
-      height: 100%;
-    }
+  .sidebar {
+    border-right: 1px solid var(themes-light-fontcolor);
+  }
+
+  .sidebar__nav-link {
+    color: var(themes-light-fontcolor);
   }
 
   .modal-content {
-    background-color: var(themes-light-bgcolor);
-  }
-
-  .admin-navbar__profile-list {
     background-color: var(themes-light-bgcolor);
   }
 
@@ -76,51 +166,11 @@ body.theme-light {
   }
 
   .card:not(.loginform__card) {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 120px);
+    overflow: auto;
     background-color: var(themes-light-bgcolor);
     color: var(themes-light-fontcolor);
-    // padding: 10px;
-    // .row {
-    //   height: inherit;
-    // }
-  }
-
-  #content.sidebar-fixed {
-    position: absolute;
-    left: 250px;
-    top: 80px;
-    width: calc(100% - 250px);
-    transition: 0.6s ease;
-    overflow: auto;
-
-    .card {
-      padding: 10px;
-      max-height: calc(100vh - 80px);
-      overflow: auto;
-      height: calc(100vh - 80px);
-      background-color: var(themes-light-bgcolor);
-      color: var(themes-light-fontcolor);
-    }
-  }
-
-  #content.sidebar-hidden {
-    position: absolute;
-    left: 0px;
-    top: 80px;
-    width: 100%;
-    transition: 0.6s ease;
-    overflow: auto;
-
-    .card {
-      padding: 10px;
-      max-height: calc(100vh - 80px);
-      overflow: auto;
-      height: calc(100vh - 80px);
-      background-color: var(themes-light-bgcolor);
-      color: var(themes-light-fontcolor);
-    }
+    border: none;
+    max-height: calc(100vh - 80px);
   }
 }
 
@@ -128,40 +178,39 @@ body.theme-dark {
   background-color: var(themes-dark-bgcolor);
   color: var(themes-dark-fontcolor);
 
-  .sidebar {
+  .breadcrumbs {
     background-color: var(themes-dark-bgcolor);
+
+    &__crumb {
+      color: var(themes-dark-fontcolor);
+    }
   }
 
-  .jumbotron {
-    background-color: var(themes-light-primary);
+  .admin-navbar__logo {
+    border: 1px solid var(themes-dark-fontcolor);
   }
 
-  .card.card-contact {
-    text-align: center;
+  .admin-navbar__navitem a {
+    color: var(themes-dark-fontcolor);
 
-    .col-md-6.contact-info {
-      align-self: center;
-      padding: 0 0 0 0;
-
-      @media screen and (min-width: 48rem) {
-        padding: 0 0 0 10px;
-      }
+    &:hover {
+      color: var(themes-dark-warning);
     }
+  }
 
-    .row {
-      margin: 0;
-    }
+  .sidebar__nav-link-active {
+    border-left: 10px solid var(themes-light-bgcolor);
+  }
 
-    .row.contact-row {
-      height: 100%;
-    }
+  .sidebar {
+    border-right: 1px solid var(themes-dark-fontcolor);
+  }
+
+  .sidebar__nav-link {
+    color: var(themes-dark-fontcolor);
   }
 
   .modal-content {
-    background-color: var(themes-dark-bgcolor);
-  }
-
-  .admin-navbar__profile-list {
     background-color: var(themes-dark-bgcolor);
   }
 
@@ -179,69 +228,10 @@ body.theme-dark {
   }
 
   .card:not(.loginform__card) {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 120px);
+    overflow: auto;
     background-color: var(themes-dark-bgcolor);
     color: var(themes-dark-fontcolor);
-    // padding: 10px;
-    // .row {
-    //   height: inherit;
-    // }
+    border: none;
+    max-height: calc(100vh - 80px);
   }
-
-  #content.sidebar-fixed {
-    position: absolute;
-    left: 250px;
-    top: 80px;
-    width: calc(100% - 250px);
-    transition: 0.6s ease;
-    overflow: auto;
-
-    .card {
-      padding: 10px;
-      max-height: calc(100vh - 80px);
-      overflow: auto;
-      height: calc(100vh - 80px);
-      background-color: var(themes-dark-bgcolor);
-      color: var(themes-dark-fontcolor);
-    }
-  }
-
-  #content.sidebar-hidden {
-    position: absolute;
-    left: 0px;
-    top: 80px;
-    width: 100%;
-    transition: 0.6s ease;
-    overflow: auto;
-
-    .card {
-      padding: 10px;
-      max-height: calc(100vh - 80px);
-      overflow: auto;
-      height: calc(100vh - 80px);
-      background-color: var(themes-dark-bgcolor);
-      color: var(themes-dark-fontcolor);
-    }
-  }
-}
-
-#root {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  padding: 0px;
-}
-
-.container-fluid {
-  padding: 0px;
-}
-
-.spinner {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }

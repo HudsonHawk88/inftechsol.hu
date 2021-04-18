@@ -54,12 +54,7 @@ function FelhasznalokBase(props) {
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <FelhasznalokContent
-            {...props}
-            notification={props.notification}
-            data={{ user: props && props.data.user }}
-            logOut={props.logOut && this.props.logOut}
-          />
+          <FelhasznalokContent {...props} />
         </TabPane>
         <TabPane tabId="2">
           <Row>

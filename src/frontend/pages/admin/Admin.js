@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Breadcrumbs } from "react-breadcrumbs";
 
 import Header from "../../components/Header/Header";
+// import Sidebar from "../../components/Sidebar/Sidebar";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import AdminRoutes from "./AdminRoutes";
+import Services from "./Services.js";
 
 function Admin(props) {
-  const user = props.data && props.data.user && props.data.user;
+  const user = props && props.datas && props.datas.user && props.datas.user;
+
   return (
-    <React.Fragment>
-       <Header {...props} toggleSidebar={props.toggleSidebar} isSidebarOpen={props.isSidebarOpen} data={{ user: user }} logOut={props.logOut} />
-          <Sidebar width={250} isSidebarOpen={props && props.isSidebarOpen} />
-          <main id="content" className="sidebar-fixed container-fluid">
-              {props.children}
-          </main>
-    </React.Fragment>
+    <div className="admin-app">
+      <Header
+        {...props}
+        user={user && user}
+        toggleSidebar={props.toggleSidebar}
+        isSidebarOpen={props.isSidebarOpen}
+        logOut={props.logOut}
+      />
+
+      <Sidebar />
+      <main id="content" className="content">
+        <Breadcrumbs className="breadcrumbs" separator=" > " />
+        <AdminRoutes {...props} user={user && user} />
+      </main>
+    </div>
   );
 }
 

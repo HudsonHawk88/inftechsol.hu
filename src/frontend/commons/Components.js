@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Route } from "react-router-dom";
+import { Breadcrumb } from "react-breadcrumbs";
 
 export const LoadingPage = () => {
   return (
@@ -11,6 +13,30 @@ export const LoadingPage = () => {
         <span className="sr-only">Loading...</span>
       </div>
     </div>
+  );
+};
+
+export const CrumbRoute = ({
+  component: Component,
+  includeSearch = false,
+  render,
+  ...props
+}) => {
+  return (
+    <Route
+      {...props}
+      render={(routeProps) => (
+        <Breadcrumb
+          data={{
+            title: props.title,
+            pathname: routeProps.match.url,
+            search: includeSearch ? routeProps.location.search : null,
+          }}
+        >
+          {Component ? <Component {...routeProps} /> : render(routeProps)}
+        </Breadcrumb>
+      )}
+    />
   );
 };
 
@@ -38,4 +64,29 @@ export const ToggleSwitch = (props) => {
       </label>
     </div>
   );
+};
+
+export const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
+
+  useEffect(() => {
+    // Handler to call on window resize
+    function handleResize() {
+      // Set window width/height to state
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty array ensures that effect is only run on mount
+  return windowSize;
 };

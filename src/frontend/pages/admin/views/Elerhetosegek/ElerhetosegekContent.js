@@ -658,9 +658,6 @@ function ElerhetosegekContent(props) {
     return (
       <BootstrapTable
         noDataIndication="Ez a tábla még üres..."
-        bootstrap4
-        striped
-        bordered
         wrapperClasses="table-responsive"
         keyField="id"
         data={elerhetosegekJson}

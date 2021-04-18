@@ -14,7 +14,6 @@ module.exports = {
     watchContentBase: true,
     host: "192.168.11.64",
     port: 3000,
-    publicPath: "auto",
     historyApiFallback: true,
     hot: true,
     proxy: {

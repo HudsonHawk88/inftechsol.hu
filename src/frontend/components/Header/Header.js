@@ -6,8 +6,8 @@ import { ToggleSwitch } from "../../commons/Components";
 function Header(props) {
   const [isDropped, setDrop] = useState(false);
   const profileDrop = document.getElementById("profile-dropdown");
-  
-  const user = props.data && props.data.user && props.data.user;
+
+  const user = props && props.user;
 
   useEffect(() => {
     if (profileDrop) {
@@ -22,7 +22,11 @@ function Header(props) {
   return (
     <div className="admin-navbar">
       <div className="admin-navbar__logo-div">
-        <img className="admin-navbar__logo" alt="logo" src={window.location.origin + "/images/logo.png"} />
+        <img
+          className="admin-navbar__logo"
+          alt="logo"
+          src={window.location.origin + "/images/logo.png"}
+        />
       </div>
       <ToggleSwitch
         className="admin-navbar__toggleTheme"
@@ -42,29 +46,36 @@ function Header(props) {
       </div> */}
       <nav className="admin-navbar__nav" id="nav-list">
         <ul className="admin-navbar__navlist">
-            <li className="admin-navbar__navitem">
-                <div
-                    className="admin-navbar__profile"
-                    onClick={() => setDrop(!isDropped)}
-                >
-                    <img className="admin-navbar__profile-image" src={"https://cicunevelde.eoldal.hu/img/mid/5/cica.jpg"} alt="profilepicture" />
-                    {user && user.vezeteknev + " " + user.keresztnev}&nbsp;&nbsp;
-                    <i className="fa fa-caret-down" aria-hidden="true"></i>
-                    <ul className="admin-navbar__profile-list" id="profile-dropdown">
-                        <li className="admin-navbar__navitem">
-                            <NavLink
-                                to="/"
-                                className="admin-navbar__nav-link"
-                                activeClassName="admin-navbar__nav-link--active"
-                                onClick={() => props.logOut()}
-                            >
-                                <i className="fa fa-sign-out" aria-hidden="true"></i>{" "}
-                                Kijelentkezés
-                            </NavLink>
-                        </li>
-                    </ul>         
-                </div>
-            </li>
+          <li className="admin-navbar__navitem">
+            <div
+              className="admin-navbar__profile"
+              onClick={() => setDrop(!isDropped)}
+            >
+              <img
+                className="admin-navbar__profile-image"
+                src={"https://cicunevelde.eoldal.hu/img/mid/5/cica.jpg"}
+                alt="profilepicture"
+              />
+              <span className="admin-navbar__username">
+                {user && user.vezeteknev + " " + user.keresztnev}&nbsp;&nbsp;
+                <i className="fa fa-caret-down" aria-hidden="true"></i>
+              </span>
+
+              <ul className="admin-navbar__profile-list" id="profile-dropdown">
+                <li className="admin-navbar__navitem">
+                  <NavLink
+                    to="/"
+                    className="admin-navbar__nav-link"
+                    activeClassName="admin-navbar__nav-link-active"
+                    onClick={() => props.logOut()}
+                  >
+                    <i className="fa fa-sign-out" aria-hidden="true"></i>{" "}
+                    Kijelentkezés
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </li>
         </ul>
       </nav>
     </div>

@@ -10,6 +10,7 @@
     "font-awesome": "4.7.0",
     "react": "16.13.1",
     "react-bootstrap-table-next": "4.0.1",
+    "react-breadcrumbs": "^2.1.7",
     "react-burger-menu": "2.9.0",
     "react-dom": "16.13.1",
     "react-dropzone": "11.0.2",

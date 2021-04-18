@@ -9,7 +9,7 @@
     text-align: left;
 
     @media screen and (min-width: 50rem) {
-      right: 20px;
+      right: 30px;
     }
 
     &-checkbox {
@@ -93,14 +93,15 @@
   &__toggleTheme {
     position: absolute;
     top: 25px;
-    right: 220px;
-    width: 85px;
+    right: 80px;
     display: inline-block;
     vertical-align: middle;
     text-align: left;
+    width: 60px;
 
-    @media screen and (min-width: 50rem) {
-      right: 220px;
+    @media screen and (min-width: 62rem) {
+      right: 230px;
+      width: 90px;
     }
 
     &-checkbox {
@@ -128,17 +129,28 @@
         height: 34px;
         padding: 0;
         line-height: 34px;
-        font-size: 14px;
+        font-size: 15px;
         color: white;
         font-weight: bold;
         box-sizing: border-box;
       }
       &:before {
-        content: attr(data-on);
-        text-transform: uppercase;
+        font-family: "FontAwesome";
+        content: "\f185";
+        font-size: 18px;
         padding-left: 10px;
         background-color: #cecece;
         color: #222222;
+        @media screen and (min-width: 62rem) {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+            "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+            "Noto Color Emoji";
+          content: attr(data-on);
+          text-transform: uppercase;
+          font-size: 15px;
+          left: 0px;
+        }
       }
     }
     &-disabled {
@@ -150,12 +162,23 @@
       }
     }
     &-inner:after {
-      content: attr(data-off);
-      text-transform: uppercase;
+      content: "\f186";
+      font-family: "FontAwesome";
+      font-size: 18px;
       padding-right: 10px;
       background-color: #222222;
       color: #cecece;
       text-align: right;
+
+      @media screen and (min-width: 62rem) {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+          "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+          "Noto Color Emoji";
+        content: attr(data-off);
+        text-transform: uppercase;
+        font-size: 15px;
+      }
     }
     &-switch {
       display: block;
@@ -165,10 +188,15 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      right: 50px;
+      right: 25px;
+
       border: 0 solid #bbb;
       border-radius: 20px;
       transition: all 0.3s ease-in 0s;
+
+      @media screen and (min-width: 62rem) {
+        right: 52px;
+      }
     }
     &-checkbox:checked + &-label {
       .admin-navbar__toggleTheme-inner {

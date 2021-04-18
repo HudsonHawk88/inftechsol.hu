@@ -2,10 +2,22 @@
 @use "./functions/var" as *;
 
 .public-navbar {
-  background: rgb(33,26,30);
-  background: -moz-linear-gradient(180deg, rgba(33,26,30,1) 0%, rgba(32,103,172,1) 33%);
-  background: -webkit-linear-gradient(180deg, rgba(33,26,30,1) 0%, rgba(32,103,172,1) 33%);
-  background: linear-gradient(180deg, rgba(33,26,30,1) 0%, rgba(32,103,172,1) 33%);
+  background: rgb(33, 26, 30);
+  background: -moz-linear-gradient(
+    180deg,
+    rgba(33, 26, 30, 1) 0%,
+    rgba(32, 103, 172, 1) 33%
+  );
+  background: -webkit-linear-gradient(
+    180deg,
+    rgba(33, 26, 30, 1) 0%,
+    rgba(32, 103, 172, 1) 33%
+  );
+  background: linear-gradient(
+    180deg,
+    rgba(33, 26, 30, 1) 0%,
+    rgba(32, 103, 172, 1) 33%
+  );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#211a1e",endColorstr="#2067ac",GradientType=1);
   // background-color: #222222;
   // box-shadow: 0 0 10px #aaa;
@@ -124,14 +136,30 @@
   top: 0px;
   width: 100%;
   height: calc(100vh - 120px);
-  overflow-x: hidden;
+
+  .card {
+    height: calc(100vh - 120px);
+    overflow: auto;
+  }
 }
 
 .public-footer {
-  background: rgb(33,26,30);
-  background: -moz-linear-gradient(0deg, rgba(33,26,30,1) 0%, rgba(32,103,172,1) 33%);
-  background: -webkit-linear-gradient(0deg, rgba(33,26,30,1) 0%, rgba(32,103,172,1) 33%);
-  background: linear-gradient(0deg, rgba(33,26,30,1) 0%, rgba(32,103,172,1) 33%);
+  background: rgb(33, 26, 30);
+  background: -moz-linear-gradient(
+    0deg,
+    rgba(33, 26, 30, 1) 0%,
+    rgba(32, 103, 172, 1) 33%
+  );
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(33, 26, 30, 1) 0%,
+    rgba(32, 103, 172, 1) 33%
+  );
+  background: linear-gradient(
+    0deg,
+    rgba(33, 26, 30, 1) 0%,
+    rgba(32, 103, 172, 1) 33%
+  );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#211a1e",endColorstr="#2067ac",GradientType=1);
   display: flex;
   align-items: center;
@@ -144,4 +172,3 @@
   color: #ffffff;
   z-index: 2;
 }
-
