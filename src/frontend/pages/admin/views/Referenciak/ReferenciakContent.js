@@ -89,7 +89,7 @@ function ReferenciakContent(props) {
   };
 
   const addReferencia = () => {
-    Services.addReferenciak(referenciaObj).then((res) => {
+    Services.addReferencia(referenciaObj).then((res) => {
       if (!res.err) {
         toggleModal();
         props.notification("success", res.msg);
