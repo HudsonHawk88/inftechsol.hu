@@ -101,7 +101,7 @@ function ReferenciakContent(props) {
   };
 
   const editReferencia = () => {
-    Services.editReferenciak(referenciaObj, currentId).then((res) => {
+    Services.editReferencia(referenciaObj, currentId).then((res) => {
       if (!res.err) {
         toggleModal();
         props.notification("success", res.msg);
@@ -247,14 +247,14 @@ function ReferenciakContent(props) {
     switch (modalType) {
       case "FEL": {
         addReferencia();
-        break;
+        return;
       }
       case "MOD": {
         editReferencia();
-        break;
+        return;
       }
       default: {
-        break;
+        return;
       }
     }
   };
