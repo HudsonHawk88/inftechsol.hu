@@ -15,6 +15,7 @@
     "react-dom": "16.13.1",
     "react-dropzone": "11.0.2",
     "react-notifications": "1.6.0",
+    "react-responsive-carousel": "^3.2.18",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "reactstrap": "8.4.1"

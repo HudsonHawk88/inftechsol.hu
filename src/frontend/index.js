@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { useWindowSize } from "./commons/Components";
 
 import "./index.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import Public from "./pages/public/Public";
 import Login from "./pages/login/Login";
@@ -158,7 +159,7 @@ function Main(props) {
         {window.location.pathname.includes("admin") ? (
           <Route
             path={"/admin"}
-            render={(props) =>
+            children={(props) =>
               datas.authenticated ? (
                 <Admin
                   {...props}

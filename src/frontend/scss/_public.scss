@@ -141,6 +141,55 @@
     height: calc(100vh - 120px);
     overflow: auto;
   }
+
+  .carousel-root {
+    .slide,
+    .slide.selected {
+      background-color: black;
+    }
+
+    .control-arrow {
+      width: 25px;
+
+      @media screen and (min-width: 62rem) {
+        width: 70px;
+      }
+    }
+  }
+
+  .carousel-image {
+    height: calc(100vh - 120px);
+    background-color: black;
+    opacity: 0.3;
+  }
+
+  .carousel-legend {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    position: absolute;
+    margin: 0 0 0 -45%;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    width: 90%;
+    display: grid;
+    place-items: center;
+    height: calc(100vh - 180px);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+
+    @media screen and (min-width: 62rem) {
+      font-size: 34px;
+    }
+
+    .nav-link {
+      color: var(themes-light-fontcolor);
+    }
+  }
 }
 
 .public-footer {
