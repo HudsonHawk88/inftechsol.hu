@@ -90,6 +90,20 @@ export const Sidebar = () => {
               <span className="sidebar__title">Elérhetőségek</span>
             </NavLink>
           </li>
+          <li className="sidebar__navitem">
+            <NavLink
+              exact
+              className="sidebar__nav-link"
+              activeClassName="sidebar__nav-link-active"
+              to="/admin/gdpr"
+            >
+              {" "}
+              <span className="sidebar__icon">
+                <i className="fa fa-gavel" aria-hidden="true"></i>
+              </span>
+              <span className="sidebar__title">GDPR</span>
+            </NavLink>
+          </li>
         </ul>
       </div>
       <div onClick={() => toggleSidebar()} className="sidebar__toggler">

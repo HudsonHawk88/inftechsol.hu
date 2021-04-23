@@ -13,10 +13,10 @@ function ReferenciakContent(props) {
     });
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     if (window.location.pathname === "/referenciak") {
       getReferenciak();
-    } 
+    }
   }, [window.location.pathname]);
 
   const renderReferenciak = () => {

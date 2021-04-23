@@ -21,6 +21,7 @@ function Admin(props) {
       />
 
       <Sidebar />
+
       <main id="content" className="content">
         <Breadcrumbs className="breadcrumbs" separator=" > " />
         <AdminRoutes {...props} user={user && user} />

@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 import { ToggleSwitch } from "../../commons/Components";
 
 function PublicHeader(props) {
-  
   const [isOpen, toggleNavbar] = useState(false);
   const navList = document.getElementById("nav-list");
 
@@ -76,6 +75,15 @@ function PublicHeader(props) {
               to="/referenciak"
             >
               Referenciák
+            </NavLink>
+          </li>
+          <li className="public-navbar__navitem">
+            <NavLink
+              className="public-navbar__navlink"
+              activeClassName="public-navbar__navlink--active"
+              to="/gdpr"
+            >
+              GDPR
             </NavLink>
           </li>
           <li className="public-navbar__navitem">

@@ -3,7 +3,6 @@ import React from "react";
 import PublicHeader from "../../components/Header/PublicHeader";
 
 function Public(props) {
-  console.log(props);
   return (
     <div className="public-app">
       <PublicHeader

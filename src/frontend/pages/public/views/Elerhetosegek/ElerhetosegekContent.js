@@ -5,8 +5,6 @@ import React, { useState, useEffect } from "react";
 import Services from "./Services";
 
 function ElerhetosegekContent(props) {
-  console.log(props);
-
   const [elerhetosegekJson, setElerhetosegekJson] = useState([]);
   const [mailObj, setMailObj] = useState({
     nev: "",
@@ -29,7 +27,6 @@ function ElerhetosegekContent(props) {
   const getElerhetosegek = () => {
     Services.listElerhetosegek().then((res) => {
       if (!res.err) {
-        console.log(res);
         setElerhetosegekJson(res[0]);
       } else {
         props.notification();

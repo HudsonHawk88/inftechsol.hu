@@ -146,10 +146,14 @@ body.theme-light {
   color: var(themes-light-fontcolor);
 
   .breadcrumbs {
-    background-color: var(themes-light-bgcolor);
+    background-color: darken(var(themes-light-bgcolor), 10%);
 
     &__crumb {
       color: var(themes-light-fontcolor);
+    }
+
+    &__inner {
+      padding: 5px 10px;
     }
   }
 
@@ -201,6 +205,7 @@ body.theme-light {
     color: var(themes-light-fontcolor);
     border: none;
     max-height: calc(100vh - 80px);
+    padding: 10px;
   }
 }
 
@@ -209,10 +214,14 @@ body.theme-dark {
   color: var(themes-dark-fontcolor);
 
   .breadcrumbs {
-    background-color: var(themes-dark-bgcolor);
+    background-color: lighten(var(themes-dark-bgcolor), 10%);
 
     &__crumb {
       color: var(themes-dark-fontcolor);
+    }
+
+    &__inner {
+      padding: 5px 10px;
     }
   }
 
@@ -263,5 +272,6 @@ body.theme-dark {
     color: var(themes-dark-fontcolor);
     border: none;
     max-height: calc(100vh - 80px);
+    padding: 10px;
   }
 }

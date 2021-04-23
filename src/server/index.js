@@ -25,6 +25,7 @@ const header = require("./common/Header/HeaderService");
 const login = require("./admin/Login/LoginService");
 const blog = require("./public/Blog/BlogService");
 const referenciak = require("./public/ReferenciakService/ReferenciakService");
+const gdpr = require("./public/GDPR/GdprService");
 const elerhetosegek = require("./public/ElerhetosegekService/ElerhetosegekService");
 const felhasznalok = require("./admin/Felhasznalok/FelhasznalokService");
 const orszagok = require("./admin/Orszagok/OrszagokService");
@@ -76,6 +77,15 @@ referenciak.editReferencia(app);
 referenciak.deleteReferencia(app);
 
 // PUBLIC REFERENCIÁK END
+
+// PUBLIC GDPR START
+
+gdpr.getGdpr(app);
+gdpr.addGdpr(app);
+gdpr.editGdpr(app);
+gdpr.deleteGdpr(app);
+
+// PUBLIC GDPR END
 
 // ELÉRHETŐSÉGEK START
 

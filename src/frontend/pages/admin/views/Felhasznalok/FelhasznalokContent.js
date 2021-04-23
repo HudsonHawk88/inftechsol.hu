@@ -19,7 +19,7 @@ import Services from "./Services";
 
 function FelhasznalokContent(props) {
   const [isModalOpen, toggle] = useState(false);
-  const [ isViewOpen, toggleView ] = useState(false);
+  const [isViewOpen, toggleView] = useState(false);
   const [isDeleteModalOpen, toggleDelete] = useState(false);
   const [userObj, setUserObj] = useState({
     vezeteknev: "",
@@ -31,17 +31,15 @@ function FelhasznalokContent(props) {
   });
   const [usersJson, setUserJson] = useState([]);
   const [currentId, setCurrentId] = useState(null);
-  const [ deleteId, setDeleteId ] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
   const [formType, setFormType] = useState("FEL");
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     if (window.location.pathname === "/admin/users") {
       getUsersFromServer();
     }
   }, [window.location.pathname]);
-
 
   const toggleModal = () => {
     toggle(!isModalOpen);
@@ -70,7 +68,8 @@ function FelhasznalokContent(props) {
         return "Felhasználó hozzáadása";
       case "MOD":
         return "Felhasználó módosítása";
-      default: return;
+      default:
+        return;
     }
   };
 
@@ -78,7 +77,6 @@ function FelhasznalokContent(props) {
     if (id) {
       Services.getUser(id).then((res) => {
         setUserObj(res[0]);
-        console.log(userObj);
       });
     } else {
       Services.listUsers().then((res) => {
@@ -86,10 +84,6 @@ function FelhasznalokContent(props) {
       });
     }
   };
-
-  // const onAvatarChange = (e) => {
-  //   console.log(e.target.value);
-  // };
 
   const handleViewClick = (id) => {
     getUsersFromServer(id);
@@ -135,18 +129,18 @@ function FelhasznalokContent(props) {
 
   const addUser = () => {
     let felvitelObj = {};
-      felvitelObj = JSON.parse(JSON.stringify(userObj));
-      felvitelObj.created_on = new Date();
-      Services.addUser(userObj).then((res) => {
-        if (!res.err) {
-          toggleModal();
-          getUsersFromServer();
-          props.notification("success", res.msg);
-        } else {
-          props.notification("error", res.msg);
-        }
-      });
-  }
+    felvitelObj = JSON.parse(JSON.stringify(userObj));
+    felvitelObj.created_on = new Date();
+    Services.addUser(userObj).then((res) => {
+      if (!res.err) {
+        toggleModal();
+        getUsersFromServer();
+        props.notification("success", res.msg);
+      } else {
+        props.notification("error", res.msg);
+      }
+    });
+  };
 
   const editUser = () => {
     Services.editUser(userObj, currentId).then((res) => {
@@ -158,7 +152,7 @@ function FelhasznalokContent(props) {
         props.notification("error", res.err);
       }
     });
-  } 
+  };
 
   const onSubmit = () => {
     switch (formType) {
@@ -170,7 +164,8 @@ function FelhasznalokContent(props) {
         editUser();
         break;
       }
-      default: break;
+      default:
+        break;
     }
   };
 
@@ -227,7 +222,7 @@ function FelhasznalokContent(props) {
         <br /> */}
       </React.Fragment>
     );
-  }
+  };
 
   const renderForm = () => {
     return (
@@ -362,7 +357,10 @@ function FelhasznalokContent(props) {
           <ModalHeader>Felhasználó megtekintése</ModalHeader>
           <ModalBody>{renderViewForm()}</ModalBody>
           <ModalFooter>
-            <Button className="button--primary" onClick={() => toggleViewModal()}>
+            <Button
+              className="button--primary"
+              onClick={() => toggleViewModal()}
+            >
               OK
             </Button>
           </ModalFooter>
@@ -375,7 +373,10 @@ function FelhasznalokContent(props) {
           <Button className="button--danger" onClick={() => deleteUser()}>
             Igen
           </Button>
-          <Button className="button--secondary" onClick={() => toggleDeleteModal()}>
+          <Button
+            className="button--secondary"
+            onClick={() => toggleDeleteModal()}
+          >
             Nem
           </Button>
         </ModalFooter>

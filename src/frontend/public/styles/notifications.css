@@ -1,8 +1,11 @@
 @charset "UTF-8";
 @font-face {
-  font-family: 'Notification';
-  src: url("fonts/notification.eot");
-  src: url("fonts/notification.eot?#iefixs3g3t9") format("embedded-opentype"), url("fonts/notification.woff?s3g3t9") format("woff"), url("fonts/notification.ttf?s3g3t9") format("truetype"), url("fonts/notification.svg?s3g3t9#notification") format("svg");
+  font-family: "Notification";
+  src: url("./fonts/notification.eot");
+  src: url("./fonts/notification.eot") format("embedded-opentype"),
+    url("./fonts/notification.woff") format("woff"),
+    url("./fonts/notification.ttf") format("truetype"),
+    url("./fonts/notification.svg") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -42,7 +45,8 @@
   margin: 0 0 5px 0;
 }
 
-.notification:hover, .notification:focus {
+.notification:hover,
+.notification:focus {
   opacity: 1;
 }
 
@@ -74,7 +78,7 @@
   left: 15px;
   margin-top: -14px;
   display: block;
-  font-family: 'Notification';
+  font-family: "Notification";
   width: 28px;
   height: 28px;
   font-size: 28px;

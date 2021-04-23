@@ -15,41 +15,59 @@ import {
   AvFeedback,
 } from "availity-reactstrap-validation";
 import BootstrapTable from "react-bootstrap-table-next";
+import { serializer } from "@organw/wysiwyg-editor";
+import { Wysiwyg } from "../../../../commons/Components";
 import Services from "./Services";
 
-function ReferenciakContent(props) {
+function GdprContent(props) {
   const [isModalOpen, toggle] = useState(false);
   const [isViewModalOpen, toggleViewModal] = useState(false);
   const [modalType, toggleModalType] = useState("FEL");
   const [currentId, setCurrentId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [isDeleteModalOpen, toggleDeleteModal] = useState(false);
-  const [referenciaObj, setReferenciaObj] = useState({
-    company_name: "",
-    description: "",
+  const [gdprObj, setGdprObj] = useState({
+    nev: "",
+    tartalom: serializer.deserialize(
+      '<p align="left" style="font-size:17px"></p>'
+    ),
   });
-  const [referenciakJson, setReferenciakJson] = useState(null);
+  const [gdprJson, setGdprJson] = useState([]);
+  // const [editorValue, setEditorValue] = useState(
+  //   serializer.deserialize('<p align="left" style="font-size:17px"></p>')
+  // );
+  // ValueJson.fromJSON({ editorDefault })
 
   useEffect(() => {
-    if (window.location.pathname === "/admin/referenciak") {
-      getReferenciak();
+    if (window.location.pathname === "/admin/gdpr") {
+      getGdpr();
     }
-  }, [window.location.pathname]);
+  });
 
-  const getReferenciak = (id) => {
+  const getGdpr = (id) => {
     if (id) {
-      Services.getReferencia(id).then((res) => {
+      Services.getGdpr(id).then((res) => {
         if (!res.err) {
-          setReferenciaObj(res[0]);
+          setGdprObj({
+            nev: res[0].nev,
+            tartalom: serializer.deserialize(res[0].tartalom),
+          });
         }
       });
     } else {
-      Services.listReferenciak().then((res) => {
+      Services.listGdpr().then((res) => {
         if (!res.err) {
-          setReferenciakJson(res);
+          setGdprJson(res);
         }
       });
     }
+  };
+
+  const onChangeEditor = ({ value }) => {
+    setGdprObj({
+      ...gdprObj,
+      tartalom: value,
+    });
   };
 
   const toggleView = () => {
@@ -57,9 +75,11 @@ function ReferenciakContent(props) {
   };
 
   const handleNewClick = () => {
-    setReferenciaObj({
-      company_name: "",
-      description: "",
+    setGdprObj({
+      nev: "",
+      tartalom: serializer.deserialize(
+        '<p align="left" style="font-size:17px"></p>'
+      ),
     });
     toggleModalType("FEL");
     toggleModal();
@@ -67,14 +87,14 @@ function ReferenciakContent(props) {
 
   const handleViewClick = (cell) => {
     setCurrentId(cell);
-    getReferenciak(cell);
+    getGdpr(cell);
     toggleView();
   };
 
   const handleEditClick = (cell) => {
     toggleModalType("MOD");
     setCurrentId(cell);
-    getReferenciak(cell);
+    getGdpr(cell);
     toggleModal();
   };
 
@@ -87,36 +107,44 @@ function ReferenciakContent(props) {
     toggleDelete();
   };
 
-  const addReferencia = () => {
-    Services.addReferencia(referenciaObj).then((res) => {
+  const addGdpr = () => {
+    let felvitelObj = {
+      nev: gdprObj.nev,
+      tartalom: serializer.serialize(gdprObj.tartalom),
+    };
+    Services.addGdpr(felvitelObj).then((res) => {
       if (!res.err) {
         toggleModal();
         props.notification("success", res.msg);
-        getReferenciak();
+        getGdpr();
       } else {
         props.notification("error", res.err);
       }
     });
   };
 
-  const editReferencia = () => {
-    Services.editReferencia(referenciaObj, currentId).then((res) => {
+  const editGdpr = () => {
+    let modositoObj = {
+      nev: gdprObj.nev,
+      tartalom: serializer.serialize(gdprObj.tartalom),
+    };
+    Services.editGdpr(modositoObj, currentId).then((res) => {
       if (!res.err) {
         toggleModal();
         props.notification("success", res.msg);
-        getReferenciak();
+        getGdpr();
       } else {
         props.notification("error", res.err);
       }
     });
   };
 
-  const deleteReferencia = () => {
-    Services.deleteReferencia(deleteId).then((res) => {
+  const deleteGdpr = () => {
+    Services.deleteGdpr(deleteId).then((res) => {
       if (!res.err) {
         toggleDelete();
         props.notification("success", res.msg);
-        getReferenciak();
+        getGdpr();
       } else {
         props.notification("error", res.err);
       }
@@ -126,9 +154,9 @@ function ReferenciakContent(props) {
   const renderModalTitle = () => {
     switch (modalType) {
       case "FEL":
-        return "Referencia hozzáadása";
+        return "GDPR hozzáadása";
       case "MOD":
-        return "Referencia módosítása";
+        return "GDPR módosítása";
       default:
         return "";
     }
@@ -136,12 +164,16 @@ function ReferenciakContent(props) {
 
   const renderViewModal = () => {
     return (
-      <Modal isOpen={isViewModalOpen} toggle={toggleView}>
-        <ModalHeader>Referencia megtekintése</ModalHeader>
+      <Modal isOpen={isViewModalOpen} toggle={toggleView} size="xl">
+        <ModalHeader>GDPR megtekintése</ModalHeader>
         <ModalBody>
-          <div>Cégnév: {referenciaObj.company_name}</div>
+          <div>Dokumentum neve: {gdprObj.nev}</div>
           <br />
-          <div>Leírás: {referenciaObj.description}</div>
+          <div>
+            Leírás:
+            <br />
+            <Wysiwyg value={gdprObj.tartalom} contentEditable={false} />
+          </div>
           <br />
         </ModalBody>
         <ModalFooter>
@@ -156,13 +188,13 @@ function ReferenciakContent(props) {
   const renderDeleteModal = () => {
     return (
       <Modal isOpen={isDeleteModalOpen} toggle={toggleDelete}>
-        <ModalHeader>Referencia törlése</ModalHeader>
+        <ModalHeader>GDPR törlése</ModalHeader>
         <ModalBody>Valóban törölni kívánja a kiválasztott tételt?</ModalBody>
         <ModalFooter>
           <Button
             className="button--danger"
             type="submit"
-            onClick={() => deleteReferencia()}
+            onClick={() => deleteGdpr()}
           >
             Törlés
           </Button>
@@ -178,24 +210,22 @@ function ReferenciakContent(props) {
     return (
       <React.Fragment>
         <AvGroup>
-          <Label>Cégnév:</Label>
+          <Label>Név:</Label>
           <AvInput
-            name="company_name"
+            name="nev"
             type="text"
             onChange={(e) => handleInputChange(e)}
-            value={referenciaObj.company_name}
+            value={gdprObj.nev}
           />
           <AvFeedback>Ez a mező kitöltése kötelező!</AvFeedback>
         </AvGroup>
         <AvGroup>
           <Label>Leírás:</Label>
-          <AvInput
-            name="description"
-            type="text"
-            onChange={(e) => handleInputChange(e)}
-            value={referenciaObj.description}
+          <Wysiwyg
+            fontId="Editor1"
+            value={gdprObj.tartalom}
+            onChange={onChangeEditor}
           />
-          <AvFeedback>Ez a mező kitöltése kötelező!</AvFeedback>
         </AvGroup>
       </React.Fragment>
     );
@@ -204,8 +234,8 @@ function ReferenciakContent(props) {
   const handleInputChange = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    setReferenciaObj({
-      ...referenciaObj,
+    setGdprObj({
+      ...gdprObj,
       [e.target.name]: value,
     });
   };
@@ -245,11 +275,11 @@ function ReferenciakContent(props) {
   const onSubmit = () => {
     switch (modalType) {
       case "FEL": {
-        addReferencia();
+        addGdpr();
         return;
       }
       case "MOD": {
-        editReferencia();
+        editGdpr();
         return;
       }
       default: {
@@ -261,13 +291,13 @@ function ReferenciakContent(props) {
   const renderTable = () => {
     const columns = [
       {
-        dataField: "company_name",
-        text: "Cégnév",
+        dataField: "nev",
+        text: "Dokumentum neve",
       },
-      {
-        dataField: "description",
-        text: "Leírás",
-      },
+      // {
+      //   dataField: "",
+      //   text: "Leírás",
+      // },
       {
         dataField: "id",
         text: "Műveletek",
@@ -283,8 +313,9 @@ function ReferenciakContent(props) {
         bordered
         wrapperClasses="table-responsive"
         keyField="id"
-        data={referenciakJson}
+        data={gdprJson}
         columns={columns}
+        noDataIndication={"Nincs megjeleníthető adat!"}
       />
     );
   };
@@ -292,18 +323,16 @@ function ReferenciakContent(props) {
   return (
     <div className="card">
       <div className="row">
-        <div className="col-md-12" />
-        <br />
         <div className="col-md-5">
           <Button className="button--primary" onClick={() => handleNewClick()}>
-            + Referencia hozzáadása
+            + GDPR hozzáadása
           </Button>
         </div>
         <div className="col-md-7" />
         <div className="col-md-12" />
         <br />
-        <div className="col-md-12">{referenciakJson && renderTable()}</div>
-        <Modal isOpen={isModalOpen} toggle={toggleModal}>
+        <div className="col-md-12">{renderTable()}</div>
+        <Modal isOpen={isModalOpen} toggle={toggleModal} size="xl">
           <ModalHeader>{renderModalTitle()}</ModalHeader>
           <ModalBody>
             <AvForm>{renderModal()}</AvForm>
@@ -324,4 +353,4 @@ function ReferenciakContent(props) {
   );
 }
 
-export default ReferenciakContent;
+export default GdprContent;

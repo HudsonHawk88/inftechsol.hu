@@ -4,6 +4,7 @@ import { CrumbRoute } from "../../commons/Components";
 import FelhasznalokBase from "./views/Felhasznalok/FelhasznalokBase";
 import ReferenciakBase from "./views/Referenciak/ReferenciakBase";
 import ElerhetosegekBase from "./views/Elerhetosegek/ElerhetosegekBase";
+import GdprBase from "./views/GDPR/GdprBase";
 import Kezdolap from "./views/Kezdolap/Kezdolap";
 
 function AdminRoutes(props) {
@@ -19,6 +20,13 @@ function AdminRoutes(props) {
         path="/admin/users"
         render={() => {
           return <FelhasznalokBase {...props} />;
+        }}
+      />
+      <CrumbRoute
+        title="GDPR"
+        path="/admin/gdpr"
+        render={() => {
+          return <GdprBase {...props} />;
         }}
       />
       <CrumbRoute

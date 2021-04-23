@@ -132,10 +132,13 @@ body.theme-light {
   color: #15172a;
 }
 body.theme-light .breadcrumbs {
-  background-color: #f5f6f7;
+  background-color: #d9dde0;
 }
 body.theme-light .breadcrumbs__crumb {
   color: #15172a;
+}
+body.theme-light .breadcrumbs__inner {
+  padding: 5px 10px;
 }
 body.theme-light .admin-navbar__logo {
   border: 1px solid #15172a;
@@ -175,6 +178,7 @@ body.theme-light .card:not(.loginform__card) {
   color: #15172a;
   border: none;
   max-height: calc(100vh - 80px);
+  padding: 10px;
 }
 
 body.theme-dark {
@@ -182,10 +186,13 @@ body.theme-dark {
   color: #f5f6f7;
 }
 body.theme-dark .breadcrumbs {
-  background-color: #15172a;
+  background-color: #262a4c;
 }
 body.theme-dark .breadcrumbs__crumb {
   color: #f5f6f7;
+}
+body.theme-dark .breadcrumbs__inner {
+  padding: 5px 10px;
 }
 body.theme-dark .admin-navbar__logo {
   border: 1px solid #f5f6f7;
@@ -225,6 +232,7 @@ body.theme-dark .card:not(.loginform__card) {
   color: #f5f6f7;
   border: none;
   max-height: calc(100vh - 80px);
+  padding: 10px;
 }
 
 body.theme-light .loginform {

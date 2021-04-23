@@ -23,29 +23,6 @@ function Main(props) {
     user: null,
   });
 
-  // const width = useWindowSize().width;
-  // const root = document.getElementById("root");
-  // console.log(root);
-
-  // const toggleFullsize = () => {
-  //   if (root.requestFullscreen) {
-  //     root.requestFullscreen();
-  //   }
-  //   else if (root.webkitRequestFullscreen) {
-  //     /* Safari */
-  //     root.webkitRequestFullscreen();
-  //   } else if (root.msRequestFullscreen) {
-  //     /* IE11 */
-  //     root.msRequestFullscreen();
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (width < 992) {
-  //     toggleFullsize();
-  //   }
-  // }, [width]);
-
   const getCookie = (name) => {
     // Split cookie string and get all individual name=value pairs in an array
     var cookieArr = document.cookie.split(";");
