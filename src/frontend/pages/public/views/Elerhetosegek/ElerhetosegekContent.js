@@ -14,6 +14,8 @@ function ElerhetosegekContent(props) {
     uzenet: "",
   });
 
+  const [ elfogad, setElfogad ] = useState(false);
+
   const setDefaultValues = () => {
     setMailObj({
       nev: "",
@@ -192,10 +194,13 @@ function ElerhetosegekContent(props) {
                   className="input-group-btn col-md-12"
                   style={{ marginTop: "10px" }}
                 >
+                  Megismertem és elfogadom az <u><a href="/gdpr" target="_blank"> Adatvédelmi szabályzatot</a></u><br />
+                  <input type="checkbox" name="elfogad" onChange={() => setElfogad(!elfogad)} value={elfogad} /><br /><br />
                   <button
                     href=""
                     type="submit"
                     className="btn btn-primary btn-form display-4"
+                    disabled={!elfogad}
                     onClick={() => sendMail()}
                   >
                     KÜLDÉS
