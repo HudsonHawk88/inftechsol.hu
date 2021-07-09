@@ -1,6 +1,12 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
+import {
+  AvForm,
+  AvInput,
+  AvFeedback,
+  AvGroup,
+} from "availity-reactstrap-validation";
 
 import Services from "./Services";
 
@@ -138,77 +144,99 @@ function ElerhetosegekContent(props) {
               Köszönöm, hogy kitölti az űrlapot!
             </div>
             <div>
-              <div className="row">
-                <div className="col-md-6 multi-horizontal" data-for="nev">
-                  <input
-                    type="text"
-                    className="form-control input"
-                    name="nev"
-                    placeholder="Név"
-                    onChange={(e) => handleInputChange(e)}
-                    value={mailObj.nev}
-                  />
-                </div>
-                <div className="col-md-6 multi-horizontal" data-for="telefon">
-                  <input
-                    type="text"
-                    className="form-control input"
-                    name="telefon"
-                    placeholder="Telefon"
-                    onChange={(e) => handleInputChange(e)}
-                    value={mailObj.telefon}
-                  />
-                </div>
-                <div className="col-md-6" data-for="email">
-                  <input
-                    type="text"
-                    className="form-control input"
-                    name="email"
-                    placeholder="E-mail"
-                    onChange={(e) => handleInputChange(e)}
-                    value={mailObj.email}
-                  />
-                </div>
-                <div className="col-md-6" data-for="tema">
-                  <input
-                    type="text"
-                    className="form-control input"
-                    name="tema"
-                    placeholder="Megkeresés oka/Téma"
-                    onChange={(e) => handleInputChange(e)}
-                    value={mailObj.tema}
-                  />
-                </div>
-                <div className="col-md-12" data-for="uzenet">
-                  <textarea
-                    className="form-control input"
-                    name="uzenet"
-                    rows="3"
-                    placeholder="Üzenet"
-                    style={{ resize: "none" }}
-                    onChange={(e) => handleInputChange(e)}
-                    value={mailObj.uzenet}
-                  ></textarea>
-                </div>
-                <div
-                  className="input-group-btn col-md-12"
-                  style={{ marginTop: "10px" }}
-                >
-                  Megismertem és elfogadom az <u><a href="/gdpr" target="_blank"> Adatvédelmi szabályzatot</a></u><br />
-                  <input type="checkbox" name="elfogad" onChange={() => setElfogad(!elfogad)} value={elfogad} /><br /><br />
-                  <button
-                    href=""
-                    type="submit"
-                    className="btn btn-primary btn-form display-4"
-                    disabled={!elfogad}
-                    onClick={() => sendMail()}
+              <AvForm onValidSubmit={sendMail}>
+                <div className="row">
+                  <div className="col-md-6 multi-horizontal" data-for="nev">
+                    <AvGroup>
+                      <AvInput
+                        type="text"
+                        className="form-control input"
+                        name="nev"
+                        placeholder="Név"
+                        onChange={(e) => handleInputChange(e)}
+                        value={mailObj.nev}
+                        required
+                      />
+                      <AvFeedback>Ez a mező kitöltése kötelező</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div className="col-md-6 multi-horizontal" data-for="telefon">
+                    <AvGroup>
+                      <AvInput
+                        type="text"
+                        className="form-control input"
+                        name="telefon"
+                        placeholder="Telefon"
+                        onChange={(e) => handleInputChange(e)}
+                        value={mailObj.telefon}
+                        required
+                      />
+                      <AvFeedback>Ez a mező kitöltése kötelező</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div className="col-md-6" data-for="email">
+                    <AvGroup>
+                      <AvInput
+                        type="text"
+                        className="form-control input"
+                        name="email"
+                        placeholder="E-mail"
+                        onChange={(e) => handleInputChange(e)}
+                        value={mailObj.email}
+                        required
+                      />
+                      <AvFeedback>Ez a mező kitöltése kötelező</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div className="col-md-6" data-for="tema">
+                    <AvGroup>
+                      <AvInput
+                        type="text"
+                        className="form-control input"
+                        name="tema"
+                        placeholder="Megkeresés oka/Téma"
+                        onChange={(e) => handleInputChange(e)}
+                        value={mailObj.tema}
+                        required
+                      />
+                      <AvFeedback>Ez a mező kitöltése kötelező</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div className="col-md-12" data-for="uzenet">
+                    <AvGroup>
+                      <AvInput
+                        type="textarea"
+                        className="form-control input"
+                        name="uzenet"
+                        rows="3"
+                        placeholder="Üzenet"
+                        style={{ resize: "none" }}
+                        onChange={(e) => handleInputChange(e)}
+                        value={mailObj.uzenet}
+                        required
+                      />
+                      <AvFeedback>Ez a mező kitöltése kötelező</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div
+                    className="input-group-btn col-md-12"
+                    style={{ marginTop: "10px" }}
                   >
-                    KÜLDÉS
-                  </button>
+                    Megismertem és elfogadom az <u><a href="/gdpr" target="_blank"> Adatvédelmi szabályzatot</a></u><br />
+                    <input type="checkbox" name="elfogad" onChange={() => setElfogad(!elfogad)} value={elfogad} /><br /><br />
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-form display-4"
+                      disabled={!elfogad}
+                      // onClick={() => sendMail()}
+                    >
+                      KÜLDÉS
+                    </button>
+                  </div>
+                  <div className="col-xs-12 col-sm-12 col-md-12" />
+                  <br />
                 </div>
-                <div className="col-xs-12 col-sm-12 col-md-12" />
-                <br />
-              </div>
+              </AvForm>
             </div>
           </div>
         </div>
