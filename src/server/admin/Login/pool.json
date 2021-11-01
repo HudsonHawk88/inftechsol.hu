@@ -1,9 +1,0 @@
-{
-  "users": {
-    "user": "postgres",
-    "host": "localhost",
-    "database": "users",
-    "password": "CoronamVitae88",
-    "port": 5432
-  }
-}

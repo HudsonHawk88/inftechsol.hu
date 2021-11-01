@@ -1,9 +1,0 @@
-{
-  "referenciak": {
-    "user": "postgres",
-    "host": "localhost",
-    "database": "views",
-    "password": "CoronamVitae88",
-    "port": 5432
-  }
-}

@@ -1,8 +1,0 @@
-@use '../variables/colors';
-@use '../mixins/buttons-backgrounds';
-@use '../functions/var' as *;
-@use 'sass:map';
-
-@include buttons-backgrounds.generate-color-backgrounds(
-  var(themes-#{var(defaultTheme)})
-);
