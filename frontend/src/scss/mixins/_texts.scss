@@ -1,0 +1,7 @@
+@mixin generate-color-texts($main-palette) {
+  @each $key, $value in $main-palette {
+    .text--#{"" + $key} {
+      color: $value;
+    }
+  }
+}

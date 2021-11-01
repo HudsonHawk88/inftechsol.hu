@@ -1,0 +1,9 @@
+{
+  "gdpr": {
+    "user": "postgres",
+    "host": "92.118.27.50",
+    "database": "views",
+    "password": "CoronamVitae88",
+    "port": 5432
+  }
+}

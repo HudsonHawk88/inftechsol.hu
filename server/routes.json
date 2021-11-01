@@ -1,0 +1,20 @@
+{
+  "routes": [
+    "/",
+    "/auth",
+    "/token",
+    "/login",
+    "/register",
+    "/logout",
+    "/users",
+    "/header",
+    "/blog",
+    "/gdpr",
+    "/szolgaltatasok",
+    "/referenciak",
+    "/elerhetosegek",
+    "/orszagok",
+    "/telepulesek",
+    "/contactmail"
+  ]
+}

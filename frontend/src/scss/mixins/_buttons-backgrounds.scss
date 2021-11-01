@@ -1,0 +1,23 @@
+@mixin generate-color-backgrounds($main-palette) {
+    @each $key, $value in $main-palette {
+      .button--#{"" + $key} {
+        background-color: $value;
+        border: 0;
+      }
+
+      .button--#{"" + $key}:hover {
+        background-color: $value;
+        border: 0;
+      }
+
+      .button--#{"" + $key}:focus {
+        background-color: $value;
+        border: 0;
+      }
+
+      .button--#{"" + $key}:active {
+        background-color: $value !important;
+        border: 0;
+      }
+    }
+  }

@@ -1,86 +1,25 @@
 {
-  "name": "fullstack_app",
-  "version": "0.1.0",
-  "main": "index.js",
-  "private": true,
-  "dependencies": {
-    "@babel/polyfill": "^7.11.5",
-    "@webpack-cli/serve": "^1.3.1",
-    "availity-reactstrap-validation": "^2.6.1",
-    "bootstrap": "^4.4.1",
-    "clean-webpack-plugin": "^3.0.0",
-    "crypto-js": "^4.0.0",
-    "font-awesome": "^4.7.0",
-    "html-webpack-plugin": "^4.5.0",
-    "http-proxy-middleware": "^1.0.6",
-    "react": "^16.13.1",
-    "react-bootstrap-table-next": "^4.0.1",
-    "react-burger-menu": "^2.9.0",
-    "react-dom": "^16.13.1",
-    "react-dropzone": "^11.0.2",
-    "react-notifications": "^1.6.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.1",
-    "reactstrap": "^8.4.1",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.0.0"
-  },
-  "engines": {
-    "node": "10.19.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-transform-arrow-functions": "^7.10.4",
-    "@babel/plugin-transform-runtime": "^7.13.10",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.2",
-    "babel-polyfill": "^6.3.14",
-    "concurrently": "^4.0.1",
-    "cross-env": "^5.2.0",
-    "css-loader": "^4.3.0",
-    "dotenv": "^8.2.0",
-    "jest": "^23.6.0",
-    "nodemon": "^1.18.4",
-    "style-loader": "^0.23.1",
-    "webpack-cli": "^4.3.0",
-    "webpack-dev-server": "^3.11.0"
-  },
+  "name": "inftechsol.hu",
+  "version": "1.0.0",
+  "description": "",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "install-root": "npm i",
-    "install-frontend": "cd src/frontend && npm i",
-    "install-server": "cd src/server && npm i",
+    "install-frontend": "cd frontend && npm i",
+    "install-server": "cd server && npm i",
     "install-all": "npm run install-root && npm run install-frontend && npm run install-server",
-    "build": "webpack build",
-    "deploy": "npm run build && git commit -a -m deployment && git push heroku master",
-    "dev": "webpack serve --watch-content-base",
-    "server": "cross-env NODE_ENV=production babel-node src/server/index.js",
-    "server-dev": "nodemon -r dotenv/config src/server/index.js",
-    "start-dev": "concurrently \"npm run server-dev\" \"npm run dev\"",
-    "server-spec": "babel-node src/server/server.spec",
-    "start": "npm run server"
+    "start-dev": "concurrently \"cd frontend && npm run dev\" \"cd server && npm run dev\"",
+    "build": "cd frontend && npm run build"
   },
-  "keywords": [
-    "react",
-    "express"
-  ],
-  "homepage": "http://192.168.11.64:3000",
-  "author": "Gergő Tóth",
-  "license": "MIT",
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HudsonHawk88/inftechsol.hu.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HudsonHawk88/inftechsol.hu/issues"
+  },
+  "homepage": "https://github.com/HudsonHawk88/inftechsol.hu#readme"
 }
