@@ -1,7 +1,7 @@
 {
   "orszagok": {
     "user": "postgres",
-    "host": "92.118.27.50",
+    "host": "inftechsol.hu",
     "database": "orszagok",
     "password": "CoronamVitae88",
     "port": 5432

@@ -59,7 +59,7 @@ export default class Services {
         "Access-Control-Allow-Origin": "http://192.168.11.64:3000",
         id: id,
       },
-      body: JSON.stringify(JSON.parse(data)),
+      body: JSON.stringify(data),
     });
     return result;
   };

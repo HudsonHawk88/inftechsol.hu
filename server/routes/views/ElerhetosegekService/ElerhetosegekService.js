@@ -55,9 +55,10 @@ router.post('/', (req, res) => {
 })
 
 router.put('/', (req, res) => {
-  const modositoObj = JSON.parse(req.body);
+  let modositoObj = req.body;
+  modositoObj = JSON.parse(JSON.stringify(modositoObj));
   const id = req.headers.id;
-  const sql = `UPDATE elerhetosegek SET nev='${modositoObj.nev}', cim='${modositoObj.cim}, telefon='${modositoObj.telefon}', email='${modositoObj.telefon}' WHERE id='${id}'';`;
+  const sql = `UPDATE elerhetosegek SET titulus='${modositoObj.titulus}', vezeteknev='${modositoObj.vezeteknev}', keresztnev='${modositoObj.keresztnev}', orszag='${JSON.stringify(modositoObj.orszag)}', irszam='${modositoObj.irszam}', telepules='${JSON.stringify(modositoObj.telepules)}', postafiok='${modositoObj.postafiok}', kozterulet='${modositoObj.kozterulet}', hazszam='${modositoObj.hazszam}', hrsz='${modositoObj.hrsz}', epulet='${modositoObj.epulet}', emelet='${modositoObj.emelet}', ajto='${modositoObj.ajto}', telefon='${modositoObj.telefon}', email='${modositoObj.email}' WHERE id='${id}';`;
   elerhetosegek.query(sql, (err) => {
     if (!err) {
       res.status(200).send({ msg: "Elérhetőség sikeresen módosítva!" });
