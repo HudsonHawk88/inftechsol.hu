@@ -10,6 +10,8 @@ import ElerhetosegekBase from "../pages/public/Elerhetosegek/ElerhetosegekBase";
 import GdprTajekozatato from "../pages/public/GDPR/GdprTajekoztato";
 
 const PublicRoutes = (props) => {
+  const { notification } = props;
+  console.log(notification);
   return (
     <React.Fragment>
       {/* <Route exact path="/" render={() => <Kezdolap {...props} />} />
@@ -18,12 +20,12 @@ const PublicRoutes = (props) => {
       <Route path="/referenciak" render={() => <Page404 {...props} />} />
       <Route path="/gdpr" render={() => <GdprTajekozatato {...props} />} />
       <Route path="/elerhetosegek" render={() => <ElerhetosegekBase {...props} />} /> */}
-      <Route exact path="/" component={Kezdolap} />
-      <Route path="/bio" component={Page404} />
-      <Route path="/szolgaltatasok" component={Page404} />
-      <Route path="/referenciak" component={Page404} />
-      <Route path="/gdpr" component={GdprTajekozatato} />
-      <Route path="/elerhetosegek" component={ElerhetosegekBase} />
+      <Route exact path="/" render={() => <Kezdolap {...props} />} />
+      <Route path="/bio" render={() => <Page404 {...props} />} />
+      <Route path="/szolgaltatasok" render={() => <Page404 {...props} />} />
+      <Route path="/referenciak" render={() => <Page404 {...props} />} />
+      <Route path="/gdpr" render={() => <GdprTajekozatato {...props} />} />
+      <Route path="/elerhetosegek" render={() => <ElerhetosegekBase {...props} />} />
       <Route path="/404" component={Page404} />
     </React.Fragment>
   );

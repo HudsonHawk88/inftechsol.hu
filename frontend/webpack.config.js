@@ -1,7 +1,16 @@
 const path = require("path");
+const { EnvironmentPlugin } = require("webpack");
 const target = process.env.NODE_ENV === 'development' ? 'web' : 'browserslist';
+const dotenv = require('dotenv');
+
+const env = dotenv.config().parsed;
 
 console.log(target, process.env.NODE_ENV)
+
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 module.exports = {
   entry: ['@babel/polyfill', './src/index.js'],
@@ -27,6 +36,13 @@ module.exports = {
     },
     
   },
+
+  plugins: [
+    new EnvironmentPlugin({
+      reachaptchaSiteKey: process.env.REACT_APP_RECHAPTCHA_SITE_KEY
+    })
+  ],
+
   target: target,
   module: {
     rules: [
