@@ -11,6 +11,7 @@ import {
   Form,
   Label,
 } from "reactstrap";
+import BootstrapTable from 'react-bootstrap-table-next';
 import { serializer } from "@organw/wysiwyg-editor";
 import { Wysiwyg } from "../../../commons/Components";
 import Services from "./Services";
@@ -282,37 +283,37 @@ function GdprContent(props) {
     }
   };
 
-  // const renderTable = () => {
-  //   const columns = [
-  //     {
-  //       dataField: "nev",
-  //       text: "Dokumentum neve",
-  //     },
-  //     // {
-  //     //   dataField: "",
-  //     //   text: "Leírás",
-  //     // },
-  //     {
-  //       dataField: "id",
-  //       text: "Műveletek",
-  //       formatter: (cell, row, rowIndex) =>
-  //         tableIconFormatter(cell, row, rowIndex),
-  //     },
-  //   ];
+  const renderTable = () => {
+    const columns = [
+      {
+        dataField: "nev",
+        text: "Dokumentum neve",
+      },
+      // {
+      //   dataField: "",
+      //   text: "Leírás",
+      // },
+      {
+        dataField: "id",
+        text: "Műveletek",
+        formatter: (cell, row, rowIndex) =>
+          tableIconFormatter(cell, row, rowIndex),
+      },
+    ];
 
-  //   return (
-  //     <BootstrapTable
-  //       bootstrap4
-  //       striped
-  //       bordered
-  //       wrapperClasses="table-responsive"
-  //       keyField="id"
-  //       data={gdprJson}
-  //       columns={columns}
-  //       noDataIndication={"Nincs megjeleníthető adat!"}
-  //     />
-  //   );
-  // };
+    return (
+      <BootstrapTable
+        bootstrap4
+        striped
+        bordered
+        wrapperClasses="table-responsive"
+        keyField="id"
+        data={gdprJson}
+        columns={columns}
+        noDataIndication={"Nincs megjeleníthető adat!"}
+      />
+    );
+  };
 
   return (
     <div className="card">
@@ -325,8 +326,8 @@ function GdprContent(props) {
         <div className="col-md-7" />
         <div className="col-md-12" />
         <br />
-        {/* <div className="col-md-12">{renderTable()}</div> */}
-        <Modal isOpen={isModalOpen} toggle={toggleModal} size="xl">
+        <div className="col-md-12">{renderTable()}</div>
+        <Modal isOpen={isModalOpen} toggle={toggleModal} size="xl" backdrop="static">
           <ModalHeader>{renderModalTitle()}</ModalHeader>
           <ModalBody>
             <Form>{renderModal()}</Form>

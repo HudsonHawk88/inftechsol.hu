@@ -12,6 +12,7 @@ import {
   Label,
 } from "reactstrap";
 import Services from "./Services";
+import BootstrapTable from 'react-bootstrap-table-next';
 
 function ElerhetosegekContent(props) {
   const [isModalOpen, toggle] = useState(false);
@@ -20,7 +21,7 @@ function ElerhetosegekContent(props) {
   const [currentId, setCurrentId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [isDeleteModalOpen, toggleDeleteModal] = useState(false);
-  const [elerhetosegObj, setElerhetosegObj] = useState({
+  const defaultElerhetosegObj = {
     titulus: "",
     vezeteknev: "",
     keresztnev: "",
@@ -36,7 +37,8 @@ function ElerhetosegekContent(props) {
     ajto: "",
     telefon: "",
     email: "",
-  });
+  };
+  const [elerhetosegObj, setElerhetosegObj] = useState(defaultElerhetosegObj);
   const [elerhetosegekJson, setElerhetosegekJson] = useState([]);
   const [orszagok, setOrszagok] = useState([]);
   const [telepulesek, setTelepulesek] = useState([]);
@@ -49,7 +51,7 @@ function ElerhetosegekContent(props) {
     }
   };
 
-  const setDefault = (orszagok) => {
+  const setDefault = () => {
     const lang = navigator.language;
 
     if (lang === 'hu-HU') {
@@ -66,7 +68,7 @@ function ElerhetosegekContent(props) {
 
   const init = () => {
     Services.listOrszagok().then((res, err) => {
-      if (!err) {
+      if (!res.err) {
         setOrszagok(res);
         setDefault(res);
       } else {
@@ -75,8 +77,16 @@ function ElerhetosegekContent(props) {
         
     });
     Services.listTelepulesek().then((res, err) => {
+      if (!res.err) {
         setTelepulesek(res);
+      }
+        
     });
+    Services.listElerhetosegek().then((res, err) => {
+      if (!err) {
+        setElerhetosegekJson(res)
+      }
+    })
 }
 
   useEffect(() => {
@@ -90,7 +100,7 @@ function ElerhetosegekContent(props) {
         if (!err) {
           setElerhetosegObj({
             ...elerhetosegObj,
-            telepules: res[0].id
+            telepules: res[0]
           });
         } else {
           props.notification('error', res.msg)
@@ -144,7 +154,8 @@ function ElerhetosegekContent(props) {
   };
 
   const handleNewClick = () => {
-    setDefaultOrszag();
+    setDefault();
+    setElerhetosegObj(defaultElerhetosegObj)
     toggleModalType("FEL");
     toggleModal();
   };
@@ -185,6 +196,7 @@ function ElerhetosegekContent(props) {
 
   const editElerhetoseg = () => {
     Services.editElerhetoseg(elerhetosegObj, currentId).then((res) => {
+      console.log(res)
       if (!res.err) {
         toggleModal();
         props.notification("success", res.msg);
@@ -306,7 +318,7 @@ function ElerhetosegekContent(props) {
               id="orszag"
               name="orszag"
               onChange={(e) => handleInputChange(e)}
-              value={elerhetosegObj.orszag}
+              value={elerhetosegObj.orszag.orszagid}
             >
               <option key="default" value="">
                 {"Kérjük válasszon országot..."}
@@ -339,7 +351,7 @@ function ElerhetosegekContent(props) {
                 (elerhetosegObj.irszam && elerhetosegObj.irszam.length !== 4)
               }
               onChange={(e) => handleInputChange(e)}
-              value={elerhetosegObj.telepules}
+              value={elerhetosegObj.telepules.id}
             >
               <option key="default" value="">
                 {"Kérjük válasszon települést..."}
@@ -530,61 +542,61 @@ function ElerhetosegekContent(props) {
     );
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
+    // e.preventDefault();
     switch (modalType) {
-      case "FEL": {
+      case "FEL": 
         addElerhetoseg();
         break;
-      }
-      case "MOD": {
+      
+      case "MOD": 
         editElerhetoseg();
         break;
-      }
-      default: {
+      
+      default: 
         break;
-      }
+      
     }
   };
 
-  // const renderTable = () => {
-  //   const columns = [
-  //     {
-  //       dataField: "nev",
-  //       text: "Név",
-  //       formatter: (cell, row) => nevFormatter(row),
-  //     },
-  //     {
-  //       dataField: "irszam",
-  //       text: "Cím",
-  //       formatter: (cell, row) => cimFormatter(row),
-  //     },
-  //     {
-  //       dataField: "telefon",
-  //       text: "Telefon",
-  //     },
-  //     {
-  //       dataField: "email",
-  //       text: "E-mail",
-  //     },
-  //     {
-  //       dataField: "id",
-  //       text: "Műveletek",
-  //       formatter: (cell, row, rowIndex) =>
-  //         tableIconFormatter(cell, row, rowIndex),
-  //     },
-  //   ];
+  const renderTable = () => {
+    const columns = [
+      {
+        dataField: "nev",
+        text: "Név",
+        formatter: (cell, row) => nevFormatter(row),
+      },
+      {
+        dataField: "irszam",
+        text: "Cím",
+        formatter: (cell, row) => cimFormatter(row),
+      },
+      {
+        dataField: "telefon",
+        text: "Telefon",
+      },
+      {
+        dataField: "email",
+        text: "E-mail",
+      },
+      {
+        dataField: "id",
+        text: "Műveletek",
+        formatter: (cell, row, rowIndex) =>
+          tableIconFormatter(cell, row, rowIndex),
+      },
+    ];
 
-  //   return (
-  //     <BootstrapTable
-  //       noDataIndication="Ez a tábla még üres..."
-  //       wrapperClasses="table-responsive"
-  //       keyField="id"
-  //       data={elerhetosegekJson}
-  //       columns={columns}
-  //     />
-  //   );
-  // };
+    return (
+      <BootstrapTable
+        noDataIndication="Ez a tábla még üres..."
+        // wrapperClasses="table-responsive"
+        keyField="id"
+        data={elerhetosegekJson}
+        columns={columns}
+      />
+    );
+  };
 
   return (
     <div className="card">
@@ -597,22 +609,22 @@ function ElerhetosegekContent(props) {
         <div className="col-md-7" />
         <div className="col-md-12" />
         <br />
-        {/* <div className="col-md-12">{elerhetosegekJson && renderTable()}</div> */}
+        <div className="col-md-12">{elerhetosegekJson && renderTable()}</div>
         <Modal isOpen={isModalOpen} toggle={toggleModal} size="xl">
-        <Form onSubmit={onSubmit}>
+   
           <ModalHeader>{renderModalTitle()}</ModalHeader>
           <ModalBody>
             {renderModal()}
           </ModalBody>
           <ModalFooter>
-            <Button color="success" type="submit">
+            <Button color="success" type="button" onClick={() => onSubmit()}>
               Mentés
             </Button>
             <Button color="secondary" onClick={() => toggleModal()}>
               Mégsem
             </Button>
           </ModalFooter>
-          </Form>
+      
         </Modal>
         {renderDeleteModal()}
         {renderViewModal()}

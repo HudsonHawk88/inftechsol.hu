@@ -46,6 +46,7 @@
 .ow-wysiwyg-toolbar {
   padding: 0px !important;
   border: 1px solid black;
+  height: auto !important;
 }
 
 .ow-wysiwyg-toolbar-group {

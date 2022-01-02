@@ -1,13 +1,17 @@
 /* eslint-disable no-eval */
 // DEPENDENCIES
+const path = require('path');
+require('dotenv').config({
+  path: path.join(__dirname,'.env'),
+});
 const express = require("express");
 const app = express();
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const fs = require("fs");
-const http = require('http');
+// const http = require('http');
 const https = require("https");
-require('dotenv').config();
+// require('dotenv').config();
 const host = process.env.HOST;
 const port = process.env.PORT;
 

@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 import Page404 from "../pages/common/FourOFour";
 
 import Kezdolap from "../pages/public/Kezdőlap/Kezdőlap";
-import SzolgaltatasokBase from '../pages/public/Szolgaltatasok/SzolgaltatasokBase';
+// import SzolgaltatasokBase from '../pages/public/Szolgaltatasok/SzolgaltatasokBase';
 // import ReferenciakBase from "../pages/public/Referenciak/ReferenciakBase";
 import ElerhetosegekBase from "../pages/public/Elerhetosegek/ElerhetosegekBase";
 import GdprTajekozatato from "../pages/public/GDPR/GdprTajekoztato";
@@ -20,7 +20,7 @@ const PublicRoutes = (props) => {
       <Route path="/elerhetosegek" render={() => <ElerhetosegekBase {...props} />} /> */}
       <Route exact path="/" component={Kezdolap} />
       <Route path="/bio" component={Page404} />
-      <Route path="/szolgaltatasok" component={SzolgaltatasokBase} />
+      <Route path="/szolgaltatasok" component={Page404} />
       <Route path="/referenciak" component={Page404} />
       <Route path="/gdpr" component={GdprTajekozatato} />
       <Route path="/elerhetosegek" component={ElerhetosegekBase} />

@@ -20,7 +20,7 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       '/api': {
-        target: 'https://192.168.11.64:3001',
+        target: 'https://127.0.0.1:8081',
         pathRewrite: { '^/api': ''},
         secure: false
       }
