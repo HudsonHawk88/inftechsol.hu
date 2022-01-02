@@ -8,7 +8,6 @@ const bcrypt = require('bcrypt');
 
 router.get('/', (req, res) => {
   let { id } = req.headers;
-  console.log(id)
   if (id) {
     users.query(
       `SELECT * FROM users WHERE id='${id}';`,
