@@ -16,7 +16,7 @@ import Services from "./pages/login/Services";
 
 import './scss/style.scss';
 
-function Main(props) {
+function Main() {
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [ refreshRate ] = useState(1000*30);
@@ -110,42 +110,38 @@ function Main(props) {
         }
     });
   }
-  const createNotification = (type, message) => {
+  const createNotification = (type, msg) => {
     switch (type) {
-      case "info":
-        NotificationManager.info(message, "");
+      case 'info':
+        NotificationManager.info(msg);
         break;
-      case "success":
-        NotificationManager.success(message, "");
+      case 'success':
+        NotificationManager.success(msg);
         break;
-      case "warning":
-        NotificationManager.warning(message, "");
+      case 'warning':
+        NotificationManager.warning(msg);
         break;
-      case "error":
-        NotificationManager.error(message, "");
-        break;
-      default:
+      case 'error':
+        NotificationManager.error(msg);
         break;
     }
-  };
+  }
 
  
 
   return (
     <Router>
       <NotificationContainer />
-            <Route exact path='/' children={(props) => (
+            <Route exact path='/' children={(propps) => (
                 <Full isAdmin={isAdmin} isLight={isLight} toggleTheme={setLight} logOut={logout} authenticated={authenticated} user={user && user}>
                     {isAdmin ? (
                       authenticated ? (
-                        <AdminRoutes {...props} />
+                        <AdminRoutes notification={createNotification} {...propps} />
                       ) : (
-                        <>
-                          <Login setUser={setUser} notification={createNotification} />
-                        </>
+                        <Login setUser={setUser} notification={createNotification} />
                       )
                     ) : (
-                      <PublicRoutes {...props} />
+                      <PublicRoutes notification={createNotification} {...propps} />
                     )}
                 </Full>
             )} />

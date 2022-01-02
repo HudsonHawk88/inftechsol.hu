@@ -1,11 +1,14 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import { Form, InputGroup, Input } from 'reactstrap';
+import ReCAPTCHA from "react-google-recaptcha";
 
 import Services from "./Services";
 
 function ElerhetosegekContent(props) {
+  const recaptchaRef = createRef();
+  const [ isVerified, setIsVerifired ] = useState(false);
   const [elerhetosegekJson, setElerhetosegekJson] = useState([]);
   const [mailObj, setMailObj] = useState({
     nev: "",
@@ -27,12 +30,15 @@ function ElerhetosegekContent(props) {
     });
   };
 
+  console.log(process.env.reachaptchaSiteKey);
+
   const getElerhetosegek = () => {
     Services.listElerhetosegek().then((res) => {
       if (!res.err) {
         setElerhetosegekJson(res[0]);
       } else {
-        props.notification();
+        console.log(props.notification)
+        // props.notification('error', res.err);
       }
     });
   };
@@ -40,19 +46,32 @@ function ElerhetosegekContent(props) {
   useEffect(() => {
     if (window.location.pathname === "/elerhetosegek") {
       getElerhetosegek();
+      recaptchaRef.current.reset();
     }
   }, [window.location.pathname]);
 
-  const sendMail = (e) => {
+  // const handleRechaptchaChange = (token) => {
+  //   if (token) {
+  //     setIsVerifired(true);
+  //   } else {
+  //     setIsVerifired(false);
+  //   }
+  // }
+
+  const sendMail = async (e) => {
     e.preventDefault();
-    Services.sendMail(mailObj).then((res) => {
-      if (!res.err) {
-        setDefaultValues();
-        props.notification("success", res.msg);
-      } else {
-        props.notification("success", res.err);
-      }
-    });
+    const token = await recaptchaRef.current.executeAsync();
+    console.log(token);
+    if (token) {
+      Services.sendMail(mailObj).then((res) => {
+        if (!res.err) {
+          setDefaultValues();
+          // props.notification("success", res.msg);
+        } else {
+          // props.notification("success", res.err);
+        }
+      });
+    }
   };
 
   const undefinedToNull = (value) => {
@@ -214,6 +233,11 @@ function ElerhetosegekContent(props) {
                       />
                     </InputGroup>
                   </div>
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    size="invisible"
+                    sitekey={process.env.reachaptchaSiteKey}
+                  />
                   <div
                     className="input-group-btn col-md-12"
                     style={{ marginTop: "10px" }}
