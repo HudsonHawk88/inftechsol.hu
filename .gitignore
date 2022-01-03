@@ -1,4 +1,6 @@
 node_modules
-/src/frontend/node_modules
-/src/server/node_modules
-.env
+/frontend/node_modules
+/frontend/.env
+/server/node_modules
+/server/.env.development
+/server/.env.production
