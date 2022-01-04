@@ -46,7 +46,7 @@ function ElerhetosegekContent(props) {
   useEffect(() => {
     if (window.location.pathname === "/elerhetosegek") {
       getElerhetosegek();
-      recaptchaRef.current.reset();
+      // recaptchaRef.current.reset();
     }
   }, [window.location.pathname]);
 
@@ -66,9 +66,12 @@ function ElerhetosegekContent(props) {
       Services.sendMail(mailObj).then((res) => {
         if (!res.err) {
           setDefaultValues();
+          console.log('GOOGLE RECHAPTCHA RESET: ', recaptchaRef)
+          // recaptchaRef.current.reset();
           // props.notification("success", res.msg);
         } else {
           // props.notification("success", res.err);
+          // recaptchaRef.current.reset();
         }
       });
     }
@@ -237,6 +240,7 @@ function ElerhetosegekContent(props) {
                     ref={recaptchaRef}
                     size="invisible"
                     sitekey={process.env.reachaptchaSiteKey}
+                    onChange={() => { recaptchaRef.current.reset() }}
                   />
                   <div
                     className="input-group-btn col-md-12"
