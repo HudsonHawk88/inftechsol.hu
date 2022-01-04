@@ -9,7 +9,6 @@ import Services from "./Services";
 function ElerhetosegekContent(props) {
   const recaptchaRef = createRef();
   const [elerhetosegekJson, setElerhetosegekJson] = useState([]);
-  const [ secret, setSecret ] = useState('');
   const [mailObj, setMailObj] = useState({
     nev: "",
     email: "",
@@ -255,7 +254,7 @@ function ElerhetosegekContent(props) {
                     style={{ marginTop: "10px" }}
                   >
                     Megismertem és elfogadom az <u><a href="/gdpr" target="_blank"> Adatvédelmi szabályzatot</a></u><br />
-                    <input type="checkbox" name="elfogad" onChange={() => setElfogad(!elfogad)} value={elfogad} /><br /><br />
+                    <input type="checkbox" name="elfogad" onChange={() => setElfogad(!elfogad)} checked={elfogad} /><br /><br />
                     <button
                       type="submit"
                       className="btn btn-primary btn-form display-4"
