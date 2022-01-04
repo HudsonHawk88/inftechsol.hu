@@ -8,8 +8,8 @@ import Services from "./Services";
 
 function ElerhetosegekContent(props) {
   const recaptchaRef = createRef();
-  const [ isVerified, setIsVerifired ] = useState(false);
   const [elerhetosegekJson, setElerhetosegekJson] = useState([]);
+  const [ secret, setSecret ] = useState('');
   const [mailObj, setMailObj] = useState({
     nev: "",
     email: "",
@@ -28,16 +28,14 @@ function ElerhetosegekContent(props) {
       tema: "",
       uzenet: "",
     });
+    setElfogad(false);
   };
-
-  console.log(process.env.reachaptchaSiteKey);
 
   const getElerhetosegek = () => {
     Services.listElerhetosegek().then((res) => {
       if (!res.err) {
         setElerhetosegekJson(res[0]);
       } else {
-        console.log(props.notification)
         // props.notification('error', res.err);
       }
     });
@@ -46,6 +44,7 @@ function ElerhetosegekContent(props) {
   useEffect(() => {
     if (window.location.pathname === "/elerhetosegek") {
       getElerhetosegek();
+      
       // recaptchaRef.current.reset();
     }
   }, [window.location.pathname]);
@@ -61,20 +60,29 @@ function ElerhetosegekContent(props) {
   const sendMail = async (e) => {
     e.preventDefault();
     const token = await recaptchaRef.current.executeAsync();
-    console.log(token);
-    if (token) {
-      Services.sendMail(mailObj).then((res) => {
-        if (!res.err) {
-          setDefaultValues();
-          console.log('GOOGLE RECHAPTCHA RESET: ', recaptchaRef)
-          // recaptchaRef.current.reset();
-          // props.notification("success", res.msg);
-        } else {
-          // props.notification("success", res.err);
-          // recaptchaRef.current.reset();
-        }
-      });
-    }
+    const secret = process.env.reachaptchaSecretKey;
+
+    const rechaptchaObj = {
+      secret: secret,
+      response: token
+    };
+
+    Services.checkRechaptcha(rechaptchaObj).then((res => {
+      if (res.success) {
+        Services.sendMail(mailObj).then((res) => {
+          if (!res.err) {
+            setDefaultValues();
+            // recaptchaRef.current.reset();
+            // props.notification("success", res.msg);
+          } else {
+            // props.notification("success", res.err);
+            // recaptchaRef.current.reset();
+          }
+        });
+      }
+      }
+    ));
+     
   };
 
   const undefinedToNull = (value) => {

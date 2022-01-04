@@ -39,7 +39,8 @@ module.exports = {
 
   plugins: [
     new EnvironmentPlugin({
-      reachaptchaSiteKey: process.env.REACT_APP_RECHAPTCHA_SITE_KEY
+      reachaptchaSiteKey: process.env.REACT_APP_RECHAPTCHA_SITE_KEY,
+      reachaptchaSecretKey: process.env.REACT_APP_RECHAPTCHA_SECRET_KEY
     })
   ],
 

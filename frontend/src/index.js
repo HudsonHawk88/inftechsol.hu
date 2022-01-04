@@ -43,7 +43,6 @@ function Main() {
     if (JWT) {
       Services.checkAuth().then((res, err) => {
         if (!err) {
-          console.log(res)
           if (res.authenticated === true) {
             setAuthenticated(true);
           } else {

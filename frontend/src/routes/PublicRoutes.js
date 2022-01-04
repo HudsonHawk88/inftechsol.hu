@@ -10,8 +10,6 @@ import ElerhetosegekBase from "../pages/public/Elerhetosegek/ElerhetosegekBase";
 import GdprTajekozatato from "../pages/public/GDPR/GdprTajekoztato";
 
 const PublicRoutes = (props) => {
-  const { notification } = props;
-  console.log(notification);
   return (
     <React.Fragment>
       {/* <Route exact path="/" render={() => <Kezdolap {...props} />} />

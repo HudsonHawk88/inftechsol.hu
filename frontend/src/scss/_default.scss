@@ -89,7 +89,7 @@ body.sidebar-hidden {
 
 .public-app {
   display: grid;
-  grid-template-rows: minmax(60px, auto) auto 60px;
+  grid-template-rows: minmax(60px, auto) auto;
   min-height: 100vh;
   overflow: hidden;
   position: static;
@@ -210,11 +210,11 @@ body.theme-light {
     background-color: var(themes-light-bgcolor);
     color: var(themes-light-fontcolor);
     border: none;
-    min-height: calc(100vh - 80px);
-    max-height: calc(100vh - 80px);
+    min-height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
     justify-content: unset;
     min-width: 0px;
-    padding: 20px 7px;
+    // padding: 20px 7px;
   }
 
   .loginform .card {
